@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,18 +12,16 @@
 		C2EA18CB264F5E9A00C03FA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2EA18CA264F5E9A00C03FA1 /* Assets.xcassets */; };
 		C2EA18CE264F5E9A00C03FA1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2EA18CD264F5E9A00C03FA1 /* Preview Assets.xcassets */; };
 		C2EA18DA264F5E9B00C03FA1 /* Native_YoutubeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA18D9264F5E9B00C03FA1 /* Native_YoutubeTests.swift */; };
-		C2EA18E5264F5E9B00C03FA1 /* Native_YoutubeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA18E4264F5E9B00C03FA1 /* Native_YoutubeUITests.swift */; };
+		C2EA18F6264F63BD00C03FA1 /* YTData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA18F5264F63BD00C03FA1 /* YTData.swift */; };
+		C2EA18F9264F716A00C03FA1 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C2EA18F8264F716A00C03FA1 /* SwiftyJSON */; };
+		C2EA18FC264F759800C03FA1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C2EA18FB264F759800C03FA1 /* Alamofire */; };
+		C2EA18FF264F7FED00C03FA1 /* VideoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA18FE264F7FED00C03FA1 /* VideoRow.swift */; };
+		C2EA1908264F817900C03FA1 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C2EA1907264F817900C03FA1 /* SDWebImageSwiftUI */; };
+		C2EA190A264F8AA700C03FA1 /* ChangeIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA1909264F8AA700C03FA1 /* ChangeIdView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		C2EA18D6264F5E9B00C03FA1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C2EA18BB264F5E9900C03FA1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C2EA18C2264F5E9900C03FA1;
-			remoteInfo = "Native Youtube";
-		};
-		C2EA18E1264F5E9B00C03FA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C2EA18BB264F5E9900C03FA1 /* Project object */;
 			proxyType = 1;
@@ -43,9 +41,9 @@
 		C2EA18D5264F5E9B00C03FA1 /* Native YoutubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Native YoutubeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2EA18D9264F5E9B00C03FA1 /* Native_YoutubeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Native_YoutubeTests.swift; sourceTree = "<group>"; };
 		C2EA18DB264F5E9B00C03FA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C2EA18E0264F5E9B00C03FA1 /* Native YoutubeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Native YoutubeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2EA18E4264F5E9B00C03FA1 /* Native_YoutubeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Native_YoutubeUITests.swift; sourceTree = "<group>"; };
-		C2EA18E6264F5E9B00C03FA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2EA18F5264F63BD00C03FA1 /* YTData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTData.swift; sourceTree = "<group>"; };
+		C2EA18FE264F7FED00C03FA1 /* VideoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRow.swift; sourceTree = "<group>"; };
+		C2EA1909264F8AA700C03FA1 /* ChangeIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeIdView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,17 +51,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2EA1908264F817900C03FA1 /* SDWebImageSwiftUI in Frameworks */,
+				C2EA18F9264F716A00C03FA1 /* SwiftyJSON in Frameworks */,
+				C2EA18FC264F759800C03FA1 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2EA18D2264F5E9B00C03FA1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C2EA18DD264F5E9B00C03FA1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -78,7 +72,6 @@
 			children = (
 				C2EA18C5264F5E9900C03FA1 /* Native Youtube */,
 				C2EA18D8264F5E9B00C03FA1 /* Native YoutubeTests */,
-				C2EA18E3264F5E9B00C03FA1 /* Native YoutubeUITests */,
 				C2EA18C4264F5E9900C03FA1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,7 +81,6 @@
 			children = (
 				C2EA18C3264F5E9900C03FA1 /* Native Youtube.app */,
 				C2EA18D5264F5E9B00C03FA1 /* Native YoutubeTests.xctest */,
-				C2EA18E0264F5E9B00C03FA1 /* Native YoutubeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,6 +90,8 @@
 			children = (
 				C2EA18C6264F5E9900C03FA1 /* Native_YoutubeApp.swift */,
 				C2EA18C8264F5E9900C03FA1 /* ContentView.swift */,
+				C2EA18FD264F7F8200C03FA1 /* View */,
+				C2EA18F2264F638200C03FA1 /* Model */,
 				C2EA18CA264F5E9A00C03FA1 /* Assets.xcassets */,
 				C2EA18CF264F5E9A00C03FA1 /* Info.plist */,
 				C2EA18D0264F5E9A00C03FA1 /* Native_Youtube.entitlements */,
@@ -123,13 +117,21 @@
 			path = "Native YoutubeTests";
 			sourceTree = "<group>";
 		};
-		C2EA18E3264F5E9B00C03FA1 /* Native YoutubeUITests */ = {
+		C2EA18F2264F638200C03FA1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C2EA18E4264F5E9B00C03FA1 /* Native_YoutubeUITests.swift */,
-				C2EA18E6264F5E9B00C03FA1 /* Info.plist */,
+				C2EA18F5264F63BD00C03FA1 /* YTData.swift */,
 			);
-			path = "Native YoutubeUITests";
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C2EA18FD264F7F8200C03FA1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2EA18FE264F7FED00C03FA1 /* VideoRow.swift */,
+				C2EA1909264F8AA700C03FA1 /* ChangeIdView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +150,11 @@
 			dependencies = (
 			);
 			name = "Native Youtube";
+			packageProductDependencies = (
+				C2EA18F8264F716A00C03FA1 /* SwiftyJSON */,
+				C2EA18FB264F759800C03FA1 /* Alamofire */,
+				C2EA1907264F817900C03FA1 /* SDWebImageSwiftUI */,
+			);
 			productName = "Native Youtube";
 			productReference = C2EA18C3264F5E9900C03FA1 /* Native Youtube.app */;
 			productType = "com.apple.product-type.application";
@@ -170,24 +177,6 @@
 			productReference = C2EA18D5264F5E9B00C03FA1 /* Native YoutubeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C2EA18DF264F5E9B00C03FA1 /* Native YoutubeUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C2EA18EF264F5E9B00C03FA1 /* Build configuration list for PBXNativeTarget "Native YoutubeUITests" */;
-			buildPhases = (
-				C2EA18DC264F5E9B00C03FA1 /* Sources */,
-				C2EA18DD264F5E9B00C03FA1 /* Frameworks */,
-				C2EA18DE264F5E9B00C03FA1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C2EA18E2264F5E9B00C03FA1 /* PBXTargetDependency */,
-			);
-			name = "Native YoutubeUITests";
-			productName = "Native YoutubeUITests";
-			productReference = C2EA18E0264F5E9B00C03FA1 /* Native YoutubeUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -204,10 +193,6 @@
 						CreatedOnToolsVersion = 12.5;
 						TestTargetID = C2EA18C2264F5E9900C03FA1;
 					};
-					C2EA18DF264F5E9B00C03FA1 = {
-						CreatedOnToolsVersion = 12.5;
-						TestTargetID = C2EA18C2264F5E9900C03FA1;
-					};
 				};
 			};
 			buildConfigurationList = C2EA18BE264F5E9900C03FA1 /* Build configuration list for PBXProject "Native Youtube" */;
@@ -219,13 +204,17 @@
 				Base,
 			);
 			mainGroup = C2EA18BA264F5E9900C03FA1;
+			packageReferences = (
+				C2EA18F7264F716900C03FA1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				C2EA18FA264F759800C03FA1 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				C2EA1906264F817900C03FA1 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = C2EA18C4264F5E9900C03FA1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				C2EA18C2264F5E9900C03FA1 /* Native Youtube */,
 				C2EA18D4264F5E9B00C03FA1 /* Native YoutubeTests */,
-				C2EA18DF264F5E9B00C03FA1 /* Native YoutubeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -247,13 +236,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C2EA18DE264F5E9B00C03FA1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -261,6 +243,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2EA18FF264F7FED00C03FA1 /* VideoRow.swift in Sources */,
+				C2EA18F6264F63BD00C03FA1 /* YTData.swift in Sources */,
+				C2EA190A264F8AA700C03FA1 /* ChangeIdView.swift in Sources */,
 				C2EA18C9264F5E9900C03FA1 /* ContentView.swift in Sources */,
 				C2EA18C7264F5E9900C03FA1 /* Native_YoutubeApp.swift in Sources */,
 			);
@@ -274,14 +259,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C2EA18DC264F5E9B00C03FA1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2EA18E5264F5E9B00C03FA1 /* Native_YoutubeUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -289,11 +266,6 @@
 			isa = PBXTargetDependency;
 			target = C2EA18C2264F5E9900C03FA1 /* Native Youtube */;
 			targetProxy = C2EA18D6264F5E9B00C03FA1 /* PBXContainerItemProxy */;
-		};
-		C2EA18E2264F5E9B00C03FA1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C2EA18C2264F5E9900C03FA1 /* Native Youtube */;
-			targetProxy = C2EA18E1264F5E9B00C03FA1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -505,46 +477,6 @@
 			};
 			name = Release;
 		};
-		C2EA18F0264F5E9B00C03FA1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 4538W4A79B;
-				INFOPLIST_FILE = "Native YoutubeUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.aayush.pokharel.Native-YoutubeUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "Native Youtube";
-			};
-			name = Debug;
-		};
-		C2EA18F1264F5E9B00C03FA1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 4538W4A79B;
-				INFOPLIST_FILE = "Native YoutubeUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.aayush.pokharel.Native-YoutubeUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "Native Youtube";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -575,16 +507,52 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C2EA18EF264F5E9B00C03FA1 /* Build configuration list for PBXNativeTarget "Native YoutubeUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C2EA18F0264F5E9B00C03FA1 /* Debug */,
-				C2EA18F1264F5E9B00C03FA1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C2EA18F7264F716900C03FA1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		C2EA18FA264F759800C03FA1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.3;
+			};
+		};
+		C2EA1906264F817900C03FA1 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C2EA18F8264F716A00C03FA1 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EA18F7264F716900C03FA1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		C2EA18FB264F759800C03FA1 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EA18FA264F759800C03FA1 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		C2EA1907264F817900C03FA1 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EA1906264F817900C03FA1 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C2EA18BB264F5E9900C03FA1 /* Project object */;
 }

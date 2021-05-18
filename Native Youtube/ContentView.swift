@@ -8,14 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var data: YTData
+    @State var showing_playlist_id: Bool = true
     var body: some View {
-        Text("Hello, world!")
-            .padding()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        
+        VStack{
+            ScrollView(.vertical, showsIndicators: false){
+                
+                ForEach(data.videos, id:\.self.title) { vid in
+                    VideoRow(video: vid)
+                        .contextMenu(ContextMenu(menuItems: {
+                                                Button(action: {
+                                                    print("MAKE THIS WORK")
+                                                }, label: {
+                                                    Text("Play")
+                                                })
+                                            }))
+                        .padding(.vertical, 5)
+                    
+                }
+                        ChangeIdView()
+                            .padding()
+                            .accentColor(.pink)
+                            .environmentObject(data)
+                    }
+        }.onAppear(perform: {
+            data.load()
+        })
+        
     }
 }
