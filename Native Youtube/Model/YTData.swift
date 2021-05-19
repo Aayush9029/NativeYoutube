@@ -11,13 +11,6 @@ import SwiftyJSON
 import SwiftUI
 import Alamofire
 
-//https://www.googleapis.com/youtube/v3/videos?KEY=AIzaSyCnOLgdnqvCSBYHjd_HxR-6l-pH4mY5TrU
-
-//Playlist
-//https://www.youtube.com/playlist?list=PLFgquLnL59alKyN8i_z5Ofm_h0KthT072
-
-
-//
 struct Video{
     var title: String
     var thumbnail: URL

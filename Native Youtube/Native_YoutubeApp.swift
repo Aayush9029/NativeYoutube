@@ -10,11 +10,15 @@ import SwiftUI
 @main
 struct Native_YoutubeApp: App {
     @StateObject var ytData = YTData()
+    @StateObject var ytSearch = YTSearch()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(ytData)
-                .frame(width: 350, height: 720)
+                .environmentObject(ytSearch)
+
+                .frame(width: 900, height: 720)
             
         }
         .windowStyle(HiddenTitleBarWindowStyle())
