@@ -8,7 +8,6 @@ If you use an iPhone please checkout
 
 ---
 
-
 Installation Requirements:
 
 1. [HomeBrew](https://brew.sh)
@@ -18,27 +17,19 @@ Installation Requirements:
 
 ---
 
-2. [MPV](https://formulae.brew.sh/formula/mpv)
+2. [MPV](https://formulae.brew.sh/formula/mpv) and [youtube-dl](https://formulae.brew.sh/formula/youtube-dl)
 ```bash 
- brew install mpv
+ brew install mpv youtube-dl
  ```
-  
-  
-  ---
-  
-3. [youtube-dl](https://formulae.brew.sh/formula/youtube-dl)
-```bash 
-brew install brew install youtube-dl
-```
-  
-  ---
+
+---
   
 4. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/tag/v0.01)
 ```bash
 wget https://github.com/Aayush9029/Native-Youtube/releases/tag/v0.01
 ```
   
-  ---
+---
   
 Usage:
 
@@ -46,7 +37,7 @@ Usage:
   
  ### How to Get a YouTube API Key
  
-1. Log in to Google Developers Console.
+1. Log in to [Google Developers Console](https://console.developers.google.com/).
 2. Create a new project.
 3. On the new project dashboard, click Explore & Enable APIs.
 4. In the library, navigate to YouTube Data API v3 under YouTube APIs.
@@ -62,14 +53,12 @@ Features to add:
 - [ ] Package app with mpv and youtube-dl binary
 - [ ] New Splash Screen
 
-
-
 ---
 
 FAQ: 
 
- Why no clean code structure?
+Why no clean code structure?
  - Working on it.
  
-How do i donate?
+How do I donate?
 - You don't need to, [but feel free to checkout some of my other apps](https://apps.apple.com/ca/developer/aayush-pokharel/id1532440924)
