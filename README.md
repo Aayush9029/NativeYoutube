@@ -11,21 +11,34 @@ If you use an iPhone please checkout
 
 Installation Requirements:
 
-[HomeBrew](https://brew.sh)
-> `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+1. [HomeBrew](https://brew.sh)
+```bash 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-  > [MPV](https://formulae.brew.sh/formula/mpv)
-  >
-  > `brew install mpv`
+---
+
+2. [MPV](https://formulae.brew.sh/formula/mpv)
+```bash 
+ brew install mpv
+ ```
   
   
-  > [youtube-dl](https://formulae.brew.sh/formula/youtube-dl)
-  > 
-  > `brew install brew install youtube-dl`
+  ---
   
+3. [youtube-dl](https://formulae.brew.sh/formula/youtube-dl)
+```bash 
+brew install brew install youtube-dl
+```
   
+  ---
   
+4. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/tag/v0.01)
+```bash
+wget https://github.com/Aayush9029/Native-Youtube/releases/tag/v0.01
+```
   
+  ---
   
 Usage:
 
