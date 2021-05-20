@@ -43,7 +43,6 @@ class YTSearch: ObservableObject{
     @Published var search_videos = [SearchVideo]()
     @AppStorage("apiKey") var apiKey = ""
 
-//    let apiKey = "AIzaSyCnOLgdnqvCSBYHjd_HxR-6l-pH4mY5TrU"
     let maxResults = "25"
   
     func load(query: String){
