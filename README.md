@@ -55,10 +55,21 @@ Usage:
 7. A screen will appear with the API key.
 
 
-
 Features to add:
 
 - [ ] oauth login, subscription view
 - [ ] add more yoututbe like features (upload, edit, account) pages.
 - [ ] Package app with mpv and youtube-dl binary
 - [ ] New Splash Screen
+
+
+
+---
+
+FAQ: 
+
+ Why no clean code structure?
+ - Working on it.
+ 
+How do i donate?
+- You don't need to, [but feel free to checkout some of my other apps](https://apps.apple.com/ca/developer/aayush-pokharel/id1532440924)
