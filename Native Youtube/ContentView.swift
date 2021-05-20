@@ -17,10 +17,24 @@ struct ContentView: View {
     @State var showing_playlist_id: Bool = true
     @State var message = "Hello, World!"
     @State var isRunning = false
+    
+    @AppStorage("apiKey") var apiKey = ""
+    
+    @State var apiInput = ""
     var body: some View {
         
         NavigationView {
             VStack{
+                if apiKey.count < 3{
+                HStack{
+                    TextField("API KEY", text: $apiInput)
+                    Button(action: {
+                        apiKey = apiInput
+                    }, label: {
+                        Text("Save API KEY")
+                    })
+                }.padding(.horizontal)
+                }
                 ScrollView(.vertical, showsIndicators: false){
                     
                     ForEach(data.videos, id:\.self.title) { vid in
@@ -151,3 +165,4 @@ extension ContentView{
     
     
 }
+

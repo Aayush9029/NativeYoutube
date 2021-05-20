@@ -49,10 +49,11 @@ extension Collection where Indices.Iterator.Element == Index {
 class YTData: ObservableObject{
     
     @Published var videos = [Video]()
+//    Playlist that will be displayed on the right hand side.
     @AppStorage("playlistID") var savedID: String = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
     
     var playlistID = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
-    let apiKey = "AIzaSyCnOLgdnqvCSBYHjd_HxR-6l-pH4mY5TrU"
+    @AppStorage("apiKey") var apiKey = ""
     let maxResults = "25"
     
     init() {

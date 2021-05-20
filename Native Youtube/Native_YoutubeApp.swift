@@ -11,15 +11,22 @@ import SwiftUI
 struct Native_YoutubeApp: App {
     @StateObject var ytData = YTData()
     @StateObject var ytSearch = YTSearch()
+    @AppStorage("firstlaunch") var firstTime = true
+
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup{
+            if !firstTime{
             ContentView()
                 .environmentObject(ytData)
                 .environmentObject(ytSearch)
 
                 .frame(width: 900, height: 720)
-            
+            }else{
+                WelcomeView()
+                    .frame(width: 900, height: 720)
+
+            }
         }
         .windowStyle(HiddenTitleBarWindowStyle())
     }
