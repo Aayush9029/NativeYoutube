@@ -42,7 +42,7 @@ Usage:
   
  ### How to Get a YouTube API Key
  
-1. Log in to [Google Developers Console](https://console.developers.google.com/).
+1. Log in to [Google Developers Console](https://console.developers.google.com/), Here's [The Official Documentation](https://developers.google.com/youtube/v3/getting-started)
 2. Create a new project.
 3. On the new project dashboard, click Explore & Enable APIs.
 4. In the library, navigate to YouTube Data API v3 under YouTube APIs.
