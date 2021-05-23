@@ -6,7 +6,7 @@ echo "Installing / Updating Homebrew"
 echo "Installing / Updating mpv and youtube dl"
 brew install mpv youtube-dl
 
-echo "\n\nDownloading..."
+echo "Downloading..."
 wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.01/Native.Youtube.app.zip > /dev/null 2>&1
 
 echo "Unzipping the file"
@@ -18,7 +18,7 @@ rm Native.Youtube.app.zip
 echo "Saving to your Applications folder"
 mv Native\ Youtube.app /Applications
 
-echo "\nDONE :)"
+echo "DONE :)"
 
 echo "Exiting terminal in 3"
 sleep 2
