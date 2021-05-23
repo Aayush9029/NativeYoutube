@@ -1,10 +1,6 @@
-#
-# Uncomment below to specify your own resources.
-# See https://github.com/jondot/blade for more information.
-#
 
 blades:
-  - source: assets/icon.png # this image should be the only image, and the biggest image you can use (typically for icons, 1024x1024)
+  - source: assets/icons/1024.png
     mount: Native Youtube/Assets.xcassets/AppIcon.appiconset
     contents: true
 
