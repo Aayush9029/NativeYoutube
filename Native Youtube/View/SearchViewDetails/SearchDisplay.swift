@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 struct SearchDisplay: View {
     @State private var hovered = false
-
+    
     var video: SearchVideo
     var body: some View {
         HStack{

@@ -20,8 +20,6 @@ struct Native_YoutubeApp: App {
             ContentView()
                 .environmentObject(ytData)
                 .environmentObject(ytSearch)
-
-                .frame(width: 900, height: 720)
             }else{
                 WelcomeView()
                     .frame(width: 900, height: 720)

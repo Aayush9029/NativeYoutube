@@ -9,14 +9,14 @@ import SwiftUI
 
 struct WelcomeView: View {
     @AppStorage("firstlaunch") var firstTime = true
-
+    
     var body: some View {
         VStack{
             HStack{
                 VStack (alignment: .leading){
-            Text("Hello")
-                .font(.largeTitle.bold())
-            Text("Thanks for using \"Native Youtube?\"")
+                    Text("Hello")
+                        .font(.largeTitle.bold())
+                    Text("Thanks for using \"Native Youtube?\"")
                 }
                 Spacer()
             }
@@ -29,7 +29,7 @@ struct WelcomeView: View {
                     HStack{
                         Text("RiFi")
                             .font(.largeTitle.bold())
-                }
+                    }
                     .frame(width: 100, height: 100, alignment: .center)
                     .foregroundColor(.blue)
                     .padding(10)
@@ -37,10 +37,10 @@ struct WelcomeView: View {
                     .cornerRadius(10)
                     .shadow(color: .white, radius: 10)
                     .padding()
-         
-            })  .padding()
-
-
+                    
+                })  .padding()
+                
+                
                 
                 Link(destination: URL(string: "https://aayush9029.github.io/RifiApp/")!, label: {
                     HStack{
@@ -54,26 +54,26 @@ struct WelcomeView: View {
                     .cornerRadius(10)
                     .padding()
                 })
-                            
                 
-                    
-                    Link(destination: URL(string: "https://youtu.be/W_vOo5uqqj8")!, label: {
-                        HStack{
-                            Text("Watch Demo")
-                        }
-                        .font(.largeTitle.bold())
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Color.red)
-                        .cornerRadius(10)
-                        .padding()
-                    })
+                
+                
+                Link(destination: URL(string: "https://youtu.be/W_vOo5uqqj8")!, label: {
+                    HStack{
+                        Text("Watch Demo")
+                    }
+                    .font(.largeTitle.bold())
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(Color.red)
+                    .cornerRadius(10)
+                    .padding()
+                })
                 
                 Button(action: {
                     firstTime = false
                 }, label: {
                     Text("I already did")
-                        
+                    
                 }).padding()
                 
                 Spacer()
@@ -81,14 +81,14 @@ struct WelcomeView: View {
                     .padding()
                 Text("It lets you control media playback using Camera Vison and Ai, and works well with Mac.")
                     .padding()
-        }
+            }
             
-
+            
         }.frame(width: 900, height: 720)
         .padding()
         .background(Color.blue.edgesIgnoringSafeArea(.all))
         .cornerRadius(5)
-
+        
     }
 }
 

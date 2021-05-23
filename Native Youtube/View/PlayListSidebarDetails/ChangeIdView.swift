@@ -16,49 +16,36 @@ struct ChangeIdView: View {
     var body: some View {
         VStack {
             HStack{
+                
                 TextField("Playlist ID", text: $textVal)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .cornerRadius(10)
-               
-                Button(action: {
-                    if textVal.count > 2{
-                        data.changeDefaultPlaylist(newPlaylistID: textVal)
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .underlineTextField(color: .red)
+                
+                CustomButton(image: "square.and.arrow.down.fill", color: .blue)
+                    .frame(width: 40, height: 40)
+                    .onTapGesture {
+                        if textVal.count > 2{
+                            data.changeDefaultPlaylist(newPlaylistID: textVal)
+                            textVal = ""
+                        }
+                }
+                
+                CustomButton(image: "clock.arrow.circlepath", color: .green)
+                    .frame(width: 40, height: 40)
+                    .padding(10)
+                    .onTapGesture {
+                        data.revertToDefault()
                         textVal = ""
-                    }
-                }, label: {
-                    Image(systemName: "square.and.arrow.down.fill")
-                        .foregroundColor(.white)
-                })
-                .background(Color.blue.opacity(0.75).ignoresSafeArea(edges: .all))
-                .cornerRadius(8)
-                .shadow(color: .blue.opacity(0.5), radius: 5)
-                .padding(5)
-               
-                Button(action: {
-                    data.revertToDefault()
-                    textVal = ""
-
-                }, label: {
-                    Image(systemName: "clock.arrow.circlepath")
-                })
-                .background(Color.green.opacity(0.75).ignoresSafeArea(edges: .all))
-                .cornerRadius(8)
-                .shadow(color: .green.opacity(0.5), radius: 5)
+                }
             }
         }
     }
 }
 
-extension NSTextField{
-    open override var focusRingType: NSFocusRingType{
-        get{.none}
-        set{}
-    }
-}
 
 struct ChangeIdView_Previews: PreviewProvider {
     static var previews: some View {
         ChangeIdView()
-
+        
     }
 }
