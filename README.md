@@ -1,21 +1,14 @@
-# Native-Youtube
+# Muubii
+
+![Screen Shot 2021-05-23 at 4 10 32 AM](https://user-images.githubusercontent.com/43297314/119253059-55d10580-bb7d-11eb-9beb-fd4453ada82a.png)
+
+![Screen Shot 2021-05-23 at 4 07 53 AM](https://user-images.githubusercontent.com/43297314/119253119-aa748080-bb7d-11eb-9aa2-756b8d81b83e.png)
 
 ---
-*Shameless plug*
 
-If you use an iPhone please checkout
-# [Rifi](https://aayush9029.github.io/RifiApp/)
+## Installation 
 
----
-
-Screen Shot\s:
-![GZDhvAG](https://user-images.githubusercontent.com/43297314/119246063-2ce44c80-bb4c-11eb-933a-32ce694518c1.png)
-
-
-
-Installation Requirements:
-
-0. Automatic install (recommended)
+### Automatic install (recommended)
  - Open Terminal. 
  - Paste the line below, once done check your applications folder.
  - Ctrl + Click the app 
@@ -25,7 +18,9 @@ Installation Requirements:
 /bin/bash -c "$(curl https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/install.sh)"
 ```
 
-or (manual)
+### or (manual)
+
+---
 
 1. [HomeBrew](https://brew.sh)
 ```bash 
@@ -41,9 +36,9 @@ or (manual)
 
 ---
   
-4. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/download/v0.01/Native.Youtube.app.zip)
+3. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/download/v0.01/Native.Youtube.app.zip)
 ```bash
-wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.01/Native.Youtube.app.zip
+cd ~/Desktop; wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.01/Native.Youtube.app.zip
 ```
   
 ---
@@ -75,14 +70,20 @@ Features to add:
 FAQ: 
 
 Why no clean code structure?
- - Working on it.
+ - Working on it. (35% there)
  
 How do I donate?
 - You don't need to, [but feel free to checkout some of my other apps](https://apps.apple.com/ca/developer/aayush-pokharel/id1532440924)
 
-Where should i paste api keys? What are these buttons? What do they mean?
-- Here: new ui the works *;)*
+Where should I paste api keys?
 ![usage](https://user-images.githubusercontent.com/43297314/119250560-d805fd80-bb6e-11eb-99ad-a489535933a2.png)
 
 
+---
+If you also have an iPhone checkout
+# [Rifi](https://aayush9029.github.io/RifiApp/)
+
+*It's pretty neat imo*
+
+---
 
