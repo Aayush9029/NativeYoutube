@@ -25,6 +25,7 @@ Installation Requirements:
 /bin/bash -c "$(curl https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/install.sh)"
 ```
 
+or (manual)
 
 1. [HomeBrew](https://brew.sh)
 ```bash 
