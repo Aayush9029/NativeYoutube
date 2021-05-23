@@ -67,3 +67,10 @@ Why no clean code structure?
  
 How do I donate?
 - You don't need to, [but feel free to checkout some of my other apps](https://apps.apple.com/ca/developer/aayush-pokharel/id1532440924)
+
+Where should i paste api keys? What are these buttons? What do they mean?
+- Here: new ui the works *;)*
+![usage](https://user-images.githubusercontent.com/43297314/119250560-d805fd80-bb6e-11eb-99ad-a489535933a2.png)
+
+
+
