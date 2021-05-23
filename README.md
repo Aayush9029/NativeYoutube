@@ -15,6 +15,12 @@ Screen Shot\s:
 
 Installation Requirements:
 
+0. Automatic install (recommended)
+```bash
+/bin/bash -c "$(curl https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/install.sh)"
+```
+
+
 1. [HomeBrew](https://brew.sh)
 ```bash 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
