@@ -9,16 +9,16 @@ brew link youtube-dl
 brew link mpv
 
 echo "Downloading..."
-wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.01/Native.Youtube.app.zip > /dev/null 2>&1
+wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip > /dev/null 2>&1
 
 echo "Unzipping the file"
-unzip -qq Native.Youtube.app.zip
+unzip -qq Muubii.app.zip
 
 echo "removing cache"
-rm Native.Youtube.app.zip
+rm Muubii.app.zip
 
 echo "Saving to your Applications folder"
-mv Native\ Youtube.app /Applications
+mv Muubii.app /Applications
 
 echo "DONE :)"
 
