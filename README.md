@@ -8,6 +8,11 @@ If you use an iPhone please checkout
 
 ---
 
+Screen Shot\s:
+![GZDhvAG](https://user-images.githubusercontent.com/43297314/119246063-2ce44c80-bb4c-11eb-933a-32ce694518c1.png)
+
+
+
 Installation Requirements:
 
 1. [HomeBrew](https://brew.sh)
