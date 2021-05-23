@@ -16,6 +16,11 @@ Screen Shot\s:
 Installation Requirements:
 
 0. Automatic install (recommended)
+ - Open Terminal. 
+ - Paste the line below, once done check your applications folder.
+ - Ctrl + Click the app 
+ - Done.
+ 
 ```bash
 /bin/bash -c "$(curl https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/install.sh)"
 ```
