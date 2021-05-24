@@ -9,6 +9,8 @@ brew install mpv youtube-dl
 brew link youtube-dl
 brew link mpv
 
+cd Applications
+
 echo "Downloading...."
 wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip
 echo "Installing Muubbi"
