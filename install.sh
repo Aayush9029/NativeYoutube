@@ -10,7 +10,7 @@ brew link mpv
 
 echo "Downloading..."
 cd /Applications
-curl -O https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip
+curl -o https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip
 
 echo "Installing"
 unzip -qq Muubii.app.zip
