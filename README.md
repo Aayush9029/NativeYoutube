@@ -36,7 +36,7 @@
 
 ---
   
-3. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/download/v0.01/Native.Youtube.app.zip)
+3. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip)
 ```bash
 cd ~/Desktop; wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip
 ```
