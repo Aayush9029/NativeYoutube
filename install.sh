@@ -3,10 +3,9 @@ echo "Installing / Updating Homebrew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 echo "Installing / Updating mpv and youtube dl"
-brew install mpv youtube-dl wget
+brew install mpv youtube-dl
 brew link youtube-dl
 brew link mpv
-brew link wget
 
 
 echo "Downloading..."
