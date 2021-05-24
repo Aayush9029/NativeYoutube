@@ -65,13 +65,15 @@ Features to add:
 - [ ] Package app with mpv and youtube-dl binary
 - [ ] New Splash Screen
 
+*Submit new PRs on develop branch*
+
 ---
 
 FAQ: 
 
 Why no clean code structure?
  - Working on it. (35% there)
- 
+  
 How do I donate?
 - You don't need to, [but feel free to checkout some of my other apps](https://apps.apple.com/ca/developer/aayush-pokharel/id1532440924)
 
