@@ -22,7 +22,7 @@ struct ContentView: View {
             ZStack{
                 EffectsView()
                 SearchView()
-                    .frame(minWidth: 500, idealWidth: 600)
+                    .frame(minWidth: 450, idealWidth: 500)
 
                     .environmentObject(search_data)
             }
