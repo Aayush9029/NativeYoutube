@@ -11,7 +11,7 @@ brew link wget
 
 echo "Downloading..."
 cd /Applications
-wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip > /dev/null 2>&1
+curl -O https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip
 
 
 
