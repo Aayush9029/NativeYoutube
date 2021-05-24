@@ -15,7 +15,7 @@
  - Done.
  
 ```bash
-/bin/bash -c "$(curl https://raw.githubusercontent.com/insomnia-creator/Native-Youtube/main/install.sh)"
+/bin/bash -c "$(curl https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/install.sh)"
 ```
 
 ### or (manual)
