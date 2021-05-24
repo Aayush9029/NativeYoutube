@@ -8,22 +8,21 @@ brew link youtube-dl
 brew link mpv
 brew link wget
 
+
 echo "Downloading..."
+cd ~/Applications
 wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip > /dev/null 2>&1
 
-echo "Unzipping the file"
+
+
+echo "Installing"
 unzip -qq Muubii.app.zip
-
-echo "removing cache"
 rm Muubii.app.zip
-
-echo "Saving to your Applications folder"
-mv Muubii.app /Applications
 
 echo "Installed"
 
 echo "Exiting terminal in 3"
-sleep 2
+sleep 1
 echo "2"
 sleep 1
 echo "1"
