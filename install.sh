@@ -1,7 +1,10 @@
 #!/bin/bash
 
-echo "Installing / Updating Homebrew"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if ! type brew > /dev/null
+then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
 echo "Installing / Updating mpv and youtube dl"
 brew install mpv youtube-dl
@@ -21,11 +24,3 @@ echo "Saving to your Applications folder"
 mv Muubii.app /Applications
 
 echo "DONE :)"
-
-echo "Exiting terminal in 3"
-sleep 2
-echo "2"
-sleep 1
-echo "1"
-sleep 1
-exit
