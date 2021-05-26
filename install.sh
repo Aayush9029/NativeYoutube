@@ -30,6 +30,8 @@ curl -LO https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Mu
 echo "${GREEN}Installing"
 unzip -qq Muubii.app.zip
 rm Muubii.app.zip
+xattr -dr com.apple.quarantine Muubii.app
+echo "Removing quarantine"
 
 echo "${PURPLE}Installed"
 
