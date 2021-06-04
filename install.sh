@@ -1,31 +1,41 @@
-#!/bin/bash
-
-echo "Installing / Updating Homebrew"
+echo "Checking /}Installing"
+if ! type brew > /dev/null;
+then
+echo "Installing Homebrew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-echo "Installing / Updating mpv and youtube dl"
-brew install mpv youtube-dl
-brew link youtube-dl
+fi
+echo "Installing / Checking dependencies"
+if brew ls --versions mpv && brew ls --versions youtube-dl > /dev/null;
+then
+echo "Not installing because the packages already exist"
+else
+echo "Installing Dependencies"
+brew install mpv
+brew install youtube-dl
 brew link mpv
+brew link youtube-dl
+
+fi
 
 echo "Downloading..."
-wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip > /dev/null 2>&1
+cd /Applications
+curl -LO https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip
 
-echo "Unzipping the file"
+echo "Installing"
 unzip -qq Muubii.app.zip
-
-echo "removing cache"
 rm Muubii.app.zip
+xattr -dr com.apple.quarantine Muubii.app
+echo "Removing quarantine"
 
-echo "Saving to your Applications folder"
-mv Muubii.app /Applications
+echo "Installed"
 
-echo "DONE :)"
-
-echo "Exiting terminal in 3"
-sleep 2
-echo "2"
+open Muubii.app
+echo "Exiting terminal in 3 seconds"
 sleep 1
-echo "1"
+
+echo "Exiting terminal in 2 seconds"
+sleep 1 
+echo "Exiting terminal in 1 second"
+
 sleep 1
 exit
