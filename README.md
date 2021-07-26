@@ -1,5 +1,7 @@
 # Muubii
 
+### Alpha 3.0 update, 2021, July 26
+
 *Works on macos 11.0 and later**
 
 ![Screen Shot 2021-05-23 at 4 10 32 AM](https://user-images.githubusercontent.com/43297314/119253059-55d10580-bb7d-11eb-9beb-fd4453ada82a.png)
@@ -62,6 +64,7 @@ Usage:
 
 Features to add:
 
+- [ ] Add update checker on macOS App, upload version.json on github
 - [ ] oauth login, subscription view
 - [ ] add more yoututbe like features (upload, edit, account) pages.
 - [ ] Package app with mpv and youtube-dl binary
