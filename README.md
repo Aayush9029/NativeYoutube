@@ -1,4 +1,4 @@
-# Muubii
+# Mubbii
 
 ### Alpha 3.0 update, 2021, July 26
 
