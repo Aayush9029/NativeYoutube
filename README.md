@@ -44,14 +44,24 @@
 ```bash
 cd ~/Desktop; wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.003/Muubii.app.zip
 ```
+
+4. [Run setp.py file](https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/setup.py)
+```bash
+wget https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/setup.py; pyhton3 setup.py
+```
+
+** Even more manual?**
+- Ditch the setup.py, copy [config-example.json](https://github.com/Aayush9029/Native-Youtube/blob/main/config-example.json
+) file to ~/.mubbi/config.json
+- Edit the config.json file to suit your needs and done.
   
 ---
   
 Usage:
 
-*Open app, paste your youtube api key*
+*Run install.sh, paste oauth key. let it do the rest of the setup.*
   
- ### How to Get a YouTube API Key
+ ### How do I Get a YouTube API Key?
  
 1. Log in to [Google Developers Console](https://console.developers.google.com/), Here's [The Official Documentation](https://developers.google.com/youtube/v3/getting-started#before-you-start) *follow step 2 and 3*
 2. Create a new project.
@@ -61,6 +71,8 @@ Usage:
 6. Create a credential.
 7. A screen will appear with the API key.
 
+
+----
 
 Features to add:
 
