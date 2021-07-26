@@ -11,6 +11,11 @@ struct SearchView: View {
     @EnvironmentObject var search_data: YTSearch
     @State var searchVal = ""
     
+    @AppStorage("apiKey") var apiKey = ""
+    @AppStorage("mpv_path") var mpvPath = ""
+    @AppStorage("streamlink_path") var youtubedlPath = ""
+    
+    
     var body: some View {
         VStack {
             ScrollView(.vertical, showsIndicators: false){
@@ -32,36 +37,40 @@ struct SearchView: View {
                         .padding(.horizontal)
                         .contextMenu(ContextMenu(menuItems: {
                             VStack{
-                                
                                 Button(action: {
+                                    print("----")
+                                    print(apiKey)
+                                    print(mpvPath)
+                                    print("----")
                                     let shellProcess = Process();
-                                    shellProcess.launchPath = "/bin/bash";
-                                    shellProcess.arguments = [
-                                        "-l",
-                                        "-c",
-                                        // Important: this must all be one parameter to make it work.
-                                        "mpv \(vid.url)",
-                                    ];
-                                    shellProcess.launch();
-                                    print(vid.url)
+                                                      shellProcess.launchPath = "/bin/bash";
+                                                      shellProcess.arguments = [
+                                                          "-l",
+                                                          "-c",
+                                                          // Important: this must all be one parameter to make it work.
+                                                          "\(mpvPath) \(vid.url) --script-opts=ytdl_hook-ytdl_path=\(youtubedlPath) --no-video",
+                                                      ];
+                                                      shellProcess.launch();
+                                }, label: {
+                                    Text("Play Audio")
+                                })
+                                Button(action: {
+                                    print("----")
+                                    print(apiKey)
+                                    print(mpvPath)
+                                    print("----")
+                                    let shellProcess = Process();
+                                                      shellProcess.launchPath = "/bin/bash";
+                                                      shellProcess.arguments = [
+                                                          "-l",
+                                                          "-c",
+                                                          // Important: this must all be one parameter to make it work.
+                                                          "\(mpvPath) \(vid.url) --script-opts=ytdl_hook-ytdl_path=\(youtubedlPath)",
+                                                      ];
+                                                      shellProcess.launch();
                                 }, label: {
                                     Text("Play Video")
                                 })
-                                
-                                Button(action: {
-                                    let shellProcess = Process();
-                                    shellProcess.launchPath = "/bin/bash";
-                                    shellProcess.arguments = [
-                                        "-l",
-                                        "-c",
-                                        // Important: this must all be one parameter to make it work.
-                                        "mpv \(vid.url) --no-video",
-                                    ];
-                                    shellProcess.launch();
-                                }, label: {
-                                    Text("Play Music")
-                                })
-                                
                             }
                         }))
                     

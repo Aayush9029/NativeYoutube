@@ -11,7 +11,13 @@ import SwiftUI
 struct PlayListView: View {
     @EnvironmentObject var data: YTData
     @State var showing_playlist_id: Bool = true
+    
     @AppStorage("apiKey") var apiKey = ""
+    @AppStorage("mpv_path") var mpvPath = ""
+    @AppStorage("streamlink_path") var youtubedlPath = ""
+
+    
+    
     @State var apiInput = ""
     
     var body: some View {
@@ -23,26 +29,34 @@ struct PlayListView: View {
                         .contextMenu(ContextMenu(menuItems: {
                             VStack{
                                 Button(action: {
+                                    print("----")
+                                    print(apiKey)
+                                    print(mpvPath)
+                                    print("----")
                                     let shellProcess = Process();
                                                       shellProcess.launchPath = "/bin/bash";
                                                       shellProcess.arguments = [
                                                           "-l",
                                                           "-c",
                                                           // Important: this must all be one parameter to make it work.
-                                                          "mpv \(vid.url) --no-video",
+                                                          "\(mpvPath) \(vid.url) --script-opts=ytdl_hook-ytdl_path=\(youtubedlPath) --no-video",
                                                       ];
                                                       shellProcess.launch();
                                 }, label: {
-                                    Text("Play Music")
+                                    Text("Play Audio")
                                 })
                                 Button(action: {
+                                    print("----")
+                                    print(apiKey)
+                                    print(mpvPath)
+                                    print("----")
                                     let shellProcess = Process();
                                                       shellProcess.launchPath = "/bin/bash";
                                                       shellProcess.arguments = [
                                                           "-l",
                                                           "-c",
                                                           // Important: this must all be one parameter to make it work.
-                                                          "mpv \(vid.url)",
+                                                          "\(mpvPath) \(vid.url) --script-opts=ytdl_hook-ytdl_path=\(youtubedlPath)",
                                                       ];
                                                       shellProcess.launch();
                                 }, label: {
@@ -55,19 +69,6 @@ struct PlayListView: View {
                 }
                 ChangeIdView()
                     .environmentObject(data)
-                HStack{
-                    TextField("API KEY", text: $apiInput)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .underlineTextField(color: .orange)
-                    
-                    CustomButton(image: "chevron.left.slash.chevron.right", color: .orange)
-                    .frame(width: 50)
-                        .onTapGesture {
-                            if apiInput.count == 39{                                
-                            apiKey = apiInput
-                            }
-                    }
-                }
                 .padding(.horizontal)
             }
         }

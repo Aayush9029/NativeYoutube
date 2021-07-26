@@ -1,4 +1,7 @@
-echo "Checking /}Installing"
+echo "Your Oauth Token"
+read -p "> " TOKEN
+
+echo "Checking / Installing"
 if ! type brew > /dev/null;
 then
 echo "Installing Homebrew..."
@@ -12,9 +15,6 @@ else
 echo "Installing Dependencies"
 brew install mpv
 brew install youtube-dl
-brew link mpv
-brew link youtube-dl
-
 fi
 
 echo "Downloading..."
@@ -23,16 +23,25 @@ curl -LO https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Mu
 
 echo "Installing"
 unzip -qq Muubii.app.zip
-rm Muubii.app.zip
-xattr -dr com.apple.quarantine Muubii.app
-echo "Removing quarantine"
 
-echo "Installed"
+echo "Removing .zip file"
+rm Muubii.app.zip
+
+echo "Removing quarantine"
+xattr -dr com.apple.quarantine Muubii.app
+
+echo "Installed..."
+
+#  Why python? Because it's easy to install, *written by co-pilot
+echo "Creating config file"
+python3 setup.py $TOKEN
+
+
+
 
 open Muubii.app
 echo "Exiting terminal in 3 seconds"
 sleep 1
-
 echo "Exiting terminal in 2 seconds"
 sleep 1 
 echo "Exiting terminal in 1 second"

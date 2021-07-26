@@ -28,6 +28,7 @@ struct ContentView: View {
             }
             
         }.onAppear(perform: {
+            AuthExtractor()
             data.load()
         })
         

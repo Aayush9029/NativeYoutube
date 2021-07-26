@@ -25,6 +25,7 @@
 		C2F70F47265A241C00031F1A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F70F46265A241C00031F1A /* SearchView.swift */; };
 		C2F70F4A265A24DF00031F1A /* CustomExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F70F49265A24DF00031F1A /* CustomExtensions.swift */; };
 		C2F70F4C265A279300031F1A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F70F4B265A279300031F1A /* CustomButton.swift */; };
+		C2FE022D26AE508800DDC88B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FE022C26AE508800DDC88B /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		C2F70F46265A241C00031F1A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C2F70F49265A24DF00031F1A /* CustomExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomExtensions.swift; sourceTree = "<group>"; };
 		C2F70F4B265A279300031F1A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		C2FE022C26AE508800DDC88B /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			children = (
 				C2EA18F5264F63BD00C03FA1 /* YTData.swift */,
 				C22F3FE0265485A6003E67D2 /* YTSearchModel.swift */,
+				C2FE022C26AE508800DDC88B /* Extension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -182,7 +185,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					C2EA18C2264F5E9900C03FA1 = {
 						CreatedOnToolsVersion = 12.5;
@@ -238,6 +241,7 @@
 				C24CC3D32656A5CA00CEC9CB /* WelcomeView.swift in Sources */,
 				C2EA190A264F8AA700C03FA1 /* ChangeIdView.swift in Sources */,
 				C2EA18C9264F5E9900C03FA1 /* ContentView.swift in Sources */,
+				C2FE022D26AE508800DDC88B /* Extension.swift in Sources */,
 				C22F3FDD265484E1003E67D2 /* SearchDisplay.swift in Sources */,
 				C2EA18C7264F5E9900C03FA1 /* Native_YoutubeApp.swift in Sources */,
 				C2F70F45265A23E300031F1A /* PlayListView.swift in Sources */,
@@ -369,6 +373,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Native Youtube/Native_Youtube.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "Native\\ Youtube/Preview\\ Content";
@@ -393,6 +398,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Native Youtube/Native_Youtube.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "Native\\ Youtube/Preview\\ Content";
