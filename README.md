@@ -38,9 +38,9 @@
 
 ---
   
-3. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip)
+3. [Download app](https://github.com/Aayush9029/Native-Youtube/releases/download/v0.003/Muubii.app.zip)
 ```bash
-cd ~/Desktop; wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.02/Muubii.app.zip
+cd ~/Desktop; wget https://github.com/Aayush9029/Native-Youtube/releases/download/v0.003/Muubii.app.zip
 ```
   
 ---
@@ -79,9 +79,9 @@ Why no clean code structure?
 How do I donate?
 - You don't need to, [but feel free to checkout some of my other apps](https://apps.apple.com/ca/developer/aayush-pokharel/id1532440924)
 
-Where should I paste api keys?
-![usage](https://user-images.githubusercontent.com/43297314/119250560-d805fd80-bb6e-11eb-99ad-a489535933a2.png)
-
+Where should I input the api keys?
+- The when you run install.sh it will prompt you with a place to enter it + you can always edit ~/.mubbi/config.json 
+- `vi ~/.mubbi.config.json` after running install.sh ie
 
 ---
 If you also have an iPhone checkout
@@ -89,6 +89,7 @@ If you also have an iPhone checkout
 
 *It's pretty neat imo*
 
+*Personal app*
 ---
 
 
