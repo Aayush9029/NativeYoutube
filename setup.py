@@ -3,16 +3,8 @@ import json
 import os
 import sys
 
-# get all args
-args = sys.argv
-
-# get the second arg which should be the auth_token
-auth_token = args[1]
-
-# if auth_token is not set ask for it
-if auth_token is None:
-    auth_token = input("Enter Youtube Auth Token: ")
-
+#get the args from a PROMPT rather than a system argument
+auth_token = input("Enter your YouTube API Key here");
 
 # get installation path of youtube-dl
 youtube_dl_path = os.popen("which youtube-dl").read().rstrip()
