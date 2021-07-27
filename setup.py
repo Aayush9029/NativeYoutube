@@ -3,8 +3,8 @@ import json
 import os
 import sys
 
-#get the args from a PROMPT rather than a system argument
-auth_token = input("Enter your YouTube API Key here");
+#get the args from a PROMPT rather than a system argument.
+auth_token = input("Enter your YouTube API Key here:     ");
 
 # get installation path of youtube-dl
 youtube_dl_path = os.popen("which youtube-dl").read().rstrip()
