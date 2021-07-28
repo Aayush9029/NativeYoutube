@@ -13,12 +13,15 @@ auth_token = args[1]
 if auth_token is None:
     auth_token = input("Enter Youtube Auth Token: ")
 
+    
+    
+    
 
 # get installation path of youtube-dl
-youtube_dl_path = os.popen("brew --prefix youtube-dl").read().rstrip()
+youtube_dl_path = os.popen("which youtube-dl").read().rstrip()
 
 # get installation path of mpv
-mpv_path = os.popen("brew --prefix mpv").read().rstrip()
+mpv_path = os.popen("which mpv").read().rstrip()
 
 # print installation paths and auth token
 print("your youtube-dl path: " + youtube_dl_path)
