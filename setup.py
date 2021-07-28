@@ -60,6 +60,7 @@ with open(home_dir + "/.mubbi/config.json", "w") as f:
         "YoutubedlPath": youtube_dl_path
     }, f, indent=4)
 
+    
 
 #  In cause you're wondering about weird comment formatting,
 # 95% of the code was written by github co-pilot :D
