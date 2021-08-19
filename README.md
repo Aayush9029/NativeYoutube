@@ -4,6 +4,8 @@
 
 *Works on macos 11.0 and later**
 
+*New: added a youtube tutorial for ease of installation*
+
 ![Screen Shot 2021-05-23 at 4 10 32 AM](https://user-images.githubusercontent.com/43297314/119253059-55d10580-bb7d-11eb-9beb-fd4453ada82a.png)
 
 ![Screen Shot 2021-05-23 at 4 07 53 AM](https://user-images.githubusercontent.com/43297314/119253119-aa748080-bb7d-11eb-9aa2-756b8d81b83e.png)
@@ -11,6 +13,8 @@
 ---
 
 ## Installation 
+
+[Watch the Youtube Tutorial](https://www.youtube.com/watch?v=WrFPERZb7uw)
 
 ### Automatic install (recommended)
  - Open Terminal. 
