@@ -53,7 +53,7 @@ cd ~/Desktop; wget https://github.com/Aayush9029/Native-Youtube/releases/downloa
 * pass oauth token as second argument*
 *eg `python3 setup.py YOUR_OAUTH_TOKEN`
 ```bash
-wget https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/setup.py; pyhton3 setup.py
+wget https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/setup.py; python3 setup.py
 ```
 
 ** Even more manual?**
