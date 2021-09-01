@@ -96,13 +96,6 @@ Where should I input the api keys?
 - `vi ~/.mubbi.config.json` after running install.sh ie
 
 ---
-If you also have an iPhone checkout
-# [Rifi](https://aayush9029.github.io/RifiApp/)
-
-*It's pretty neat imo*
-
-*Personal app*
----
 
 > NEWS
 > 
@@ -117,3 +110,9 @@ If you also have an iPhone checkout
 > [Insomnia-creator](https://github.com/insomnia-creator)
 >
 > [Nathom](https://github.com/nathom)
+
+
+If you also have an iPhone checkout
+# [Rifi](https://aayush9029.github.io/RifiApp/)
+
+*It's pretty neat imo*
