@@ -5,17 +5,16 @@ import sys
 
 # get all args
 args = sys.argv
-
+auth_token = None
 # get the second arg which should be the auth_token
-auth_token = args[1]
+
+if len(args) > 1:
+    auth_token = args[1]
 
 # if auth_token is not set ask for it
 if auth_token is None:
     auth_token = input("Enter Youtube Auth Token: ")
 
-    
-    
-    
 
 # get installation path of youtube-dl
 youtube_dl_path = os.popen("which youtube-dl").read().rstrip()
@@ -60,7 +59,6 @@ with open(home_dir + "/.mubbi/config.json", "w") as f:
         "YoutubedlPath": youtube_dl_path
     }, f, indent=4)
 
-    
 
 #  In cause you're wondering about weird comment formatting,
 # 95% of the code was written by github co-pilot :D
