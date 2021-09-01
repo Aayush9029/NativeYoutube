@@ -34,7 +34,7 @@ echo "Installed..."
 
 #  Why python? Because it's easy to install, *written by co-pilot
 echo "Creating config file"
-python3 setup.py $TOKEN
+wget https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/setup.py; python3 setup.py
 
 
 
