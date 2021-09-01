@@ -93,7 +93,7 @@ How do I donate?
 
 Where should I input the api keys?
 - The when you run install.sh it will prompt you with a place to enter it + you can always edit ~/.mubbi/config.json 
-- `vi ~/.mubbi.config.json` after running install.sh ie
+- `vi ~/.mubbi/config.json` after running install.sh ie
 
 ---
 
