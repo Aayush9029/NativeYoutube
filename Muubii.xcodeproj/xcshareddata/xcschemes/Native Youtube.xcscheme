@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C2EA18C2264F5E9900C03FA1"
-               BuildableName = "Muubii.app"
+               BuildableName = "Mubbii.app"
                BlueprintName = "Muubii"
                ReferencedContainer = "container:Muubii.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C2EA18C2264F5E9900C03FA1"
-            BuildableName = "Muubii.app"
+            BuildableName = "Mubbii.app"
             BlueprintName = "Muubii"
             ReferencedContainer = "container:Muubii.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C2EA18C2264F5E9900C03FA1"
-            BuildableName = "Muubii.app"
+            BuildableName = "Mubbii.app"
             BlueprintName = "Muubii"
             ReferencedContainer = "container:Muubii.xcodeproj">
          </BuildableReference>

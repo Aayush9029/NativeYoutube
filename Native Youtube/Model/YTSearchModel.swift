@@ -68,6 +68,36 @@ class YTSearch: ObservableObject{
         
     }
     
+    func dateToString(date: Date) -> String{
+        let calendar = Calendar.current
+        
+        if calendar.isDateInToday(date){
+            return "Today"
+            
+        }else if calendar.isDateInYesterday(date){
+            return "Yesterday"
+            
+        }else{
+            let formatter = DateFormatter()
+            formatter.dateStyle = .long
+            return formatter.string(from: date)
+        }
+    }
+
+    
+    func timestampToDate(timestamp: String) -> String{
+        
+        let dateStringFormatter = DateFormatter()
+        dateStringFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let d = dateStringFormatter.date(from: timestamp)
+        
+        if let d = d {
+           return dateToString(date: d)
+        }
+        
+        return timestamp
+    }
+    
     func loadData(videoID: String){
         let url = URL(string: "https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=\(videoID)&key=\(apiKey)&maxResults=\(maxResults)")
         
@@ -78,8 +108,10 @@ class YTSearch: ObservableObject{
                     let data = video.1
                     let title = data["snippet"]["title"].string
                     let thumbnail_url = data["snippet"]["thumbnails"]["medium"]["url"].url
-                    let publishedAt = data["snippet"]["publishedAt"].string
+                    var publishedAt = data["snippet"]["publishedAt"].string
                     let url = "https://www.youtube.com/watch?v=\(videoID)"
+                    
+                    publishedAt = self.timestampToDate(timestamp: publishedAt!)
                     
                     self.search_videos.append(SearchVideo(title: title!, thumbnail: thumbnail_url!, publishedAt: publishedAt!, url: URL(string: url)!))
                     

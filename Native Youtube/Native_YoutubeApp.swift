@@ -26,7 +26,7 @@ struct Native_YoutubeApp: App {
 
             }
         }
-        .windowStyle(HiddenTitleBarWindowStyle())
+//        .windowStyle(HiddenTitleBarWindowStyle())
     }
     
     

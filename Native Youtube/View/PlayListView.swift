@@ -33,6 +33,7 @@ struct PlayListView: View {
                                     print(apiKey)
                                     print(mpvPath)
                                     print("----")
+                                    stopPlaying()
                                     let shellProcess = Process();
                                                       shellProcess.launchPath = "/bin/bash";
                                                       shellProcess.arguments = [
@@ -50,6 +51,7 @@ struct PlayListView: View {
                                     print(apiKey)
                                     print(mpvPath)
                                     print("----")
+                                    stopPlaying()
                                     let shellProcess = Process();
                                                       shellProcess.launchPath = "/bin/bash";
                                                       shellProcess.arguments = [

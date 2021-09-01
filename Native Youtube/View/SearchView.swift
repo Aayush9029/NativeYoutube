@@ -42,6 +42,7 @@ struct SearchView: View {
                                     print(apiKey)
                                     print(mpvPath)
                                     print("----")
+                                    stopPlaying()
                                     let shellProcess = Process();
                                                       shellProcess.launchPath = "/bin/bash";
                                                       shellProcess.arguments = [
@@ -52,13 +53,16 @@ struct SearchView: View {
                                                       ];
                                                       shellProcess.launch();
                                 }, label: {
-                                    Text("Play Audio")
+                                    Label("Play Audio", systemImage: "music.note")
                                 })
+                                Divider()
                                 Button(action: {
                                     print("----")
                                     print(apiKey)
                                     print(mpvPath)
                                     print("----")
+                     
+                                    stopPlaying()
                                     let shellProcess = Process();
                                                       shellProcess.launchPath = "/bin/bash";
                                                       shellProcess.arguments = [
@@ -69,7 +73,8 @@ struct SearchView: View {
                                                       ];
                                                       shellProcess.launch();
                                 }, label: {
-                                    Text("Play Video")
+                                    Label("Play Video", systemImage: "tv")
+//                                    :( doesn't work on macos 11
                                 })
                             }
                         }))
@@ -99,4 +104,14 @@ extension SearchView{
             NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
         }
     }
+}
+
+
+func stopPlaying(){
+    let killProcess = Process();
+    killProcess.launchPath = "/usr/bin/killall";
+    killProcess.arguments = [
+                          "mpv",
+                      ];
+    killProcess.launch();
 }
