@@ -22,7 +22,7 @@ rm -rf /Applications/Muubii.app/
 
 echo "Downloading..."
 cd /Applications
-curl -LO https://github.com/Aayush9029/Native-Youtube/releases/download/v0.003/Muubii.app.zip
+curl -LO https://github.com/Aayush9029/Native-Youtube/releases/download/v0.004/Muubii.app.zip
 
 echo "Installing"
 unzip -qq Muubii.app.zip
