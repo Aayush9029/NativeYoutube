@@ -1,7 +1,0 @@
-
-blades:
-  - source: assets/icons/1024.png
-    mount: Native Youtube/Assets.xcassets/AppIcon.appiconset
-    contents: true
-
-
