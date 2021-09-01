@@ -36,7 +36,8 @@ echo "Installed..."
 echo "Creating config file"
 wget https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/setup.py; python3 setup.py $TOKEN
 
-
+echo "Deleting older installation if it exists"
+rm -rf /Applications/Muubii.app/
 
 
 open Muubii.app
