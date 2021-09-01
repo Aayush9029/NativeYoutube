@@ -32,7 +32,7 @@ print("you can configure this in the config.json file")
 
 # show path to config.json
 print("path to config.json: " +
-      os.path.join(os.path.expanduser("~"), "config.json"))
+      os.path.join(os.path.expanduser("~"), "/mubbi/config.json"))
 
 
 # Here's an example of json structure.
