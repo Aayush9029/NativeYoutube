@@ -4,8 +4,6 @@
 
 *Works on macos 11.0 and later**
 
-*New: added a youtube tutorial for ease of installation*
-*New: To update run the automatic install once*
 
 ![Screen Shot 2021-05-23 at 4 10 32 AM](https://user-images.githubusercontent.com/43297314/119253059-55d10580-bb7d-11eb-9beb-fd4453ada82a.png)
 
@@ -81,14 +79,6 @@ Usage:
 
 ----
 
-Features to add:
-
-- [ ] Add update checker on macOS App, upload version.json on github
-- [ ] oauth login, subscription view
-- [ ] add more yoututbe like features (upload, edit, account) pages.
-- [ ] Package app with mpv and youtube-dl binary
-- [ ] New Splash Screen
-
 *Submit new PRs on develop branch*
 
 ---
@@ -114,6 +104,13 @@ If you also have an iPhone checkout
 *Personal app*
 ---
 
+> NEWS
+> 
+> *New: added a youtube tutorial for ease of installation*
+> 
+> *New: upload date looks a lot cleaner now, 2 mpv won't be created now*
+> 
+> *Note: To update run the automatic install once*
 
 > Thanks to:
 > 
