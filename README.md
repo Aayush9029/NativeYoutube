@@ -1,10 +1,11 @@
 # Mubbii
 
-### Alpha 3.0 update, 2021, July 26
+### Alpha 4.0 update, 2021, Sept 1
 
 *Works on macos 11.0 and later**
 
 *New: added a youtube tutorial for ease of installation*
+*New: To update run the automatic install once*
 
 ![Screen Shot 2021-05-23 at 4 10 32 AM](https://user-images.githubusercontent.com/43297314/119253059-55d10580-bb7d-11eb-9beb-fd4453ada82a.png)
 
