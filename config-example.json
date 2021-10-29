@@ -1,7 +1,0 @@
-// Copy and paste from line 3 to line 7 and modify the contents. Save the file as config.json on ~/.mubbi directory. where ~ is your home directory.
-
-{
-    "AuthToken": "YOUR_OATH_TOKEN_GOES_HERE",
-    "MpvPath": "/opt/homebrew/opt/mpv",
-    "YoutubedlPath": "/opt/homebrew/opt/youtube-dl"
-}
