@@ -22,27 +22,27 @@ struct SearchedVideosView: View {
                     .padding(.horizontal)
                     .contextMenu(ContextMenu(menuItems: {
                         VStack{
-                            Button(action: {
-                                settingsViewModel.play(for: vid.url, audioOnly: true)
-                            }, label: {
-                                Label("Play Audio", systemImage: "music.note")
-                            })
-                            
-                            Divider()
+//                            Button(action: {
+//                                settingsViewModel.play(for: vid.url, audioOnly: true)
+//                            }, label: {
+//                                Label("Play Audio", systemImage: "music.note")
+//                            })
+//                            
+//                            Divider()
                             
                             Button(action: {
                                 settingsViewModel.play(for: vid.url)
                             }, label: {
-                                Label("Play Video", systemImage: "tv")
+                                Label("Open in youtube.com", systemImage: "tv")
                             })
                             
-                            Divider()
-                            
-                            Button(action: {
-                                NSWorkspace.shared.open(vid.url)
-                            }, label: {
-                                Label("Open in youtube.com", systemImage: "globe")
-                            })
+//                            Divider()
+//
+//                            Button(action: {
+//                                NSWorkspace.shared.open(vid.url)
+//                            }, label: {
+//                                Label("Open in youtube.com", systemImage: "globe")
+//                            })
                         }
                     }))
             }

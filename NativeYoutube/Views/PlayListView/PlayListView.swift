@@ -26,15 +26,20 @@ struct PlayListView: View {
                          .contextMenu(ContextMenu(menuItems: {
                              VStack{
                                  Button(action: {
-                                     settingsViewModel.play(for: vid.url, audioOnly: true)
-                                 }, label: {
-                                     Text("Play Audio")
-                                 })
-                                 Button(action: {
                                      settingsViewModel.play(for: vid.url)
                                  }, label: {
-                                     Text("Play Video")
+                                     Label("Open in youtube.com", systemImage: "tv")
                                  })
+//                                 Button(action: {
+//                                     settingsViewModel.play(for: vid.url, audioOnly: true)
+//                                 }, label: {
+//                                     Text("Play Audio")
+//                                 })
+//                                 Button(action: {
+//                                     settingsViewModel.play(for: vid.url)
+//                                 }, label: {
+//                                     Text("Play Video")
+//                                 })
                              }
                          }))
                  }

@@ -37,6 +37,7 @@
 		C27DD3B1272CBBD500B4DC16 /* LogTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */; };
 		C27DD3B5272CE7A500B4DC16 /* SomethingWentWrongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */; };
 		C27DD3B7272CE9DF00B4DC16 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */; };
+		C2BB85C9272CFDC100AC3578 /* youtube-dl in Resources */ = {isa = PBXBuildFile; fileRef = C2BB85C8272CFDC100AC3578 /* youtube-dl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTextView.swift; sourceTree = "<group>"; };
 		C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingWentWrongView.swift; sourceTree = "<group>"; };
 		C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
+		C2BB85C8272CFDC100AC3578 /* youtube-dl */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youtube-dl"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				C27DD36C272C89FA00B4DC16 /* ViewControllers */,
 				C27DD371272C8A7600B4DC16 /* Extensions */,
 				C27DD369272C882A00B4DC16 /* Main.storyboard */,
+				C2BB85C7272CFDB200AC3578 /* Executables */,
 				C27DD351272C853F00B4DC16 /* Assets.xcassets */,
 				C27DD356272C853F00B4DC16 /* NativeYoutube.entitlements */,
 				C27DD353272C853F00B4DC16 /* Preview Content */,
@@ -133,9 +136,9 @@
 		C27DD35C272C856B00B4DC16 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C27DD378272C8CAE00B4DC16 /* SharedViews */,
 				C27DD37A272C8CC200B4DC16 /* SearchView */,
 				C27DD379272C8CB700B4DC16 /* PlayListView */,
-				C27DD378272C8CAE00B4DC16 /* SharedViews */,
 				C27DD3AD272CBABA00B4DC16 /* SettingsView */,
 			);
 			path = Views;
@@ -228,6 +231,14 @@
 			path = SettingsView;
 			sourceTree = "<group>";
 		};
+		C2BB85C7272CFDB200AC3578 /* Executables */ = {
+			isa = PBXGroup;
+			children = (
+				C2BB85C8272CFDC100AC3578 /* youtube-dl */,
+			);
+			path = Executables;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -292,6 +303,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2BB85C9272CFDC100AC3578 /* youtube-dl in Resources */,
 				C27DD36A272C883400B4DC16 /* Main.storyboard in Resources */,
 				C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */,
 				C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */,

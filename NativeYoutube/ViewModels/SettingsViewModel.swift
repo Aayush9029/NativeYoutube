@@ -92,33 +92,15 @@ class SettingsViewModel: ObservableObject{
     }
     
     func play(for url: URL, audioOnly:Bool = false){
-        print("killing process")
-        stopPlaying()
-        print("kil done")
-        print("Playing")
-        
-        let shellProcess = Process();
-                          shellProcess.launchPath = "/bin/bash";
-                          shellProcess.arguments = [
-                              "-l",
-                              "-c",
-                              // Important: this must all be one parameter to make it work.
-                              "\(mpvPath) \(url) --script-opts=ytdl_hook-ytdl_path=\(youtubedlPath) \(audioOnly ? "--no-video" : "")",
-                          ];
-                          shellProcess.launch();
+        NSWorkspace.shared.open(url)
     }
-    
-    func stopPlaying(){
-        let shell_out = shell("mpv", "/usr/bin/killall")
-        self.logs.append(shell_out)
-    }
-    func shell(_ command: String, _ using: String) -> String {
+    func shell(_ command: String) -> String {
         let task = Process()
         let pipe = Pipe()
         task.standardOutput = pipe
         task.standardError = pipe
         task.arguments = ["-c", command]
-        task.launchPath = "/bin/zsh"
+        task.launchPath = "/bin/bash"
         task.launch()
         
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
