@@ -37,6 +37,9 @@ class SearchViewModel: ObservableObject{
     func startSearch(){
         Task{
             do{
+                DispatchQueue.main.sync {
+                    self.currentStatus = .startedFetching
+                }
                 try await self.getVideoIDs()
             }
             catch{
@@ -125,6 +128,8 @@ class SearchViewModel: ObservableObject{
                         publishedAt = timestampToDate(timestamp: publishedAt)
                         
                         self.videos.append(SearchModel(title: title, thumbnail: thumbnail_url, publishedAt: publishedAt, url: URL(string: url)!))
+                        self.currentStatus = .doneFetching
+
                     }
                 }
                 

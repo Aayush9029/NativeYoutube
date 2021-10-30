@@ -34,7 +34,11 @@ class PlayListViewModel: ObservableObject{
     func startFetch(){
         Task{
             do{
+                DispatchQueue.main.sync {
+                    self.currentStatus = .startedFetching
+                }
                 try await self.fetchPlayListVideos()
+                
             }
             catch{
                 print("Couldn't load playlist videos")
@@ -72,6 +76,7 @@ class PlayListViewModel: ObservableObject{
                             let channelTitle = data["snippet"]["videoOwnerChannelTitle"].string!
                             publishedAt = timestampToDate(timestamp: publishedAt)
                             self.videos.append(PlayListModel(title: title, thumbnail: thumbnail_url, publishedAt: publishedAt, url: URL(string: url)!, channelTitle: channelTitle))
+                            self.currentStatus = .doneFetching
                         }
                     }
                 }
