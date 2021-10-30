@@ -24,9 +24,9 @@ Personal App that turned into "alpha released app"
 
 > **Where's the non menu bar version that worked on BigSur?**
 
-It's in the [oldApp branch](https://github.com/Aayush9029/Native-Youtube/tree/OldApp)
-It is no longer being maintained however there are forks of the "old version" which are being maintained.
-*Note: The codebase for oldApp is very bad as it was hacked together in couple hours*
+It's in the [Mubbii branch](https://github.com/Aayush9029/Native-Youtube/tree/Mubbii)
+It is no longer being maintained however there are forks of the "Mubbii" which are being maintained.
+*Note: The codebase for Mubbii is very bad as it was hacked together in couple hours*
 
 > **How do I Get a YouTube API Key?**
 1. Log in to Google Developers Console, Here's The Official Documentation follow step 2 and 3
