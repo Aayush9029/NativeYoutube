@@ -25,7 +25,7 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 10){
                         TextField("Your Google API Key", text: $settingsViewModel.apiKey)
                         Link(
-                            destination: URL(string: "https://www.youtube.com/watch?v=WrFPERZb7uw")!,
+                            destination: URL(string: Constants.demoYoutubeVideo)!,
                             label: {
                                 HStack{
                                     Spacer()

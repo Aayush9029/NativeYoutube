@@ -72,7 +72,7 @@ class PlayListViewModel: ObservableObject{
                             let title = data["snippet"]["title"].string!
                             let thumbnail_url = data["snippet"]["thumbnails"]["medium"]["url"].url!
                             var publishedAt = data["snippet"]["publishedAt"].string!
-                            let url = "https://www.youtube.com/watch?v=\(data["contentDetails"]["videoId"].string ?? "gNi_6U5Pm_o")"
+                            let url = "\(Constants.templateYoutubeURL)\(data["contentDetails"]["videoId"].string ?? "gNi_6U5Pm_o")"
                             let channelTitle = data["snippet"]["videoOwnerChannelTitle"].string!
                             publishedAt = timestampToDate(timestamp: publishedAt)
                             self.videos.append(PlayListModel(title: title, thumbnail: thumbnail_url, publishedAt: publishedAt, url: URL(string: url)!, channelTitle: channelTitle))

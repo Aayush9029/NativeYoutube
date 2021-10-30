@@ -33,24 +33,52 @@ struct SwiftUIWebView: NSViewRepresentable {
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator as? WKUIDelegate
         webView.load(URLRequest(url: URL(string: viewModel.link)!))
-        guard let path = Bundle.main.path(forResource: "style", ofType: "css"),
-          let cssString = try? String(contentsOfFile: path).components(separatedBy: .newlines).joined()
+        
+        guard let cssPath = Bundle.main.path(forResource: "nativeyoutube-inject", ofType: "css"),
+          let cssString = try? String(contentsOfFile: cssPath).components(separatedBy: .newlines).joined()
         else {
-            return webView
+            fatalError("css not found")
+//            return webView
         }
+        
+        guard let jsPath = Bundle.main.path(forResource: "nativeyoutube-inject", ofType: "js"),
+          let jsString = try? String(contentsOfFile: jsPath).components(separatedBy: .newlines).joined()
+        else {
+            fatalError("js not found")
+//            return webView
+        }
+        
+//        print(cssString)
         print(cssString)
+
         let source = """
              var style = document.createElement('style');
-             style.innerHTML = '\(cssString)';
+             style.innerHTML = '\(cssString);'
+          
              document.head.appendChild(style);
+            
+          /*  var script = document.createElement('script');
+            script.innerHTML = '\(jsString)';
+          document.head.appendChild(script);*/
+
           """
+        let webpagePreferences = WKWebpagePreferences()
+        webpagePreferences.allowsContentJavaScript = true
+        
         let userScript = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
         let userContentController = WKUserContentController()
+        
         userContentController.addUserScript(userScript)
+        
         let configuration = WKWebViewConfiguration()
-         configuration.userContentController = userContentController
-        webView = WKWebView(frame: .zero, configuration: configuration)
+        configuration.defaultWebpagePreferences = webpagePreferences
 
+        configuration.allowsAirPlayForMediaPlayback = true
+         configuration.userContentController = userContentController
+        
+//        WKWebPagePreferences.allowsContentJavaScript
+        webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.configuration.defaultWebpagePreferences.allowsContentJavaScript = true
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator as? WKUIDelegate
         webView.load(URLRequest(url: URL(string: viewModel.link)!))

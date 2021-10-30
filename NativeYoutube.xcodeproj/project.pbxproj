@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C21C24D8272D9F44005F19AB /* nativeyoutube-inject.js in Resources */ = {isa = PBXBuildFile; fileRef = C21C24D7272D9F44005F19AB /* nativeyoutube-inject.js */; };
 		C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD34F272C853E00B4DC16 /* ContentView.swift */; };
 		C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD351272C853F00B4DC16 /* Assets.xcassets */; };
 		C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD354272C853F00B4DC16 /* Preview Assets.xcassets */; };
@@ -41,10 +42,11 @@
 		C2BB85CC272D14EA00AC3578 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB85CB272D14EA00AC3578 /* VideoPlayer.swift */; };
 		C2BB85D0272D15E800AC3578 /* SwiftUIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB85CF272D15E800AC3578 /* SwiftUIWebView.swift */; };
 		C2BB85D2272D160400AC3578 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB85D1272D160400AC3578 /* WebViewModel.swift */; };
-		C2BB85D5272D190300AC3578 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = C2BB85D4272D190300AC3578 /* style.css */; };
+		C2BB85D5272D190300AC3578 /* nativeyoutube-inject.css in Resources */ = {isa = PBXBuildFile; fileRef = C2BB85D4272D190300AC3578 /* nativeyoutube-inject.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C21C24D7272D9F44005F19AB /* nativeyoutube-inject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "nativeyoutube-inject.js"; sourceTree = "<group>"; };
 		C27DD34A272C853E00B4DC16 /* NativeYoutube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeYoutube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27DD34F272C853E00B4DC16 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C27DD351272C853F00B4DC16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,7 +83,7 @@
 		C2BB85CB272D14EA00AC3578 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		C2BB85CF272D15E800AC3578 /* SwiftUIWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIWebView.swift; sourceTree = "<group>"; };
 		C2BB85D1272D160400AC3578 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
-		C2BB85D4272D190300AC3578 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		C2BB85D4272D190300AC3578 /* nativeyoutube-inject.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "nativeyoutube-inject.css"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C21C24D6272D9F2B005F19AB /* Injection */ = {
+			isa = PBXGroup;
+			children = (
+				C2BB85D4272D190300AC3578 /* nativeyoutube-inject.css */,
+				C21C24D7272D9F44005F19AB /* nativeyoutube-inject.js */,
+			);
+			path = Injection;
+			sourceTree = "<group>";
+		};
 		C27DD341272C853E00B4DC16 = {
 			isa = PBXGroup;
 			children = (
@@ -254,7 +265,7 @@
 			children = (
 				C2BB85CB272D14EA00AC3578 /* VideoPlayer.swift */,
 				C2BB85CF272D15E800AC3578 /* SwiftUIWebView.swift */,
-				C2BB85D4272D190300AC3578 /* style.css */,
+				C21C24D6272D9F2B005F19AB /* Injection */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -323,11 +334,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C21C24D8272D9F44005F19AB /* nativeyoutube-inject.js in Resources */,
 				C2BB85C9272CFDC100AC3578 /* youtube-dl in Resources */,
 				C27DD36A272C883400B4DC16 /* Main.storyboard in Resources */,
 				C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */,
 				C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */,
-				C2BB85D5272D190300AC3578 /* style.css in Resources */,
+				C2BB85D5272D190300AC3578 /* nativeyoutube-inject.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

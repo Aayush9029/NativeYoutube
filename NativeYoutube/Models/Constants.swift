@@ -12,6 +12,8 @@ struct Constants {
     let apiKey: String = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
     let mpvPath: String = ""
     let youtubeDLPath: String = ""
+    static let demoYoutubeVideo: String = "https://www.youtube.com/watch?v=WrFPERZb7uw"
+    static let templateYoutubeURL: String = "https://www.youtube.com/watch?v="
 }
 
 
