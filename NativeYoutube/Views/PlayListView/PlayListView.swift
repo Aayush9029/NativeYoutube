@@ -13,6 +13,10 @@ struct PlayListView: View {
 
      var body: some View {
          VStack{
+             if playlistViewModel.currentStatus == .unknownError{
+                 SomethingWentWrongView()
+                     .environmentObject(settingsViewModel)
+             }
              ScrollView(.vertical, showsIndicators: false){
                  ForEach(playlistViewModel.videos, id:\.self.title) { vid in
                      PlaylistRowView(video: vid)

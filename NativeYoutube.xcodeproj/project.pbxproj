@@ -35,6 +35,8 @@
 		C27DD3AC272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3AB272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift */; };
 		C27DD3AF272CBAC800B4DC16 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3AE272CBAC800B4DC16 /* SettingsView.swift */; };
 		C27DD3B1272CBBD500B4DC16 /* LogTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */; };
+		C27DD3B5272CE7A500B4DC16 /* SomethingWentWrongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */; };
+		C27DD3B7272CE9DF00B4DC16 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,8 @@
 		C27DD3AB272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSViewRepresentable+Extension.swift"; sourceTree = "<group>"; };
 		C27DD3AE272CBAC800B4DC16 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTextView.swift; sourceTree = "<group>"; };
+		C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingWentWrongView.swift; sourceTree = "<group>"; };
+		C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,10 +133,10 @@
 		C27DD35C272C856B00B4DC16 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C27DD3AD272CBABA00B4DC16 /* SettingsView */,
-				C27DD378272C8CAE00B4DC16 /* SharedViews */,
-				C27DD379272C8CB700B4DC16 /* PlayListView */,
 				C27DD37A272C8CC200B4DC16 /* SearchView */,
+				C27DD379272C8CB700B4DC16 /* PlayListView */,
+				C27DD378272C8CAE00B4DC16 /* SharedViews */,
+				C27DD3AD272CBABA00B4DC16 /* SettingsView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,6 +194,8 @@
 			children = (
 				C27DD396272CA3F900B4DC16 /* ThumbnailView.swift */,
 				C27DD3A7272CB48700B4DC16 /* CleanButton.swift */,
+				C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */,
+				C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -314,7 +320,9 @@
 				C27DD397272CA3F900B4DC16 /* ThumbnailView.swift in Sources */,
 				C27DD38B272C934C00B4DC16 /* PlayListViewModel.swift in Sources */,
 				C27DD39E272CAA1E00B4DC16 /* SearchView.swift in Sources */,
+				C27DD3B5272CE7A500B4DC16 /* SomethingWentWrongView.swift in Sources */,
 				C27DD366272C85E400B4DC16 /* EventMonitor.swift in Sources */,
+				C27DD3B7272CE9DF00B4DC16 /* BottomBarView.swift in Sources */,
 				C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */,
 				C27DD398272CA44D00B4DC16 /* SearchRowView.swift in Sources */,
 				C27DD373272C8A8900B4DC16 /* Collections+Extension.swift in Sources */,

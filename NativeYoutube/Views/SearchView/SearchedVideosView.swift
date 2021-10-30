@@ -13,6 +13,10 @@ struct SearchedVideosView: View {
 
     var body: some View {
         LazyVStack{
+            if searchViewModel.currentStatus == .unknownError{
+                SomethingWentWrongView()
+                    .environmentObject(settingsViewModel)
+            }
             ForEach(searchViewModel.videos, id:\.self.title) { vid in
                 SearchRowView(video: vid)
                     .padding(.horizontal)

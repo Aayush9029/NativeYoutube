@@ -9,10 +9,8 @@ import SwiftUI
 
 struct SearchView: View {
     @EnvironmentObject var searchViewModel: SearchViewModel
-
     @EnvironmentObject var settingsViewModel: SettingsViewModel
 
-    
     
     var body: some View {
         VStack {
@@ -22,6 +20,7 @@ struct SearchView: View {
                         .textFieldStyle(PlainTextFieldStyle())
                     Button("Search"){
                         searchViewModel.startSearch()
+                        settingsViewModel.addToLogs(for: .search, message:"Searching for \($searchViewModel.searchQuery)")
                     }
                     
                 } .padding()
@@ -31,14 +30,6 @@ struct SearchView: View {
                     .environmentObject(settingsViewModel)
                 
                 Spacer()
-            }
-        }
-        .toolbar{
-            ToolbarItem(placement: .navigation){
-                HStack{
-                    Button(action: toggleSidebar, label: {
-                            Image(systemName: "sidebar.left") })
-                }
             }
         }
     }

@@ -14,14 +14,14 @@ extension View {
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false)
-        window.center()
+        window.makeKey()
         window.isReleasedWhenClosed = false
         window.title = title
         window.makeKeyAndOrderFront(nil)
         return window
     }
     
-    func openNewWindow(with title: String = "new Window") {
+    func openNewWindow(with title: String = "New Window") {
         self.newWindowInternal(with: title).contentView = NSHostingView(rootView: self)
     }
 }

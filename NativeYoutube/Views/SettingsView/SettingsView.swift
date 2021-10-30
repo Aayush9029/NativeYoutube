@@ -10,95 +10,118 @@ struct SettingsView: View {
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     
     var body: some View {
-        VStack{
-            VStack {
-                HStack{
-                    VStack(alignment: .leading){
-                        Text("Native Youtube Settings")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.red)
-                            .lineLimit(1)
-                    }
-                    Spacer()
-                }.padding(.vertical)
-                VStack(alignment: .leading, spacing: 10){
-                    TextField("Your Google API Key", text: $settingsViewModel.apiKey)
-                    Link(
-                        destination: URL(string: "https://www.youtube.com/watch?v=WrFPERZb7uw")!,
-                        label: {
-                            HStack{
-                                Spacer()
-                                Label("How to get Google API Key?", systemImage: "globe")
-                                Spacer()
+            VStack{
+                VStack {
+                    HStack{
+                        VStack(alignment: .leading){
+                            Text("Native Youtube Settings")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.red)
+                                .lineLimit(1)
+                        }
+                        Spacer()
+                    }.padding(.vertical)
+                    VStack(alignment: .leading, spacing: 10){
+                        TextField("Your Google API Key", text: $settingsViewModel.apiKey)
+                        Link(
+                            destination: URL(string: "https://www.youtube.com/watch?v=WrFPERZb7uw")!,
+                            label: {
+                                HStack{
+                                    Spacer()
+                                    Label("How to get Google API Key?", systemImage: "globe")
+                                    Spacer()
+                                }
+                                .padding(8)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(8)
                             }
-                            .padding(8)
-                            .background(.ultraThinMaterial)
-                            .cornerRadius(8)
-                        }
-                    )
-                    TextField("MPV path", text: $settingsViewModel.mpvPath)
+                        )
+                        
+                        Divider()
+                        
+                        TextField("MPV path", text: $settingsViewModel.mpvPath)
+                        
+                        Text("Open Terminal > \(Text("which mpv").font(.callout).bold())")
+                        
+                            .foregroundColor(.gray)
+                            .font(.caption)
+                        Divider()
+                        TextField("YoutubeDL Path", text: $settingsViewModel.youtubedlPath)
+                        
+                        Text("Open Terminal > \(Text("which youtube-dl").font(.callout).bold())")
+                        
+                            .foregroundColor(.gray)
+                            .font(.caption)
+                        
+                    }.padding([.bottom])
+                        .textFieldStyle(.roundedBorder)
                     
-                    Text("Open Terminal > \(Text("which mpv").font(.title3).bold())")
-                    
-                        .foregroundColor(.gray)
-                        .font(.caption)
-                    Divider()
-                    TextField("YoutubeDL Path", text: $settingsViewModel.youtubedlPath)
-                    
-                    Text("Open Terminal > \(Text("which youtube-dl").font(.title3).bold())")
-                    
-                        .foregroundColor(.gray)
-                        .font(.caption)
-                    
-                }.padding([.bottom])
-                    .textFieldStyle(.roundedBorder)
-                
-            }
-            
-            Divider()
-            VStack(alignment: .leading){
-                HStack{
-                    Text("Logs")
-                        .font(.title3.bold())
-                        .padding(.top, 5)
-                    Spacer()
-                    
-                    Label("Copy", systemImage:  "paperclip")
-                        .onTapGesture {
-                            //                            settingsViewModel.copyLogsToClipboard()
-                        }
-                        .contextMenu {
-                            Button("Copy Raw"){
-                                //                                    settingsViewModel.copyLogsToClipboard(redacted: false)
-                            }
-                            Button("Copy Redacted"){
-                                //                                settingsViewModel.copyLogsToClipboard(redacted: true)
-                            }
-                        }
-                    
-                    Label( settingsViewModel.showingLogs ? "Hide" : "Show", systemImage:  settingsViewModel.showingLogs ? "chevron.up" : "chevron.down")
-                        .onTapGesture {
-                            settingsViewModel.showingLogs.toggle()
-                        }
                 }
-                Spacer()
-                Group{
-                    if settingsViewModel.showingLogs{
-                        ScrollView(.vertical, showsIndicators: false){
-                            VStack(alignment: .leading){
-                                
-                                ForEach(settingsViewModel.logs, id: \.self){log in
-                                    LogText(text: log, color: .gray)
-                                        .id(UUID())
+                
+                Divider()
+                VStack(alignment: .leading){
+                    HStack{
+                        Text("Logs")
+                            .font(.title3.bold())
+                            .padding(.top, 5)
+                        Spacer()
+                        
+                        Label("Copy Logs", systemImage: "paperclip")
+                            .padding(8)
+                            .background(.thinMaterial)
+                            .cornerRadius(20)
+                            .onTapGesture {
+                                settingsViewModel.copyLogsToClipboard(redacted: true)
+                            }
+                            .contextMenu {
+                                Button("Copy raw"){
+                                    settingsViewModel.copyLogsToClipboard(redacted: false)
                                 }
                             }
+                        
+                        Label( settingsViewModel.showingLogs ? "Hide" : "Show", systemImage:  settingsViewModel.showingLogs ? "chevron.up" : "chevron.down")
+                            .padding(8)
+                            .background(.thinMaterial)
+                            .cornerRadius(20)
+                            .onTapGesture {                                    settingsViewModel.showingLogs.toggle()
+
+                            }
+                    }
+                    Spacer()
+                    Group{
+                        Divider()
+                        if settingsViewModel.showingLogs{
+                            ScrollView(.vertical, showsIndicators: false){
+                                VStack(alignment: .leading){
+                                    ForEach(settingsViewModel.logs, id: \.self){log in
+                                        LogText(text: log, color: .gray)
+                                            .id(UUID())
+                                    }
+                                }
+                            }
+                            .padding(.bottom)
                         }
                     }
                 }
             }
-        }
-        .frame(width: 350)
+            .onAppear(perform: {
+                settingsViewModel.showingSettings = true
+            })
+            .onDisappear(perform: {
+                settingsViewModel.showingSettings = false
+            })
         .padding(.horizontal)
+        .frame(width: 350, height: settingsViewModel.showingLogs ? 540 : 340)
+
     }
 }
+
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
+            .environmentObject(SettingsViewModel())
+    }
+}
+

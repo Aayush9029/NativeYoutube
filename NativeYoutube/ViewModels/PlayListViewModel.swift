@@ -81,7 +81,6 @@ class PlayListViewModel: ObservableObject{
                 self.currentStatus = .unknownError
             }
             print(error.localizedDescription)
-            fatalError("Handle this error")
         }
     }
     

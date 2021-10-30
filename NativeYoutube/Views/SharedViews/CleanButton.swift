@@ -35,8 +35,3 @@ struct SmallButtonView_Previews: PreviewProvider {
             .padding()
     }
 }
-
-//    .foregroundColor(currentPage == .search ? .blue : .gray)
-//    .onTapGesture {
-//        currentPage = .playlists
-//    }

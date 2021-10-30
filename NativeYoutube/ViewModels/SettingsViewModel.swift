@@ -18,7 +18,6 @@ class SettingsViewModel: ObservableObject{
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
 
     @Published var showingSettings: Bool = false
-
     
 //    SettingsView specific
     @Published var showingLogs: Bool = false
@@ -26,7 +25,8 @@ class SettingsViewModel: ObservableObject{
 //    This is passed among views, it's not logs it's OUR logs.
     @Published var logs: [String] = [String]()
     
-    
+//    This is used to toggle between views
+    @Published var currentPage: Pages = .playlists
     
     func changeYoutubeDLpath(newPath: String) -> Bool{
         if isValidPath(for: newPath){
@@ -62,6 +62,28 @@ class SettingsViewModel: ObservableObject{
         return changed
     }
     
+    func copyLogsToClipboard(redacted: Bool = true){
+        var logsText = ""
+        for log in logs {
+            logsText += log
+            logsText += "\n"
+        }
+        if redacted {
+            logsText = logsText.replacingOccurrences(of: apiKey, with: "********APIKEY*****")
+        }else{
+            logsText += "\n API KEY: \"\(apiKey)\"\n youtubedlPath: \"\(youtubedlPath)\"\n mpvPath: \"\(mpvPath)\""
+        }
+        
+        let pasteBoard = NSPasteboard.general
+        pasteBoard.clearContents()
+        pasteBoard.setString(logsText, forType: .string)
+
+    }
+
+    
+    func addToLogs(for page: Pages, message: String){
+        self.logs.append("Log at: \(Date()), from \(page.rawValue), message => \(message)")
+    }
     
     
     func isValidPath(for path: String) -> Bool{
