@@ -16,15 +16,20 @@ struct PlaylistRowView: View {
             HStack{
                 ThumbnailView(url: video.thumbnail)
                 
-                VStack(alignment: .leading) {
-                    Text(video.cleanTitle)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(video.title)
+                        .foregroundStyle(.primary)
                         .font(.title3.bold())
                         .lineLimit(1)
                     
                     Text(video.publishedAt)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.secondary)
                         .lineLimit(1)
                     
+                    Text(video.channelTitle)
+                        .foregroundStyle(.tertiary)
+                        .font(.caption)
+
                 }.padding(.leading, 10)
                 Spacer()
             }    .background(isHovered ? Color.pink.opacity(0.5) : Color.white.opacity(0.025))

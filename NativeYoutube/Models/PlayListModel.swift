@@ -17,7 +17,7 @@ struct PlayListModel{
     static let exampleData = PlayListModel(
         title: "Olivia Rodrigo - good 4 u (Official Video)",
         thumbnail: URL(string: "https://i.ytimg.com/vi/gNi_6U5Pm_o/mqdefault.jpg")!,
-        publishedAt: "2021-05-14T18:14:52Z",
+        publishedAt: "Yesterday",
         url: URL(string: "https://www.youtube.com/watch?v=gNi_6U5Pm_o")!,
         channelTitle: "OliviaRodrigoVEVO"
     )

@@ -27,6 +27,11 @@ struct BottomBarView: View {
                     }
                 Spacer()
                 CleanButton(title: "Settings", image: settingsViewModel.showingSettings ? "rectangle" : "gear", isCurrent: false)
+                    .contextMenu(menuItems: {
+                        Button("Close App"){
+                            NSApplication.shared.terminate(self)
+                        }
+                    })
                     .onTapGesture {
                         if !settingsViewModel.showingSettings{
                             SettingsView()
