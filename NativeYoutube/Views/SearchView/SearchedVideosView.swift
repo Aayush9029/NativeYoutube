@@ -31,9 +31,9 @@ struct SearchedVideosView: View {
 //                            Divider()
                             
                             Button(action: {
-                                settingsViewModel.play(for: vid.url)
+                                settingsViewModel.play(for: vid.url, with: vid.title)
                             }, label: {
-                                Label("Open in youtube.com", systemImage: "tv")
+                                Label("Play Video", systemImage: "tv")
                             })
                             
 //                            Divider()

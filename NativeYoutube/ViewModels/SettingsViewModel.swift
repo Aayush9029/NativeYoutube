@@ -91,8 +91,10 @@ class SettingsViewModel: ObservableObject{
         return path.contains("/")
     }
     
-    func play(for url: URL, audioOnly:Bool = false){
-        NSWorkspace.shared.open(url)
+    func play(for url: URL, with title: String = "video"){
+//        NSWorkspace.shared.open(url)
+        VideoPlayer(videoUrl: url)
+            .openNewWindow(with: title)
     }
     func shell(_ command: String) -> String {
         let task = Process()
