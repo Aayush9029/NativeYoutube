@@ -4,7 +4,6 @@ Personal App that turned into "alpha released app"
 <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/settings-image.png" width='325px'>
 
 ## Requirements:
-
 - MacOS 12.0 or above
 - [HomeBrew](https://brew.sh/)
   - ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"```
