@@ -9,24 +9,31 @@ import SwiftUI
 
 
 class SettingsViewModel: ObservableObject{
-
-//    Global settings
+    
+    //    Global settings
     @AppStorage(AppStorageStrings.apiKey.rawValue) var apiKey = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
     @AppStorage(AppStorageStrings.mpvPath.rawValue) var mpvPath = ""
     @AppStorage(AppStorageStrings.youtubeDLPath.rawValue) var youtubedlPath = ""
     @AppStorage(AppStorageStrings.isShowingDetails.rawValue) var isShowingDetails = false
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
-
+    
     @Published var showingSettings: Bool = false
     
-//    SettingsView specific
+    //    SettingsView specific
     @Published var showingLogs: Bool = false
     
-//    This is passed among views, it's not logs it's OUR logs.
+    //    This is passed among views, it's not logs it's OUR logs.
     @Published var logs: [String] = [String]()
     
-//    This is used to toggle between views
+    //    This is used to toggle between views
     @Published var currentPage: Pages = .playlists
+    
+    @Published var isPlaying: Bool = false
+    
+    @Published var currentlyPlaying: String = ""
+    
+    
+    var shellProcess: Process?
     
     func changeYoutubeDLpath(newPath: String) -> Bool{
         if isValidPath(for: newPath){
@@ -45,7 +52,7 @@ class SettingsViewModel: ObservableObject{
     
     
     func changePlayListID(for playlistURL: String) -> Bool{
-//        Using regex would be 100% better (this is a quick and dirty method)
+        //        Using regex would be 100% better (this is a quick and dirty method)
         var changed = false
         let splitted = playlistURL.split(separator: "&")
         for splitted in splitted {
@@ -77,9 +84,9 @@ class SettingsViewModel: ObservableObject{
         let pasteBoard = NSPasteboard.general
         pasteBoard.clearContents()
         pasteBoard.setString(logsText, forType: .string)
-
+        
     }
-
+    
     
     func addToLogs(for page: Pages, message: String){
         self.logs.append("Log at: \(Date()), from \(page.rawValue), message => \(message)")
@@ -91,18 +98,29 @@ class SettingsViewModel: ObservableObject{
         return path.contains("/")
     }
     
-    func play(for url: URL, with title: String = "video"){
-//        NSWorkspace.shared.open(url)
-        VideoPlayer(videoUrl: url)
-            .openNewWindow(with: title)
+    
+    func playAudioYTDL(url: URL, title: String){
+        guard let ytdlPath = Bundle.main.url(forResource: "youtube-dl", withExtension: "") else{
+            print("YTDL not in bundle, provide custom")
+            fatalError("YTDL not in bundle, provide custom")
+        }
+        let betterPath = ytdlPath.absoluteString.replacingOccurrences(of: "file:///", with: "/")
+        let output = shell("\(betterPath) '\(url)' -g")
+        let splitted = output.split(separator: "\n")
+        
+        if let audioUrl = splitted.last{
+            AudioView(url: URL(string: String(audioUrl))!, title: title)
+                .openNewWindow(with: "", isTransparent: true)
+        }
     }
+
     func shell(_ command: String) -> String {
         let task = Process()
         let pipe = Pipe()
         task.standardOutput = pipe
         task.standardError = pipe
         task.arguments = ["-c", command]
-        task.launchPath = "/bin/bash"
+        task.launchPath = "/bin/zsh"
         task.launch()
         
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
@@ -110,4 +128,5 @@ class SettingsViewModel: ObservableObject{
         
         return output
     }
+
 }
