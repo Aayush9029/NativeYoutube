@@ -21,25 +21,21 @@ struct PlayListView: View {
                  ForEach(playlistViewModel.videos, id:\.self.title) { vid in
                      PlaylistRowView(video: vid)
                          .onTapGesture(count: 2, perform: {
-                             settingsViewModel.play(for: vid.url)
+                             settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
                          })
                          .contextMenu(ContextMenu(menuItems: {
                              VStack{
                                  Button(action: {
-                                     settingsViewModel.play(for: vid.url)
+                                     settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
                                  }, label: {
-                                     Label("Open in youtube.com", systemImage: "tv")
+                                     Label("Play Audio", systemImage: "music.note")
                                  })
-//                                 Button(action: {
-//                                     settingsViewModel.play(for: vid.url, audioOnly: true)
-//                                 }, label: {
-//                                     Text("Play Audio")
-//                                 })
-//                                 Button(action: {
-//                                     settingsViewModel.play(for: vid.url)
-//                                 }, label: {
-//                                     Text("Play Video")
-//                                 })
+                                 Divider()
+                                 Button(action: {
+                                     NSWorkspace.shared.open(vid.url)
+                                 }, label: {
+                                     Label("Open in youtube.com", systemImage: "globe")
+                                 })
                              }
                          }))
                  }
