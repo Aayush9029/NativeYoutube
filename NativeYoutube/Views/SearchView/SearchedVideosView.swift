@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchedVideosView: View {
     @EnvironmentObject var searchViewModel: SearchViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
-
+    
     var body: some View {
         LazyVStack{
             if searchViewModel.currentStatus == .unknownError{
@@ -20,29 +20,22 @@ struct SearchedVideosView: View {
             ForEach(searchViewModel.videos, id:\.self.title) { vid in
                 SearchRowView(video: vid)
                     .padding(.horizontal)
+                    .onTapGesture(count: 2, perform: {
+                        settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
+                    })
                     .contextMenu(ContextMenu(menuItems: {
                         VStack{
-//                            Button(action: {
-//                                settingsViewModel.play(for: vid.url, audioOnly: true)
-//                            }, label: {
-//                                Label("Play Audio", systemImage: "music.note")
-//                            })
-//                            
-//                            Divider()
-                            
                             Button(action: {
-                                settingsViewModel.play(for: vid.url)
+                                settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
                             }, label: {
-                                Label("Open in youtube.com", systemImage: "tv")
+                                Label("Play Audio", systemImage: "music.note")
                             })
-                            
-//                            Divider()
-//
-//                            Button(action: {
-//                                NSWorkspace.shared.open(vid.url)
-//                            }, label: {
-//                                Label("Open in youtube.com", systemImage: "globe")
-//                            })
+                            Divider()
+                            Button(action: {
+                                NSWorkspace.shared.open(vid.url)
+                            }, label: {
+                                Label("Open in youtube.com", systemImage: "globe")
+                            })
                         }
                     }))
             }

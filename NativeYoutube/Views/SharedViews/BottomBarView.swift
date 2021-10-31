@@ -25,6 +25,15 @@ struct BottomBarView: View {
                             settingsViewModel.currentPage = .search
                         }
                     }
+                if settingsViewModel.isPlaying{
+                    ScrollView(.horizontal, showsIndicators: false){
+                    Text("\(settingsViewModel.currentlyPlaying)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        
+                    }.lineLimit(1)
+                    
+                }
                 Spacer()
                 CleanButton(title: "Settings", image: settingsViewModel.showingSettings ? "rectangle" : "gear", isCurrent: false)
                     .contextMenu(menuItems: {
@@ -37,7 +46,7 @@ struct BottomBarView: View {
                             SettingsView()
                                 .environmentObject(settingsViewModel)
                                 .background(VisualEffectView(material: NSVisualEffectView.Material.hudWindow, blendingMode: NSVisualEffectView.BlendingMode.behindWindow))
-                                .openNewWindow(with: "Native Youtube Settings")
+                                .openNewWindow(with: "Native Youtube Settings", isTransparent: false)
                         }
                     }
                     .disabled(settingsViewModel.showingSettings)

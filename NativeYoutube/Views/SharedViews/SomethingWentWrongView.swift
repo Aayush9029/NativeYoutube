@@ -32,7 +32,7 @@ struct SomethingWentWrongView: View {
                         SettingsView()
                             .environmentObject(settingsViewModel)
                             .background(VisualEffectView(material: NSVisualEffectView.Material.hudWindow, blendingMode: NSVisualEffectView.BlendingMode.behindWindow))
-                            .openNewWindow(with: "Native Youtube Settings")
+                            .openNewWindow(with: "Native Youtube Settings", isTransparent: false)
                     }
                 }
             }
