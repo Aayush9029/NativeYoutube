@@ -38,21 +38,21 @@ struct SettingsView: View {
                             }
                         )
                         
-                        Divider()
-                        
-                        TextField("MPV path", text: $settingsViewModel.mpvPath)
-                        
-                        Text("Open Terminal > \(Text("which mpv").font(.callout).bold())")
-                        
-                            .foregroundColor(.gray)
-                            .font(.caption)
-                        Divider()
-                        TextField("YoutubeDL Path", text: $settingsViewModel.youtubedlPath)
-                        
-                        Text("Open Terminal > \(Text("which youtube-dl").font(.callout).bold())")
-                        
-                            .foregroundColor(.gray)
-                            .font(.caption)
+//                        Divider()
+//
+//                        TextField("MPV path", text: $settingsViewModel.mpvPath)
+//
+//                        Text("Open Terminal > \(Text("which mpv").font(.callout).bold())")
+//
+//                            .foregroundColor(.gray)
+//                            .font(.caption)
+//                        Divider()
+//                        TextField("YoutubeDL Path", text: $settingsViewModel.youtubedlPath)
+//
+//                        Text("Open Terminal > \(Text("which youtube-dl").font(.callout).bold())")
+//
+//                            .foregroundColor(.gray)
+//                            .font(.caption)
                         
                     }.padding([.bottom])
                         .textFieldStyle(.roundedBorder)
@@ -112,7 +112,7 @@ struct SettingsView: View {
                 settingsViewModel.showingSettings = false
             })
         .padding(.horizontal)
-        .frame(width: 350, height: settingsViewModel.showingLogs ? 540 : 340)
+        .frame(width: 350, height: settingsViewModel.showingLogs ? 340 : 200)
 
     }
 }
