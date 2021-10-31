@@ -37,14 +37,14 @@
 		C27DD3B1272CBBD500B4DC16 /* LogTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */; };
 		C27DD3B5272CE7A500B4DC16 /* SomethingWentWrongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */; };
 		C27DD3B7272CE9DF00B4DC16 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */; };
+		C294A6FD272E267500DD5E73 /* AudioPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C294A6FC272E267500DD5E73 /* AudioPlayerControlsView.swift */; };
+		C294A6FF272E26AB00DD5E73 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C294A6FE272E26AB00DD5E73 /* Utility.swift */; };
 		C2BB85C9272CFDC100AC3578 /* youtube-dl in Resources */ = {isa = PBXBuildFile; fileRef = C2BB85C8272CFDC100AC3578 /* youtube-dl */; };
-		C2BB85CC272D14EA00AC3578 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB85CB272D14EA00AC3578 /* VideoPlayer.swift */; };
-		C2BB85D0272D15E800AC3578 /* SwiftUIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB85CF272D15E800AC3578 /* SwiftUIWebView.swift */; };
 		C2BB85D2272D160400AC3578 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB85D1272D160400AC3578 /* WebViewModel.swift */; };
-		C2BB85D5272D190300AC3578 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = C2BB85D4272D190300AC3578 /* style.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C21C24D7272D9F44005F19AB /* nativeyoutube-inject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "nativeyoutube-inject.js"; sourceTree = "<group>"; };
 		C27DD34A272C853E00B4DC16 /* NativeYoutube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeYoutube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27DD34F272C853E00B4DC16 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C27DD351272C853F00B4DC16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,11 +77,13 @@
 		C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTextView.swift; sourceTree = "<group>"; };
 		C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingWentWrongView.swift; sourceTree = "<group>"; };
 		C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
+		C294A6FC272E267500DD5E73 /* AudioPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerControlsView.swift; sourceTree = "<group>"; };
+		C294A6FE272E26AB00DD5E73 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C2BB85C8272CFDC100AC3578 /* youtube-dl */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youtube-dl"; sourceTree = "<group>"; };
 		C2BB85CB272D14EA00AC3578 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		C2BB85CF272D15E800AC3578 /* SwiftUIWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIWebView.swift; sourceTree = "<group>"; };
 		C2BB85D1272D160400AC3578 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
-		C2BB85D4272D190300AC3578 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		C2BB85D4272D190300AC3578 /* nativeyoutube-inject.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "nativeyoutube-inject.css"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C21C24D6272D9F2B005F19AB /* Injection */ = {
+			isa = PBXGroup;
+			children = (
+				C2BB85D4272D190300AC3578 /* nativeyoutube-inject.css */,
+				C21C24D7272D9F44005F19AB /* nativeyoutube-inject.js */,
+			);
+			path = Injection;
+			sourceTree = "<group>";
+		};
 		C27DD341272C853E00B4DC16 = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +136,7 @@
 				C27DD36C272C89FA00B4DC16 /* ViewControllers */,
 				C27DD371272C8A7600B4DC16 /* Extensions */,
 				C27DD369272C882A00B4DC16 /* Main.storyboard */,
+				C294A6FB272E265600DD5E73 /* AVPlayer */,
 				C2BB85C7272CFDB200AC3578 /* Executables */,
 				C27DD351272C853F00B4DC16 /* Assets.xcassets */,
 				C27DD356272C853F00B4DC16 /* NativeYoutube.entitlements */,
@@ -204,7 +216,7 @@
 		C27DD378272C8CAE00B4DC16 /* SharedViews */ = {
 			isa = PBXGroup;
 			children = (
-				C2BB85CA272D14DC00AC3578 /* Player */,
+				C2BB85CA272D14DC00AC3578 /* Web-Player-Test */,
 				C27DD396272CA3F900B4DC16 /* ThumbnailView.swift */,
 				C27DD3A7272CB48700B4DC16 /* CleanButton.swift */,
 				C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */,
@@ -241,6 +253,15 @@
 			path = SettingsView;
 			sourceTree = "<group>";
 		};
+		C294A6FB272E265600DD5E73 /* AVPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				C294A6FC272E267500DD5E73 /* AudioPlayerControlsView.swift */,
+				C294A6FE272E26AB00DD5E73 /* Utility.swift */,
+			);
+			path = AVPlayer;
+			sourceTree = "<group>";
+		};
 		C2BB85C7272CFDB200AC3578 /* Executables */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,14 +270,14 @@
 			path = Executables;
 			sourceTree = "<group>";
 		};
-		C2BB85CA272D14DC00AC3578 /* Player */ = {
+		C2BB85CA272D14DC00AC3578 /* Web-Player-Test */ = {
 			isa = PBXGroup;
 			children = (
 				C2BB85CB272D14EA00AC3578 /* VideoPlayer.swift */,
 				C2BB85CF272D15E800AC3578 /* SwiftUIWebView.swift */,
-				C2BB85D4272D190300AC3578 /* style.css */,
+				C21C24D6272D9F2B005F19AB /* Injection */,
 			);
-			path = Player;
+			path = "Web-Player-Test";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,7 +348,6 @@
 				C27DD36A272C883400B4DC16 /* Main.storyboard in Resources */,
 				C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */,
 				C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */,
-				C2BB85D5272D190300AC3578 /* style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,10 +364,11 @@
 				C2BB85D2272D160400AC3578 /* WebViewModel.swift in Sources */,
 				C27DD36E272C8A3400B4DC16 /* PlayListModel.swift in Sources */,
 				C27DD3AC272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift in Sources */,
+				C294A6FD272E267500DD5E73 /* AudioPlayerControlsView.swift in Sources */,
 				C27DD3A6272CADE500B4DC16 /* SearchedVideosView.swift in Sources */,
+				C294A6FF272E26AB00DD5E73 /* Utility.swift in Sources */,
 				C27DD39B272CA54A00B4DC16 /* SearchViewModel.swift in Sources */,
 				C27DD39A272CA49D00B4DC16 /* PlaylistRowView.swift in Sources */,
-				C2BB85CC272D14EA00AC3578 /* VideoPlayer.swift in Sources */,
 				C27DD361272C858700B4DC16 /* AppDelegate.swift in Sources */,
 				C27DD368272C85F900B4DC16 /* StatusBarController.swift in Sources */,
 				C27DD37C272C8CCF00B4DC16 /* PlayListView.swift in Sources */,
@@ -362,7 +383,6 @@
 				C27DD398272CA44D00B4DC16 /* SearchRowView.swift in Sources */,
 				C27DD373272C8A8900B4DC16 /* Collections+Extension.swift in Sources */,
 				C27DD386272C8DD100B4DC16 /* Constants.swift in Sources */,
-				C2BB85D0272D15E800AC3578 /* SwiftUIWebView.swift in Sources */,
 				C27DD364272C85C400B4DC16 /* MainViewController.swift in Sources */,
 				C27DD3AA272CB9FD00B4DC16 /* View+Extension.swift in Sources */,
 				C27DD3B1272CBBD500B4DC16 /* LogTextView.swift in Sources */,
