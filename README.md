@@ -2,11 +2,11 @@
 Personal App that turned into "alpha released app"
 
 <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'>
-![Screen Shot 2021-10-30 at 10 10 18 PM](https://user-images.githubusercontent.com/43297314/139564091-41f47094-89e2-4218-aa5f-c757db874477.png)
 
 ## Requirements:
 - MacOS 12.0 or above
 - *A working google account*
+- [IINA](https://iina.io) *Supports wide range of codecs*
 
 ## Usage
 ### Download the universal binary from the releases tab.
