@@ -1,24 +1,18 @@
 # Native-Youtube
 Personal App that turned into "alpha released app"
 
-<img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/settings-image.png" width='325px'>
+<img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'>
+![Screen Shot 2021-10-30 at 10 10 18 PM](https://user-images.githubusercontent.com/43297314/139564091-41f47094-89e2-4218-aa5f-c757db874477.png)
 
 ## Requirements:
 - MacOS 12.0 or above
-- [HomeBrew](https://brew.sh/)
-  - ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"```
-- [youtube-dl](https://formulae.brew.sh/formula/youtube-dl)
-   - ```brew install youtube-dl```
-- [mpv](https://formulae.brew.sh/cask/mpv)
-  - ```brew install mpv```
 - *A working google account*
 
 ## Usage
 ### Download the universal binary from the releases tab.
 - Open the app *It's a menu bar app*
 
-- Click on the gear icon > paste your api key, mpv and youtube-dl path and you're done.
-
+- Click on the gear icon > paste your api key, you're done.
 
 ## FAQ:
 
@@ -27,6 +21,10 @@ Personal App that turned into "alpha released app"
 It's in the [Mubbii branch](https://github.com/Aayush9029/Native-Youtube/tree/Mubbii)
 It is no longer being maintained however there are forks of the "Mubbii" which are being maintained.
 *Note: The codebase for Mubbii is very bad as it was hacked together in couple hours*
+
+> **Why drop support for Mubbii?**
+
+Mubbii required mpv and youtube-dl to be installed. This is a standalone app. Internals have been reworked from the ground up for new macOS version.
 
 > **How do I Get a YouTube API Key?**
 1. Log in to Google Developers Console, Here's The Official Documentation follow step 2 and 3
