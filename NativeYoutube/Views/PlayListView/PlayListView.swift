@@ -28,7 +28,7 @@ struct PlayListView: View {
                                  Button(action: {
                                      settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
                                  }, label: {
-                                     Label("Play Audio", systemImage: "music.note")
+                                     Label("Play Audio in IINA", systemImage: "music.note")
                                  })
                                  Divider()
                                  Button(action: {
