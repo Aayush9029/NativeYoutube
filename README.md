@@ -1,12 +1,19 @@
-# Native-Youtube
-Personal App that turned into "alpha released app"
 
-<img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'>
+<div align="center">
+  <h1>NativeYoutube</h1>
+      <img src="https://user-images.githubusercontent.com/43297314/140234524-4b128551-8f1b-45b5-b61a-8394cca49388.png" width="200px">
+  
+Personal App that turned into "alpha released app"
+      
+  <img src="https://user-images.githubusercontent.com/43297314/140234639-3f9b8621-708f-41e2-9a3f-8ce8136e88e9.png" width='305px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'>
+  
+</div>
+
 
 ## Requirements:
 - MacOS 12.0 or above
 - *A working google account*
-- [IINA](https://iina.io) *Supports wide range of codecs*
+- [IINA](https://iina.io) *Required for Native playback*
 
 ## Usage
 ### Download the universal binary from the releases tab.
