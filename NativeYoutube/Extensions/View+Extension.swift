@@ -22,10 +22,10 @@ extension View {
         window.level = .floating
         if let isTransparent = isTransparent{
             if isTransparent{
-                window.backgroundColor             =  .clear
-                window.isOpaque                      =   false
-                window.styleMask                   =   .hudWindow
-                window.isMovableByWindowBackground   =   true
+                window.backgroundColor =  .clear
+                window.isOpaque =   false
+                window.styleMask =   .hudWindow
+                window.isMovableByWindowBackground = true
                 window.makeKeyAndOrderFront(self)
             }
         }
@@ -37,12 +37,3 @@ extension View {
         self.newWindowInternal(with: title, isTransparent: isTransparent).contentView = NSHostingView(rootView: self)
     }
 }
-
-
-//myWindow  = [[NSWindow alloc] initWithContentRect:frame
-//                                                styleMask:NSBorderlessWindowMask
-//                                                  backing:NSBackingStoreBuffered
-//                                                    defer:NO];
-//[myWindow setLevel:NSFloatingWindowLevel  ];
-//[myWindow setBackgroundColor:[NSColor blueColor]];
-//[myWindow makeKeyAndOrderFront:NSApp];

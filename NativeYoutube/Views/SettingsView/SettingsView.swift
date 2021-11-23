@@ -38,22 +38,6 @@ struct SettingsView: View {
                             }
                         )
                         
-//                        Divider()
-//
-//                        TextField("MPV path", text: $settingsViewModel.mpvPath)
-//
-//                        Text("Open Terminal > \(Text("which mpv").font(.callout).bold())")
-//
-//                            .foregroundColor(.gray)
-//                            .font(.caption)
-//                        Divider()
-//                        TextField("YoutubeDL Path", text: $settingsViewModel.youtubedlPath)
-//
-//                        Text("Open Terminal > \(Text("which youtube-dl").font(.callout).bold())")
-//
-//                            .foregroundColor(.gray)
-//                            .font(.caption)
-                        
                     }.padding([.bottom])
                         .textFieldStyle(.roundedBorder)
                     

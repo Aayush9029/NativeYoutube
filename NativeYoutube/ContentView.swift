@@ -12,6 +12,7 @@ struct ContentView: View {
     @StateObject var searchViewModel = SearchViewModel()
     @StateObject var playlistViewModel = PlayListViewModel()
     @StateObject var settingsViewModel = SettingsViewModel()
+    @StateObject var youtubePlayerViewModel = YoutubePlayerViewModel()
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -22,10 +23,13 @@ struct ContentView: View {
                         PlayListView()
                             .environmentObject(playlistViewModel)
                             .environmentObject(settingsViewModel)
+                            .environmentObject(youtubePlayerViewModel)
                     case .search:
                         SearchView()
                             .environmentObject(searchViewModel)
                             .environmentObject(settingsViewModel)
+                            .environmentObject(youtubePlayerViewModel)
+
                     }
                 }
                 Divider()

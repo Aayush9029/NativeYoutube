@@ -10,6 +10,7 @@ import SwiftUI
 struct PlayListView: View {
     @EnvironmentObject var playlistViewModel: PlayListViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @EnvironmentObject var youtubePlayerViewModel: YoutubePlayerViewModel
 
      var body: some View {
          VStack{
@@ -24,19 +25,9 @@ struct PlayListView: View {
                              settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
                          })
                          .contextMenu(ContextMenu(menuItems: {
-                             VStack{
-                                 Button(action: {
-                                     settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
-                                 }, label: {
-                                     Label("Play Audio in IINA", systemImage: "music.note")
-                                 })
-                                 Divider()
-                                 Button(action: {
-                                     NSWorkspace.shared.open(vid.url)
-                                 }, label: {
-                                     Label("Open in youtube.com", systemImage: "globe")
-                                 })
-                             }
+                             CustomContextMenuView(videoUrl: vid.url, videoTitle: vid.title)
+                                 .environmentObject(youtubePlayerViewModel)
+                                 .environmentObject(settingsViewModel)
                          }))
                  }
              }.padding()
@@ -50,5 +41,9 @@ struct PlayListView: View {
 struct PlayListView_Previews: PreviewProvider {
     static var previews: some View {
         PlayListView()
+            .environmentObject(PlayListViewModel())
+            .environmentObject(SettingsViewModel())
+            .environmentObject(YoutubePlayerViewModel())
+            .frame(width: 350)
     }
 }
