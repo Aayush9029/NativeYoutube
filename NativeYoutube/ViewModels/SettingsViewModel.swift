@@ -104,11 +104,14 @@ class SettingsViewModel: ObservableObject{
         self.logs.append(shell("killall IINA"))
     }
     
-    func playAudioYTDL(url: URL, title: String){
+    func togglePlaying(_ title: String){
         stopPlaying()
+        isPlaying.toggle()
         currentlyPlaying = title
-        isPlaying = true
-//        MARK: - Will be replaced with AudioView (AVPlayer) perhaps using VLC kit.
+    }
+    
+    func playAudioYTDL(url: URL, title: String){
+        togglePlaying(title)
         guard let ytdlPath = Bundle.main.url(forResource: "youtube-dl", withExtension: "") else{
             print("YTDL not in bundle, provide custom")
             fatalError("YTDL not in bundle, provide custom")

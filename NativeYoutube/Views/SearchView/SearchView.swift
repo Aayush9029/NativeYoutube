@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchView: View {
     @EnvironmentObject var searchViewModel: SearchViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @EnvironmentObject var youtubePlayerViewModel: YoutubePlayerViewModel
 
     
     var body: some View {
