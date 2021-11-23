@@ -5,7 +5,7 @@
   
 Personal App that turned into "alpha released app"
 
-  <img src="https://user-images.githubusercontent.com/43297314/140234639-3f9b8621-708f-41e2-9a3f-8ce8136e88e9.png" width='305px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'>
+  <img src="https://user-images.githubusercontent.com/43297314/140234639-3f9b8621-708f-41e2-9a3f-8ce8136e88e9.png" width='305px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'>
 
 <img src="https://user-images.githubusercontent.com/43297314/143127910-087e9e0e-06ca-4206-9128-5f161082a7d6.png" width='450px'> <img src="https://user-images.githubusercontent.com/43297314/143129862-3971e82e-2d4c-4546-964a-05cd0f0baa28.png" width='410px'>
 
