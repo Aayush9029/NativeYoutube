@@ -15,7 +15,7 @@ Personal App that turned into "alpha released app"
 ## Requirements:
 - MacOS 12.0 or above
 - *A working google account*
-- [IINA](https://iina.io) *Required for Native playback*
+- [IINA](https://iina.io) *Required for Native Audio playback*
 
 ## Usage
 ### Download the universal binary from the releases tab.
