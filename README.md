@@ -1,7 +1,7 @@
 
 <div align="center">
   <h1>NativeYoutube</h1>
-      <img src="https://user-images.githubusercontent.com/43297314/140234524-4b128551-8f1b-45b5-b61a-8394cca49388.png" width="200px">
+      <img src="https://user-images.githubusercontent.com/43297314/145142430-6a706978-2479-441b-9849-934479de14c4.png" width="200px">
   
 Personal App that turned into "alpha released app"
 
