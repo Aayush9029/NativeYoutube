@@ -70,10 +70,10 @@ class PlayListViewModel: ObservableObject{
                         DispatchQueue.main.sync {
                             let data = video.1
                             let title = data["snippet"]["title"].string!
-                            let thumbnail_url = data["snippet"]["thumbnails"]["medium"]["url"].url!
+                            let thumbnail_url = data["snippet"]["thumbnails"]["medium"]["url"].url ?? URL(string: "https://via.placeholder.com/140x100")!
                             var publishedAt = data["snippet"]["publishedAt"].string!
                             let url = "\(Constants.templateYoutubeURL)\(data["contentDetails"]["videoId"].string ?? "gNi_6U5Pm_o")"
-                            let channelTitle = data["snippet"]["videoOwnerChannelTitle"].string!
+                            let channelTitle = data["snippet"]["videoOwnerChannelTitle"].string ?? "Unknown"
                             publishedAt = timestampToDate(timestamp: publishedAt)
                             self.videos.append(PlayListModel(title: title, thumbnail: thumbnail_url, publishedAt: publishedAt, url: URL(string: url)!, channelTitle: channelTitle))
                             self.currentStatus = .doneFetching
