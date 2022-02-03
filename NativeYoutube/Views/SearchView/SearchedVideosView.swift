@@ -12,22 +12,23 @@ struct SearchedVideosView: View {
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var youtubePlayerViewModel: YoutubePlayerViewModel
     var body: some View {
-        LazyVStack{
+        Group{
             if searchViewModel.currentStatus == .unknownError{
                 SomethingWentWrongView()
                     .environmentObject(settingsViewModel)
-            }
-            ForEach(searchViewModel.videos, id:\.self.title) { vid in
-                SearchRowView(video: vid)
-                    .padding(.horizontal)
-                    .onTapGesture(count: 2, perform: {
-                        settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
-                    })
-                    .contextMenu(ContextMenu(menuItems: {
-                        CustomContextMenuView(videoUrl: vid.url, videoTitle: vid.title)
-                            .environmentObject(youtubePlayerViewModel)
-                            .environmentObject(settingsViewModel)
-                    }))
+            } else {
+                ForEach(searchViewModel.videos, id:\.self.title) { vid in
+                    SearchRowView(video: vid)
+                        .padding(.horizontal)
+                        .onTapGesture(count: 2, perform: {
+                            settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
+                        })
+                        .contextMenu(ContextMenu(menuItems: {
+                            CustomContextMenuView(videoUrl: vid.url, videoTitle: vid.title)
+                                .environmentObject(youtubePlayerViewModel)
+                                .environmentObject(settingsViewModel)
+                        }))
+                }
             }
         }
     }

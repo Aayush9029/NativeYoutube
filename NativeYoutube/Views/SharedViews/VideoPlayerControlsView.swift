@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct VideoPlayerControlsView: View {
-    @ObservedObject var viewModel: VideoPlayerControlsViewModel
+    @StateObject var viewModel: VideoPlayerControlsViewModel
+    @State var isHoveringVolume = false
 
     var body: some View {
         HStack{
@@ -26,6 +27,8 @@ struct VideoPlayerControlsView: View {
                 case .buffering:
                     ProgressView()
                         .controlSize(.small)
+                        .padding(6)
+
                 case .paused:
                     VideoPlayerControlsButtonView(title: "Play video", image: "play")
                         .onTapGesture {
@@ -60,6 +63,9 @@ struct VideoPlayerControlsView: View {
                 VideoPlayerControlsButtonView(title: "Toggle Mute", image: viewModel.isMuted ? "speaker.slash": "speaker.wave.3")
                     .onTapGesture {
                         viewModel.isMuted ? viewModel.apply(.unmuteVideo) : viewModel.apply(.muteVideo)
+                    }
+                    .onHover {
+                        isHoveringVolume = $0
                     }
                 VideoPlayerControlsButtonView(title: "Change playback speed", image: viewModel.playbackRate.rawValue)
                     .onTapGesture {

@@ -18,17 +18,16 @@ extension View {
         window.becomeKey()
         window.isReleasedWhenClosed = false
         window.title = title
-        window.makeKeyAndOrderFront(self)
         window.level = .floating
         if let isTransparent = isTransparent{
             if isTransparent{
                 window.backgroundColor =  .clear
-                window.isOpaque =   false
-                window.styleMask =   .hudWindow
+                window.isOpaque = false
+                window.styleMask = [.hudWindow, .closable]
                 window.isMovableByWindowBackground = true
-                window.makeKeyAndOrderFront(self)
             }
         }
+        window.makeKeyAndOrderFront(self)
         window.setIsVisible(true)
         return window
     }
