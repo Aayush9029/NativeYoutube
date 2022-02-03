@@ -6,87 +6,85 @@
 //
 
 import SwiftUI
-import YouTubePlayerKit
 
 struct VideoPlayerControlsView: View {
-    @State var youtubePlayer: YouTubePlayer
-    
-    @State private var isMuted: Bool = false
-    @State private var playbackRate: PlaybackRate = .normal
+    @ObservedObject var viewModel: VideoPlayerControlsViewModel
 
     var body: some View {
         HStack{
             Group{
-                
                 VideoPlayerControlsButtonView(title: "Previous video", image: "backward.end")
                     .onTapGesture {
-                        youtubePlayer.previousVideo()
+                        viewModel.apply(.prevVideo)
                     }
-                switch youtubePlayer.playbackState{
+                switch viewModel.playbackState {
                 case .playing:
                     VideoPlayerControlsButtonView(title: "Pause video", image: "pause")
                         .onTapGesture {
-                            youtubePlayer.pause()
+                            viewModel.apply(.pauseVideo)
                         }
                 case .buffering:
                     ProgressView()
+                        .controlSize(.small)
                 case .paused:
                     VideoPlayerControlsButtonView(title: "Play video", image: "play")
                         .onTapGesture {
-                            youtubePlayer.play()
+                            viewModel.apply(.playVideo)
                         }
                 default:
                     VideoPlayerControlsButtonView(title: "Play pause video", image: "circle")
                         .onTapGesture {
-                            youtubePlayer.play()
+                            viewModel.apply(.playVideo)
                         }
                 }
 
                 VideoPlayerControlsButtonView(title: "Next video", image: "forward.end")
                     .onTapGesture {
-                        youtubePlayer.nextVideo()
+                        viewModel.apply(.nextVideo)
                     }
             }
-            Spacer()
-            Group{
-//                VideoPlayerControlsButtonView(title: "Toggle Mute", image: isMuted ? "speaker.slash": "speaker")
-//                    .onTapGesture {
-//                        isMuted ? youtubePlayer.unmute() : youtubePlayer.mute()
-//                    }
-                VideoPlayerControlsButtonView(title: "Change playback speed", image: playbackRate.rawValue)
-                    .onTapGesture {
-                        switch playbackRate {
-                        case .normal:
-                            youtubePlayer.set(playbackRate: 1.0)
-                            playbackRate = .slow
-                        case .fast:
-                            youtubePlayer.set(playbackRate: 2.0)
-                            playbackRate = .normal
-                        case .slow:
-                            youtubePlayer.set(playbackRate: 0.5)
-                            playbackRate = .fast
 
+            Spacer()
+
+            Group {
+                Text(viewModel.currentDuration)
+                Slider(value: $viewModel.seekbar, in: 0...1.0, onEditingChanged: { isSeeking in
+                    viewModel.apply(.seeking(isSeeking))
+                })
+                Text(String(timeInterval: viewModel.endDuration))
+            }
+
+            Spacer()
+
+            Group{
+                VideoPlayerControlsButtonView(title: "Toggle Mute", image: viewModel.isMuted ? "speaker.slash": "speaker.wave.3")
+                    .onTapGesture {
+                        viewModel.isMuted ? viewModel.apply(.unmuteVideo) : viewModel.apply(.muteVideo)
+                    }
+                VideoPlayerControlsButtonView(title: "Change playback speed", image: viewModel.playbackRate.rawValue)
+                    .onTapGesture {
+                        switch viewModel.playbackRate {
+                        case .normal:
+                            viewModel.apply(.playbackRate(.slow))
+                        case .fast:
+                            viewModel.apply(.playbackRate(.normal))
+                        case .slow:
+                            viewModel.apply(.playbackRate(.fast))
                         }
                     }
             }
         }
         .symbolVariant(.fill)
         .labelStyle(.iconOnly)
+        .onAppear {
+            viewModel.apply(.onAppear)
+        }
     }
 }
 
 struct VideoPlayerControlsView_Previews: PreviewProvider {
     static var previews: some View {
-        VideoPlayerControlsView(youtubePlayer: YoutubePlayerViewModel.exampleVideo)
-    }
-}
-
-
-extension VideoPlayerControlsView{
-    enum PlaybackRate: String{
-        case normal = "speedometer"
-        case fast = "hare"
-        case slow = "tortoise"
+        VideoPlayerControlsView(viewModel: .init(youtubePlayer: YoutubePlayerViewModel.exampleVideo))
     }
 }
 

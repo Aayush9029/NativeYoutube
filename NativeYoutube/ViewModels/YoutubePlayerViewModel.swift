@@ -16,6 +16,9 @@ class YoutubePlayerViewModel: ObservableObject {
     func playVideo(url: String){
         currentVideo = YouTubePlayer.init(source: YouTubePlayer.Source.url(url), configuration: YoutubePlayerViewModel.configuration)
         PopupPlayerView(youtubePlayer: currentVideo ?? YoutubePlayerViewModel.exampleVideo)
+            .onExitCommand(perform: {
+                NSApplication.shared.keyWindow?.close()
+            })
             .openNewWindow(isTransparent: true)
     }
     

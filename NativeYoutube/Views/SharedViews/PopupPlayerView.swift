@@ -13,9 +13,8 @@ struct PopupPlayerView: View {
     var body: some View {
         VStack{
             VideoPlayerView(youtubePlayer: youtubePlayer)
-//            RoundedRectangle(cornerRadius: 10)
                 .cornerRadius(20)
-            VideoPlayerControlsView(youtubePlayer: youtubePlayer)
+            VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
                 .padding(.horizontal)
                 .padding(.bottom, 5)
         }
