@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SomethingWentWrongView: View {
-    @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @EnvironmentObject var appStateViewModel: AppStateViewModel
 
     var body: some View {
         Group{
@@ -20,18 +20,16 @@ struct SomethingWentWrongView: View {
                     .foregroundStyle(.primary)
                 HStack{
                     Spacer()
-                    Label(settingsViewModel.showingSettings ? "Settings Window Opened" : "Open settings", systemImage:settingsViewModel.showingSettings ? "rectangle" : "gear")
+                    Label(appStateViewModel.showingSettings ? "Settings Window Opened" : "Open settings",
+                          systemImage: appStateViewModel.showingSettings ? "rectangle" : "gear")
                         .padding(10)
                         .background(.ultraThickMaterial)
                         .cornerRadius(10)
                     Spacer()
                 }
                 .onTapGesture {
-                    if  !settingsViewModel.showingSettings{
-                        SettingsView()
-                            .environmentObject(settingsViewModel)
-                            .background(VisualEffectView(material: NSVisualEffectView.Material.hudWindow, blendingMode: NSVisualEffectView.BlendingMode.behindWindow))
-                            .openNewWindow(with: "Native Youtube Settings", isTransparent: false)
+                    if  !appStateViewModel.showingSettings {
+                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
                     }
                 }
                 Spacer()
@@ -44,6 +42,6 @@ struct SomethingWentWrongView: View {
 struct SomethingWentWrongView_Previews: PreviewProvider {
     static var previews: some View {
         SomethingWentWrongView()
-            .environmentObject(SettingsViewModel())
+            .environmentObject(AppStateViewModel())
     }
 }

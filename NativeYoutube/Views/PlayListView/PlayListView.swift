@@ -8,43 +8,35 @@
 import SwiftUI
 
 struct PlayListView: View {
-    @EnvironmentObject var playlistViewModel: PlayListViewModel
-    @EnvironmentObject var settingsViewModel: SettingsViewModel
-    @EnvironmentObject var youtubePlayerViewModel: YoutubePlayerViewModel
+    @EnvironmentObject var appStateViewModel: AppStateViewModel
+
+    @StateObject var playlistViewModel = PlayListViewModel()
 
      var body: some View {
          Group {
-             if playlistViewModel.currentStatus == .unknownError{
+             switch playlistViewModel.currentStatus {
+             case .startedFetching:
+                 ProgressView()
+             case .none, .doneFetching:
+                 VideoListView(videos: playlistViewModel.videos)
+             default:
                  SomethingWentWrongView()
-                     .environmentObject(settingsViewModel)
-             } else {
-                 ScrollView(.vertical, showsIndicators: false){
-                     ForEach(playlistViewModel.videos, id:\.self.title) { vid in
-                         PlaylistRowView(video: vid)
-                             .onTapGesture(count: 2, perform: {
-                                 settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
-                             })
-                             .contextMenu(ContextMenu(menuItems: {
-                                 CustomContextMenuView(videoUrl: vid.url, videoTitle: vid.title)
-                                     .environmentObject(youtubePlayerViewModel)
-                                     .environmentObject(settingsViewModel)
-                             }))
-                     }.padding()
-                 }
              }
          }
          .onAppear {
-             playlistViewModel.startFetch()
+             playlistViewModel.startFetch(apiKey: appStateViewModel.apiKey, playListID: appStateViewModel.playListID)
          }
+         .onChange(of: playlistViewModel.currentStatus) { newValue in
+             appStateViewModel.addToLogs(for: Pages.playlists, message: newValue.rawValue)
+         }
+         .frame(maxWidth: .infinity, maxHeight: .infinity)
      }
  }
 
 struct PlayListView_Previews: PreviewProvider {
     static var previews: some View {
         PlayListView()
-            .environmentObject(PlayListViewModel())
-            .environmentObject(SettingsViewModel())
-            .environmentObject(YoutubePlayerViewModel())
+            .environmentObject(AppStateViewModel())
             .frame(width: 350)
     }
 }

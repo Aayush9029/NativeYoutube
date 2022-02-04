@@ -6,55 +6,76 @@
 //
 
 import AppKit
+import SwiftUI
 
-class StatusBarController {
-    private var statusBar: NSStatusBar
-    private var statusItem: NSStatusItem
-    private var popover: NSPopover
+class StatusBarController: ObservableObject {
+    private var statusBar: NSStatusBar?
+    private var statusItem: NSStatusItem?
+    private var popover: NSPopover?
     private var eventMonitor: EventMonitor?
     
-    init(_ popover: NSPopover)
+    init()
     {
-        self.popover = popover
-        statusBar = NSStatusBar.init()
-        statusItem = statusBar.statusItem(withLength: 28.0)
-        
-        if let statusBarButton = statusItem.button {
-            statusBarButton.image = #imageLiteral(resourceName: "StatusBarIcon")
-            statusBarButton.image?.size = NSSize(width: 18.0, height: 18.0)
-            statusBarButton.image?.isTemplate = true
-            
-            statusBarButton.action = #selector(togglePopover(sender:))
-            statusBarButton.target = self
-        }
-
         eventMonitor = EventMonitor(mask: [.leftMouseDown, .rightMouseDown], handler: mouseEventHandler)
     }
-    
-    @objc func togglePopover(sender: AnyObject) {
-        if(popover.isShown) {
-            hidePopover(sender)
+
+    func start(with popover: NSPopover) {
+        if let popover = self.popover {
+            popover.close()
         }
-        else {
-            showPopover(sender)
+
+        self.popover = popover
+
+        setupStatusBar(with: popover)
+    }
+
+    @objc private func togglePopover(sender: AnyObject) {
+        if let popover = popover {
+            if(popover.isShown) {
+                hidePopover(sender)
+            }
+            else {
+                showPopover(sender)
+            }
         }
     }
-    
-    func showPopover(_ sender: AnyObject) {
-        if let statusBarButton = statusItem.button {
+
+    private func showPopover(_ sender: AnyObject) {
+        if let statusBarButton = statusItem?.button, let popover = popover {
             popover.show(relativeTo: statusBarButton.bounds, of: statusBarButton, preferredEdge: NSRectEdge.maxY)
+            NSApp.activate(ignoringOtherApps: true)
             eventMonitor?.start()
         }
     }
     
-    func hidePopover(_ sender: AnyObject) {
-        popover.performClose(sender)
+    private func hidePopover(_ sender: AnyObject) {
+        popover?.performClose(sender)
         eventMonitor?.stop()
     }
     
-    func mouseEventHandler(_ event: NSEvent?) {
-        if(popover.isShown) {
-            hidePopover(event!)
+    private func mouseEventHandler(_ event: NSEvent?) {
+        if let popover = popover {
+            if popover.isShown, let event = event {
+                hidePopover(event)
+            }
         }
+    }
+
+    private func setupStatusBar(with popover: NSPopover) {
+        guard statusBar == nil else { return }
+
+        let statusBar = NSStatusBar()
+        statusItem = statusBar.statusItem(withLength: 28.0)
+
+        if let statusBarButton = statusItem?.button {
+            statusBarButton.image = #imageLiteral(resourceName: "StatusBarIcon")
+            statusBarButton.image?.size = NSSize(width: 18.0, height: 18.0)
+            statusBarButton.image?.isTemplate = true
+                
+            statusBarButton.action = #selector(togglePopover(sender:))
+            statusBarButton.target = self
+        }
+
+        self.statusBar = statusBar
     }
 }

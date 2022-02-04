@@ -11,8 +11,7 @@ import YouTubePlayerKit
 
 class YoutubePlayerViewModel: ObservableObject {
     @Published var currentVideo: YouTubePlayer?
-    
-    
+
     func playVideo(url: String){
         currentVideo = YouTubePlayer.init(source: YouTubePlayer.Source.url(url), configuration: YoutubePlayerViewModel.configuration)
         PopupPlayerView(youtubePlayer: currentVideo ?? YoutubePlayerViewModel.exampleVideo)

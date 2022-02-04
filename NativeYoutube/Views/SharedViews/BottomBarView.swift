@@ -8,48 +8,47 @@
 import SwiftUI
 
 struct BottomBarView: View {
-    @EnvironmentObject var settingsViewModel: SettingsViewModel
-    
+    @EnvironmentObject var appStateViewModel: AppStateViewModel
+
+    @Binding var currentPage: Pages
+
     var body: some View {
         Group{
             HStack{
-                CleanButton(title: "Playlists", image: "music.note.list", isCurrent: settingsViewModel.currentPage == .playlists)
+                CleanButton(title: "Playlists", image: "music.note.list", isCurrent: currentPage == .playlists)
                     .onTapGesture {
                         withAnimation {
-                            settingsViewModel.currentPage = .playlists
+                            currentPage = .playlists
                         }
                     }
-                CleanButton(title: "Search", image: "magnifyingglass", isCurrent: settingsViewModel.currentPage == .search)
+                CleanButton(title: "Search", image: "magnifyingglass", isCurrent: currentPage == .search)
                     .onTapGesture {
                         withAnimation {
-                            settingsViewModel.currentPage = .search
+                            currentPage = .search
                         }
                     }
-                if settingsViewModel.isPlaying{
+                if appStateViewModel.isPlaying {
                     ScrollView(.horizontal, showsIndicators: false){
-                    Text("\(settingsViewModel.currentlyPlaying)")
+                    Text("\(appStateViewModel.currentlyPlaying)")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         
-                    }.lineLimit(1)
-                    
+                    }
+                    .lineLimit(1)
                 }
                 Spacer()
-                CleanButton(title: "Settings", image: settingsViewModel.showingSettings ? "rectangle" : "gear", isCurrent: false)
+                CleanButton(title: "Settings", image: appStateViewModel.showingSettings ? "rectangle" : "gear", isCurrent: false)
                     .contextMenu(menuItems: {
                         Button("Close App"){
                             NSApplication.shared.terminate(self)
                         }
                     })
                     .onTapGesture {
-                        if !settingsViewModel.showingSettings{
-                            SettingsView()
-                                .environmentObject(settingsViewModel)
-                                .background(VisualEffectView(material: NSVisualEffectView.Material.hudWindow, blendingMode: NSVisualEffectView.BlendingMode.behindWindow))
-                                .openNewWindow(with: "Native Youtube Settings", isTransparent: false)
+                        if !appStateViewModel.showingSettings {
+                            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
                         }
                     }
-                    .disabled(settingsViewModel.showingSettings)
+                    .disabled(appStateViewModel.showingSettings)
             }
             .padding(.horizontal)
             .padding(.vertical, 6)
@@ -64,7 +63,7 @@ struct BottomBarView: View {
 
 struct BottomBarView_Previews: PreviewProvider {
     static var previews: some View {
-        BottomBarView()
-            .environmentObject(SettingsViewModel())
+        BottomBarView(currentPage: .constant(.playlists))
+            .environmentObject(AppStateViewModel())
     }
 }
