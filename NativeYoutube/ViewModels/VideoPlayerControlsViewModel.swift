@@ -72,9 +72,8 @@ class VideoPlayerControlsViewModel: ObservableObject {
     @Published var playbackRate: PlaybackRate = .normal
     @Published var isMuted: Bool = false
     @Published var volume: Double = 100
-    @Published var currentDuration: String = "00:00"
     @Published var seekbar: Double = 0
-    @Published var endDuration: TimeInterval = 0.001
+    @Published var duration: TimeInterval = 0.001
 
     init(youtubePlayer: YouTubePlayer) {
         self.youtubePlayer = youtubePlayer
@@ -137,7 +136,7 @@ extension VideoPlayerControlsViewModel {
             .flatMap { [youtubePlayer] in
                 youtubePlayer.durationPublisher
             }
-            .assign(to: \.endDuration, on: self)
+            .assign(to: \.duration, on: self)
             .store(in: &cancellables)
 
         // Bind and observe seek changes if not seeking
@@ -148,14 +147,6 @@ extension VideoPlayerControlsViewModel {
             }
             .filter({ [unowned self] _ in !self.currentlySeeking })
             .assign(to: \.seekbar, on: self)
-            .store(in: &cancellables)
-
-        // Bind and observe current time changes
-
-        appearSubject
-            .flatMap { [unowned self] in self.$seekbar }
-            .map { String(timeInterval: $0) }
-            .assign(to: \.currentDuration, on: self)
             .store(in: &cancellables)
 
         // MARK: - User Input Changes

@@ -13,59 +13,75 @@ struct VideoPlayerControlsView: View {
     var body: some View {
         HStack{
             Group{
-                VideoPlayerControlsButtonView(title: "Previous video", image: "backward.end")
-                    .onTapGesture {
-                        viewModel.apply(.prevVideo)
-                    }
+                Button(action: {
+                    viewModel.apply(.prevVideo)
+                }, label: {
+                    Label("Previous video", systemImage: "backward.end")
+                })
+                    .buttonStyle(VideoPlayerControlsButtonStyle())
+
                 switch viewModel.playbackState {
                 case .playing:
-                    VideoPlayerControlsButtonView(title: "Pause video", image: "pause")
-                        .onTapGesture {
-                            viewModel.apply(.pauseVideo)
-                        }
+                    Button(action: {
+                        viewModel.apply(.pauseVideo)
+                    }, label: {
+                        Label("Pause video", systemImage: "pause")
+                    })
+                        .buttonStyle(VideoPlayerControlsButtonStyle())
+
                 case .buffering:
                     ProgressView()
                         .controlSize(.small)
                         .padding(6)
 
                 case .paused:
-                    VideoPlayerControlsButtonView(title: "Play video", image: "play")
-                        .onTapGesture {
-                            viewModel.apply(.playVideo)
-                        }
+                    Button(action: {
+                        viewModel.apply(.playVideo)
+                    }, label: {
+                        Label("Play video", systemImage: "play")
+                    })
+                        .buttonStyle(VideoPlayerControlsButtonStyle())
+
                 default:
-                    VideoPlayerControlsButtonView(title: "Play pause video", image: "circle")
-                        .onTapGesture {
-                            viewModel.apply(.playVideo)
-                        }
+                    Button(action: {
+                        viewModel.apply(.playVideo)
+                    }, label: {
+                        Label("Play pause video", systemImage: "circle")
+                    })
+                        .buttonStyle(VideoPlayerControlsButtonStyle())
                 }
 
-                VideoPlayerControlsButtonView(title: "Next video", image: "forward.end")
-                    .onTapGesture {
-                        viewModel.apply(.nextVideo)
-                    }
+                Button(action: {
+                    viewModel.apply(.nextVideo)
+                }, label: {
+                    Label("Next video", systemImage: "forward.end")
+                })
+                    .buttonStyle(VideoPlayerControlsButtonStyle())
             }
 
             Spacer()
 
             Group {
-                Text(viewModel.currentDuration)
+                Text(String(timeInterval: viewModel.seekbar))
 
-                Slider(value: $viewModel.seekbar, in: 0...viewModel.endDuration) {
+                Slider(value: $viewModel.seekbar, in: 0...viewModel.duration) {
                     viewModel.apply(.seeking($0))
                 }
                 .controlSize(.small)
 
-                Text(String(timeInterval: viewModel.endDuration))
+                Text(String(timeInterval: viewModel.duration))
             }
 
             Spacer()
 
             Group{
-                VideoPlayerControlsButtonView(title: "Toggle Mute", image: viewModel.isMuted ? "speaker.slash": "speaker.wave.3")
-                    .onTapGesture {
-                        viewModel.isMuted ? viewModel.apply(.unmuteVideo) : viewModel.apply(.muteVideo)
-                    }
+
+                Button(action: {
+                    viewModel.isMuted ? viewModel.apply(.unmuteVideo) : viewModel.apply(.muteVideo)
+                }, label: {
+                    Label("Toggle Mute", systemImage: viewModel.isMuted ? "speaker.slash": "speaker.wave.3")
+                })
+                    .buttonStyle(VideoPlayerControlsButtonStyle())
 
                 if !viewModel.isMuted {
                     Slider(value: $viewModel.volume, in: 0...100) {
@@ -75,17 +91,19 @@ struct VideoPlayerControlsView: View {
                     .controlSize(.small)
                 }
 
-                VideoPlayerControlsButtonView(title: "Change playback speed", image: viewModel.playbackRate.rawValue)
-                    .onTapGesture {
-                        switch viewModel.playbackRate {
-                        case .normal:
-                            viewModel.apply(.playbackRate(.slow))
-                        case .fast:
-                            viewModel.apply(.playbackRate(.normal))
-                        case .slow:
-                            viewModel.apply(.playbackRate(.fast))
-                        }
+                Button(action: {
+                    switch viewModel.playbackRate {
+                    case .normal:
+                        viewModel.apply(.playbackRate(.slow))
+                    case .fast:
+                        viewModel.apply(.playbackRate(.normal))
+                    case .slow:
+                        viewModel.apply(.playbackRate(.fast))
                     }
+                }, label: {
+                    Label("Change playback speed", systemImage: viewModel.playbackRate.rawValue)
+                })
+                    .buttonStyle(VideoPlayerControlsButtonStyle())
             }
         }
         .symbolVariant(.fill)
@@ -104,18 +122,17 @@ struct VideoPlayerControlsView_Previews: PreviewProvider {
 }
 
 
-struct VideoPlayerControlsButtonView: View {
-    let title: String
-    let image: String
+struct VideoPlayerControlsButtonStyle: ButtonStyle {
     @State private var isHovering: Bool = false
 
-    var body: some View {
-        Label(title, systemImage: image)
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
             .padding(6)
             .background(isHovering ? .ultraThickMaterial : .ultraThinMaterial)
             .cornerRadius(8)
             .onHover {
                 isHovering = $0
             }
+            .animation(.easeIn(duration: 0.10), value: isHovering)
     }
 }
