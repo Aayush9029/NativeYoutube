@@ -13,7 +13,6 @@ struct SomethingWentWrongView: View {
     var body: some View {
         Group{
             VStack(spacing: 10){
-                Spacer()
                 Text("Something went wrong 🥶")
                     .font(.largeTitle.bold())
                 Text("Check your API credentials...")
@@ -35,8 +34,10 @@ struct SomethingWentWrongView: View {
                             .openNewWindow(with: "Native Youtube Settings", isTransparent: false)
                     }
                 }
+                Spacer()
             }
         }
+        .padding()
     }
 }
 

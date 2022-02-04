@@ -23,8 +23,8 @@ extension View {
         if let isTransparent = isTransparent{
             if isTransparent{
                 window.backgroundColor =  .clear
-                window.isOpaque =   false
-                window.styleMask =   .hudWindow
+                window.isOpaque = false
+                window.styleMask = [.hudWindow, .closable]
                 window.isMovableByWindowBackground = true
                 window.makeKeyAndOrderFront(self)
             }

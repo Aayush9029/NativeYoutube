@@ -15,25 +15,18 @@ struct ContentView: View {
     @StateObject var youtubePlayerViewModel = YoutubePlayerViewModel()
     
     var body: some View {
-        ZStack(alignment: .bottomLeading) {
-            VStack {
-                VStack(alignment: .leading, spacing: 0) {
-                    switch settingsViewModel.currentPage {
-                    case .playlists:
-                        PlayListView()
-                            .environmentObject(playlistViewModel)
-                            .environmentObject(settingsViewModel)
-                            .environmentObject(youtubePlayerViewModel)
-                    case .search:
-                        SearchView()
-                            .environmentObject(searchViewModel)
-                            .environmentObject(settingsViewModel)
-                            .environmentObject(youtubePlayerViewModel)
-
-                    }
-                }
-                Divider()
-                Spacer(minLength: 25)
+        VStack(alignment: .leading, spacing: 0) {
+            switch settingsViewModel.currentPage {
+            case .playlists:
+                PlayListView()
+                    .environmentObject(playlistViewModel)
+                    .environmentObject(settingsViewModel)
+                    .environmentObject(youtubePlayerViewModel)
+            case .search:
+                SearchView()
+                    .environmentObject(searchViewModel)
+                    .environmentObject(settingsViewModel)
+                    .environmentObject(youtubePlayerViewModel)
             }
             BottomBarView()
                 .environmentObject(settingsViewModel)

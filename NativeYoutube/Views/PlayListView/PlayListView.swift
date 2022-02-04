@@ -13,24 +13,25 @@ struct PlayListView: View {
     @EnvironmentObject var youtubePlayerViewModel: YoutubePlayerViewModel
 
      var body: some View {
-         VStack{
+         Group {
              if playlistViewModel.currentStatus == .unknownError{
                  SomethingWentWrongView()
                      .environmentObject(settingsViewModel)
-             }
-             ScrollView(.vertical, showsIndicators: false){
-                 ForEach(playlistViewModel.videos, id:\.self.title) { vid in
-                     PlaylistRowView(video: vid)
-                         .onTapGesture(count: 2, perform: {
-                             settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
-                         })
-                         .contextMenu(ContextMenu(menuItems: {
-                             CustomContextMenuView(videoUrl: vid.url, videoTitle: vid.title)
-                                 .environmentObject(youtubePlayerViewModel)
-                                 .environmentObject(settingsViewModel)
-                         }))
+             } else {
+                 ScrollView(.vertical, showsIndicators: false){
+                     ForEach(playlistViewModel.videos, id:\.self.title) { vid in
+                         PlaylistRowView(video: vid)
+                             .onTapGesture(count: 2, perform: {
+                                 settingsViewModel.playAudioYTDL(url: vid.url, title: vid.title)
+                             })
+                             .contextMenu(ContextMenu(menuItems: {
+                                 CustomContextMenuView(videoUrl: vid.url, videoTitle: vid.title)
+                                     .environmentObject(youtubePlayerViewModel)
+                                     .environmentObject(settingsViewModel)
+                             }))
+                     }.padding()
                  }
-             }.padding()
+             }
          }
          .onAppear {
              playlistViewModel.startFetch()

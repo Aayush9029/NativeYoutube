@@ -27,7 +27,7 @@ class StatusBarController {
             statusBarButton.action = #selector(togglePopover(sender:))
             statusBarButton.target = self
         }
-        
+
         eventMonitor = EventMonitor(mask: [.leftMouseDown, .rightMouseDown], handler: mouseEventHandler)
     }
     

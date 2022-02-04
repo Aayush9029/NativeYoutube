@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13E02D0A27ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E02D0927ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift */; };
+		13E02D0C27ABD2FE00B4A648 /* String+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E02D0B27ABD2FE00B4A648 /* String+Time.swift */; };
 		C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD34F272C853E00B4DC16 /* ContentView.swift */; };
 		C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD351272C853F00B4DC16 /* Assets.xcassets */; };
 		C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD354272C853F00B4DC16 /* Preview Assets.xcassets */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13E02D0927ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControlsViewModel.swift; sourceTree = "<group>"; };
+		13E02D0B27ABD2FE00B4A648 /* String+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Time.swift"; sourceTree = "<group>"; };
 		C27DD34A272C853E00B4DC16 /* NativeYoutube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeYoutube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27DD34F272C853E00B4DC16 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C27DD351272C853F00B4DC16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				C27DD36F272C8A6200B4DC16 /* PlayListViewModel.swift */,
 				C27DD376272C8AB900B4DC16 /* SearchViewModel.swift */,
 				C27DD383272C8D9D00B4DC16 /* SettingsViewModel.swift */,
+				13E02D0927ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				C27DD372272C8A8900B4DC16 /* Collections+Extension.swift */,
 				C27DD3A9272CB9FD00B4DC16 /* View+Extension.swift */,
 				C27DD3AB272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift */,
+				13E02D0B27ABD2FE00B4A648 /* String+Time.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -379,8 +385,10 @@
 				C27DD386272C8DD100B4DC16 /* Constants.swift in Sources */,
 				C27DD364272C85C400B4DC16 /* MainViewController.swift in Sources */,
 				C27DD3AA272CB9FD00B4DC16 /* View+Extension.swift in Sources */,
+				13E02D0A27ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift in Sources */,
 				C27DD3B1272CBBD500B4DC16 /* LogTextView.swift in Sources */,
 				C27DD384272C8D9D00B4DC16 /* SettingsViewModel.swift in Sources */,
+				13E02D0C27ABD2FE00B4A648 /* String+Time.swift in Sources */,
 				C2A7FC2D274D8572000D6D33 /* VideoPlayerControlsView.swift in Sources */,
 				C2A7FC25274D791D000D6D33 /* VideoPlayerView.swift in Sources */,
 			);
@@ -514,7 +522,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 4538W4A79B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -546,7 +554,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 4538W4A79B;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
