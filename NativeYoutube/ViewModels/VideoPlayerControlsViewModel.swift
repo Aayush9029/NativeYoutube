@@ -21,6 +21,7 @@ class VideoPlayerControlsViewModel: ObservableObject {
         case prevVideo
         case playbackRate(PlaybackRate)
         case seeking(Bool)
+        case changingVolume(Bool)
     }
 
     func apply(_ input: Input) {
@@ -42,7 +43,9 @@ class VideoPlayerControlsViewModel: ObservableObject {
         case .playbackRate(let rate):
             playbackRateSubject.send(rate)
         case .seeking(let seeking):
-            seekingSubject.send(seeking)
+            currentlySeeking = seeking
+        case .changingVolume(let changing):
+            currentlyChangingVolume = changing
         }
     }
 
@@ -56,7 +59,6 @@ class VideoPlayerControlsViewModel: ObservableObject {
     private let nextVideoSubject = PassthroughSubject<Void, Never>()
     private let prevVideoSubject = PassthroughSubject<Void, Never>()
     private let playbackRateSubject = PassthroughSubject<PlaybackRate, Never>()
-    private let seekingSubject = PassthroughSubject<Bool, Never>()
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -64,12 +66,14 @@ class VideoPlayerControlsViewModel: ObservableObject {
 
     private let youtubePlayer: YouTubePlayer
     private var currentlySeeking = false
+    private var currentlyChangingVolume = false
 
     @Published var playbackState: YouTubePlayer.PlaybackState = .unstarted
     @Published var playbackRate: PlaybackRate = .normal
     @Published var isMuted: Bool = false
+    @Published var volume: Double = 100
     @Published var currentDuration: String = "00:00"
-    @Published var seekbar: Double = 0.001
+    @Published var seekbar: Double = 0
     @Published var endDuration: TimeInterval = 0.001
 
     init(youtubePlayer: YouTubePlayer) {
@@ -116,6 +120,17 @@ extension VideoPlayerControlsViewModel {
             .assign(to: \.isMuted, on: self)
             .store(in: &cancellables)
 
+        // Bind and observe volume changes if user not changing it
+
+        appearSubject
+            .flatMap { [youtubePlayer] in
+                youtubePlayer.volumePublisher()
+            }
+            .filter({ [unowned self] _ in !self.currentlyChangingVolume })
+            .map { Double($0) }
+            .assign(to: \.volume, on: self)
+            .store(in: &cancellables)
+
         // Bind and observe duration changss
 
         appearSubject
@@ -128,33 +143,42 @@ extension VideoPlayerControlsViewModel {
         // Bind and observe seek changes if not seeking
 
         appearSubject
-            .flatMap {[youtubePlayer] in
+            .flatMap { [youtubePlayer] in
                 youtubePlayer.currentTimePublisher()
             }
-            .combineLatest($endDuration)
             .filter({ [unowned self] _ in !self.currentlySeeking })
-            .map { $0 / $1 }
             .assign(to: \.seekbar, on: self)
             .store(in: &cancellables)
 
         // Bind and observe current time changes
 
         appearSubject
-            .combineLatest($seekbar, $endDuration)
-            .map {  String(timeInterval: $1 * $2) }
+            .flatMap { [unowned self] in self.$seekbar }
+            .map { String(timeInterval: $0) }
             .assign(to: \.currentDuration, on: self)
             .store(in: &cancellables)
+
+        // MARK: - User Input Changes
 
         // Bind and observe any user seek changes and handle the input
 
         appearSubject
-            .combineLatest($seekbar, $endDuration)
+            .combineLatest($seekbar)
+            .map { $1 }
             .filter({ [unowned self] _ in self.currentlySeeking })
-            .map { $1 * $2 }
+            .removeDuplicates()
             .sink(receiveValue: { [youtubePlayer] in youtubePlayer.seek(to: $0, allowSeekAhead: true) })
             .store(in: &cancellables)
 
-        // Bind Inputs
+        // Bind and observe any user volume changes and handle the input
+
+        appearSubject
+            .flatMap { [unowned self] in  self.$volume }
+            .filter({ [unowned self] _ in self.currentlyChangingVolume })
+            .map { Int($0) }
+            .removeDuplicates()
+            .sink(receiveValue: { [youtubePlayer] in youtubePlayer.set(volume: $0) })
+            .store(in: &cancellables)
 
         prevVideoSubject
             .eraseToAnyPublisher()
@@ -188,13 +212,9 @@ extension VideoPlayerControlsViewModel {
 
         playbackRateSubject
             .eraseToAnyPublisher()
+            .removeDuplicates()
             .map({ ($0 == .slow) ? 0.5 : ($0 == .normal) ? 1.0 : 2.0  })
             .sink(receiveValue: youtubePlayer.set(playbackRate: ))
-            .store(in: &cancellables)
-
-        seekingSubject
-            .eraseToAnyPublisher()
-            .assign(to: \.currentlySeeking, on: self)
             .store(in: &cancellables)
     }
 }
@@ -232,6 +252,34 @@ extension YouTubePlayer {
                     }
                     promise(.success(muted))
                 }
+            }
+        }
+        .removeDuplicates()
+        .eraseToAnyPublisher()
+    }
+
+    func volumePublisher(
+        updateInterval: TimeInterval = 0.5
+    ) -> AnyPublisher<Int, Never> {
+        Just(
+            .init()
+        )
+        .append(
+            Timer.publish(
+                every: updateInterval,
+                on: .main,
+                in: .common
+            )
+            .autoconnect()
+        )
+        .flatMap { _ in
+            Future { [weak self] promise in
+                self?.getVolume(completion: { result in
+                    guard case .success(let volume) = result else {
+                        return
+                    }
+                    promise(.success(volume))
+                })
             }
         }
         .removeDuplicates()

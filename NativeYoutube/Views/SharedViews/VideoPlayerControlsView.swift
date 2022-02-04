@@ -9,7 +9,6 @@ import SwiftUI
 
 struct VideoPlayerControlsView: View {
     @StateObject var viewModel: VideoPlayerControlsViewModel
-    @State var isHoveringVolume = false
 
     var body: some View {
         HStack{
@@ -51,9 +50,12 @@ struct VideoPlayerControlsView: View {
 
             Group {
                 Text(viewModel.currentDuration)
-                Slider(value: $viewModel.seekbar, in: 0...1.0, onEditingChanged: { isSeeking in
-                    viewModel.apply(.seeking(isSeeking))
-                })
+
+                Slider(value: $viewModel.seekbar, in: 0...viewModel.endDuration) {
+                    viewModel.apply(.seeking($0))
+                }
+                .controlSize(.small)
+
                 Text(String(timeInterval: viewModel.endDuration))
             }
 
@@ -64,9 +66,15 @@ struct VideoPlayerControlsView: View {
                     .onTapGesture {
                         viewModel.isMuted ? viewModel.apply(.unmuteVideo) : viewModel.apply(.muteVideo)
                     }
-                    .onHover {
-                        isHoveringVolume = $0
+
+                if !viewModel.isMuted {
+                    Slider(value: $viewModel.volume, in: 0...100) {
+                        viewModel.apply(.changingVolume($0))
                     }
+                    .frame(width: 80)
+                    .controlSize(.small)
+                }
+
                 VideoPlayerControlsButtonView(title: "Change playback speed", image: viewModel.playbackRate.rawValue)
                     .onTapGesture {
                         switch viewModel.playbackRate {
@@ -82,6 +90,7 @@ struct VideoPlayerControlsView: View {
         }
         .symbolVariant(.fill)
         .labelStyle(.iconOnly)
+        .animation(.easeIn(duration: 0.25), value: viewModel.isMuted)
         .onAppear {
             viewModel.apply(.onAppear)
         }
@@ -99,10 +108,14 @@ struct VideoPlayerControlsButtonView: View {
     let title: String
     let image: String
     @State private var isHovering: Bool = false
+
     var body: some View {
         Label(title, systemImage: image)
             .padding(6)
             .background(isHovering ? .ultraThickMaterial : .ultraThinMaterial)
             .cornerRadius(8)
+            .onHover {
+                isHovering = $0
+            }
     }
 }
