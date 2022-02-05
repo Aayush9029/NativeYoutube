@@ -10,8 +10,6 @@ import Foundation
 
 struct Constants {
     let apiKey: String = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
-    let iinaPath: String = ""
-    let youtubeDLPath: String = ""
     static let demoYoutubeVideo: String = "https://www.youtube.com/watch?v=WrFPERZb7uw"
     static let templateYoutubeURL: String = "https://www.youtube.com/watch?v="
 }
@@ -32,8 +30,6 @@ enum StatusStates: String {
 
 enum AppStorageStrings: String{
     case apiKey = "Api Key"
-    case mpvPath = "Mpv Path"
-    case youtubeDLPath = "Youtube DL Path"
     case isShowingDetails = "Show Detailed Info"
     case playListID = "Playlist ID for your goto playlist"
 }

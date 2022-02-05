@@ -14,8 +14,6 @@ class SearchViewModel: ObservableObject{
     @Published var videos = [SearchModel]()
     @Published var currentStatus: RequestStatus = .none
     
-    @AppStorage(AppStorageStrings.mpvPath.rawValue) var mpvPath = ""
-    @AppStorage(AppStorageStrings.youtubeDLPath.rawValue) var youtubedlPath = ""
     @AppStorage(AppStorageStrings.apiKey.rawValue) var apiKey = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
     
     let maxResults = "25"

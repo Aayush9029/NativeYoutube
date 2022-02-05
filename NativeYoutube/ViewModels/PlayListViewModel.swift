@@ -13,8 +13,6 @@ class PlayListViewModel: ObservableObject{
     @Published var videos = [PlayListModel]()
     @Published var currentStatus: RequestStatus = .none
     
-    @AppStorage(AppStorageStrings.mpvPath.rawValue) var mpvPath = ""
-    @AppStorage(AppStorageStrings.youtubeDLPath.rawValue) var youtubedlPath = ""
     @AppStorage(AppStorageStrings.apiKey.rawValue) var apiKey = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
     

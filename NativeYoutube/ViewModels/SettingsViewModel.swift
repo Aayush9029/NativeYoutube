@@ -12,8 +12,6 @@ class SettingsViewModel: ObservableObject{
     
     //    Global settings
     @AppStorage(AppStorageStrings.apiKey.rawValue) var apiKey = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
-    @AppStorage(AppStorageStrings.mpvPath.rawValue) var mpvPath = ""
-    @AppStorage(AppStorageStrings.youtubeDLPath.rawValue) var youtubedlPath = ""
     @AppStorage(AppStorageStrings.isShowingDetails.rawValue) var isShowingDetails = false
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
     
@@ -34,21 +32,7 @@ class SettingsViewModel: ObservableObject{
     
     
     var shellProcess: Process?
-    
-    func changeYoutubeDLpath(newPath: String) -> Bool{
-        if isValidPath(for: newPath){
-            youtubedlPath = newPath
-        }
-        return isValidPath(for: newPath)
-    }
-    
-    
-    func changeMPVpath(newPath: String) -> Bool{
-        if isValidPath(for: newPath){
-            mpvPath = newPath
-        }
-        return isValidPath(for: newPath)
-    }
+
     
     
     func changePlayListID(for playlistURL: String) -> Bool{
@@ -78,7 +62,7 @@ class SettingsViewModel: ObservableObject{
         if redacted {
             logsText = logsText.replacingOccurrences(of: apiKey, with: "********APIKEY*****")
         }else{
-            logsText += "\n API KEY: \"\(apiKey)\"\n youtubedlPath: \"\(youtubedlPath)\"\n mpvPath: \"\(mpvPath)\""
+            logsText += "\n API KEY: \"\(apiKey)\""
         }
         
         let pasteBoard = NSPasteboard.general
