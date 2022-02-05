@@ -117,7 +117,7 @@ class SettingsViewModel: ObservableObject{
             fatalError("YTDL not in bundle, provide custom")
         }
         let betterPath = ytdlPath.absoluteString.replacingOccurrences(of: "file:///", with: "/")
-        let output = shell("\(betterPath) '\(url)' -g")
+        let output = shell("python3 \(betterPath) '\(url)' -g")
         let splitted = output.split(separator: "\n")
         
         if let audioUrl = splitted.last{
