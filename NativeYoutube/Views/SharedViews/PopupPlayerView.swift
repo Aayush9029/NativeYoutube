@@ -10,13 +10,36 @@ import YouTubePlayerKit
 
 struct PopupPlayerView: View {
     let youtubePlayer: YouTubePlayer
+    @State var isHoveringOnPlayer = false
+
     var body: some View {
-        VStack{
-            VideoPlayerView(youtubePlayer: youtubePlayer)
-                .cornerRadius(20)
-            VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
-                .padding(.horizontal)
-                .padding(.bottom, 5)
+        ZStack(alignment: .topLeading) {
+            VStack{
+                VideoPlayerView(youtubePlayer: youtubePlayer)
+                    .cornerRadius(20)
+                    .onHover { hovering in
+                        withAnimation {
+                            isHoveringOnPlayer = hovering
+                        }
+                    }
+
+                VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
+                    .padding(.horizontal)
+                    .padding(.bottom, 5)
+            }
+
+            if isHoveringOnPlayer {
+                Button(role: .cancel) {
+                    NSApp.keyWindow?.close()
+                } label: {
+                    Label("Close", systemImage: "xmark")
+                        .labelStyle(.iconOnly)
+                        .foregroundColor(.secondary)
+                }
+                .background(.ultraThickMaterial)
+                .frame(width: 28, height: 28)
+                .offset(x: 28/2, y: 28/2)
+            }
         }
         .background(.ultraThinMaterial)
         .cornerRadius(20)

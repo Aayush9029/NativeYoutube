@@ -9,31 +9,34 @@ import SwiftUI
 import Cocoa
 
 extension View {
-    private func newWindowInternal(with title: String, isTransparent: Bool?) -> NSWindow {
-        let window = NSWindow(
+    private func newWindowInternal(with title: String, isTransparent: Bool = false) -> NSWindow {
+        let window = KeyWindow(
             contentRect: NSRect(x: 20, y: 20, width: 680, height: 600),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered,
-            defer: false)
-        window.becomeKey()
+            defer: false
+        )
+
+        window.makeKey()
         window.isReleasedWhenClosed = false
         window.title = title
         window.makeKeyAndOrderFront(self)
         window.level = .floating
-        if let isTransparent = isTransparent{
-            if isTransparent{
-                window.backgroundColor =  .clear
-                window.isOpaque = false
-                window.styleMask = [.hudWindow, .closable]
-                window.isMovableByWindowBackground = true
-                window.makeKeyAndOrderFront(self)
-            }
+        if isTransparent{
+            window.backgroundColor =  .clear
+            window.isOpaque = false
+            window.styleMask = [.hudWindow, .closable]
+            window.isMovableByWindowBackground = true
+            window.makeKeyAndOrderFront(self)
         }
         window.setIsVisible(true)
         return window
     }
-    
-    func openNewWindow(with title: String = "New Window",  isTransparent: Bool?) {
-        self.newWindowInternal(with: title, isTransparent: isTransparent).contentView = NSHostingView(rootView: self)
+
+    func openNewWindow(with title: String = "New Window",  isTransparent: Bool = false) {
+        let window = newWindowInternal(with: title, isTransparent: isTransparent)
+        window.contentView = NSHostingView(rootView: self)
+        NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(self)
     }
 }
