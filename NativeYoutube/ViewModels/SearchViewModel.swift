@@ -73,7 +73,6 @@ class SearchViewModel: ObservableObject{
                 
                 for video in json["items"]{
                     let data = video.1
-                    //                    self.videoIDs.append(data["id"]["videoId"].string!)
                     if let videoID = data["id"]["videoId"].string{
                         do{
                             try await self.fetchVideoDetails(for: videoID)
@@ -127,7 +126,7 @@ class SearchViewModel: ObservableObject{
                         
                         self.videos.append(SearchModel(title: title, thumbnail: thumbnail_url, publishedAt: publishedAt, url: URL(string: url)!))
                         self.currentStatus = .doneFetching
-
+                        
                     }
                 }
                 

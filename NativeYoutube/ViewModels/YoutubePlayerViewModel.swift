@@ -20,7 +20,7 @@ class YoutubePlayerViewModel: ObservableObject {
     }
     
     static let configuration = YouTubePlayer.Configuration(
-        isUserInteractionEnabled: true,
+        isUserInteractionEnabled: false,
         allowsPictureInPictureMediaPlayback: true,
         autoPlay: true,
         showControls: false,
