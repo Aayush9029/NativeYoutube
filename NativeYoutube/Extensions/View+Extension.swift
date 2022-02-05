@@ -11,7 +11,7 @@ import Cocoa
 extension View {
     private func newWindowInternal(with title: String, isTransparent: Bool = false) -> NSWindow {
         let window = KeyWindow(
-            contentRect: NSRect(x: 20, y: 20, width: 680, height: 600),
+            contentRect: NSRect(x: 20, y: 20, width: 640, height: 360),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
