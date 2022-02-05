@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		132F7F5D27AE244E00D0F607 /* KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132F7F5C27AE244E00D0F607 /* KeyWindow.swift */; };
 		13E02D0A27ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E02D0927ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift */; };
 		13E02D0C27ABD2FE00B4A648 /* String+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E02D0B27ABD2FE00B4A648 /* String+Time.swift */; };
 		C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD34F272C853E00B4DC16 /* ContentView.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		132F7F5C27AE244E00D0F607 /* KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyWindow.swift; sourceTree = "<group>"; };
 		13E02D0927ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControlsViewModel.swift; sourceTree = "<group>"; };
 		13E02D0B27ABD2FE00B4A648 /* String+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Time.swift"; sourceTree = "<group>"; };
 		C27DD34A272C853E00B4DC16 /* NativeYoutube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeYoutube.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +173,7 @@
 				C27DD367272C85F900B4DC16 /* StatusBarController.swift */,
 				C27DD365272C85E400B4DC16 /* EventMonitor.swift */,
 				C27DD39C272CA96700B4DC16 /* DateConverter.swift */,
+				132F7F5C27AE244E00D0F607 /* KeyWindow.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				C27DD36E272C8A3400B4DC16 /* PlayListModel.swift in Sources */,
 				C27DD3AC272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift in Sources */,
 				C294A6FD272E267500DD5E73 /* AudioPlayerControlsView.swift in Sources */,
+				132F7F5D27AE244E00D0F607 /* KeyWindow.swift in Sources */,
 				C27DD3A6272CADE500B4DC16 /* SearchedVideosView.swift in Sources */,
 				C294A6FF272E26AB00DD5E73 /* Utility.swift in Sources */,
 				C27DD39B272CA54A00B4DC16 /* SearchViewModel.swift in Sources */,
@@ -613,7 +617,7 @@
 			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.1.9;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
