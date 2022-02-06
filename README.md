@@ -34,7 +34,7 @@ It is no longer being maintained however there are forks of the "Mubbii" which a
 Mubbii required mpv and youtube-dl to be installed. This is a standalone app. Internals have been reworked from the ground up for new macOS version.
 
 > **How do I Get a YouTube API Key?**
-1. Log in to Google Developers Console, Here's The Official Documentation follow step 2 and 3
+1. Log in to Google Developers Console
 2. Create a new project.
 3. On the new project dashboard, click Explore & Enable APIs.
 4. In the library, navigate to YouTube Data API v3 under YouTube APIs.
