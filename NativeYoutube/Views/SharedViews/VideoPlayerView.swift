@@ -11,8 +11,8 @@ import YouTubePlayerKit
 struct VideoPlayerView: View {
     let youtubePlayer: YouTubePlayer
     var body: some View {
-        YouTubePlayerView(self.youtubePlayer){ state in
-            switch state{
+        YouTubePlayerView(self.youtubePlayer) { state in
+            switch state {
             case .idle:
                 ProgressView()
             case .ready:

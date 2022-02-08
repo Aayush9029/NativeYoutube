@@ -14,8 +14,8 @@ struct VideoContextMenuView: View {
     let video: VideoModel
 
     var body: some View {
-        Group{
-            VStack{
+        Group {
+            VStack {
                 Button(action: {
                     appStateViewModel.playAudioYTDL(url: video.url, title: video.title)
                 }, label: {
@@ -39,11 +39,11 @@ struct VideoContextMenuView: View {
     }
 }
 
-//struct VideoContextMenu_Preview: PreviewProvider {
+// struct VideoContextMenu_Preview: PreviewProvider {
 //    static var previews: some View {
 //        VideoContextMenuView(video: .exampleData)
 //            .environmentObject(AppStateViewModel())
 //            .environmentObject(YoutubePlayerViewModel())
 //            .frame(width: 350)
 //    }
-//}
+// }

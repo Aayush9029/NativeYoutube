@@ -31,7 +31,7 @@ struct ContentView: View {
     }
 }
 
-enum Pages: String{
+enum Pages: String {
     case playlists = "Playlists"
     case search = "Search"
 }
@@ -42,4 +42,3 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(AppStateViewModel())
     }
 }
-

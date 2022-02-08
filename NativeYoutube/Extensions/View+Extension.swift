@@ -22,7 +22,7 @@ extension View {
         window.title = title
         window.makeKeyAndOrderFront(self)
         window.level = .floating
-        if isTransparent{
+        if isTransparent {
             window.backgroundColor =  .clear
             window.isOpaque = false
             window.styleMask = [.hudWindow, .closable]
@@ -33,7 +33,7 @@ extension View {
         return window
     }
 
-    func openNewWindow(with title: String = "New Window",  isTransparent: Bool = false) {
+    func openNewWindow(with title: String = "New Window", isTransparent: Bool = false) {
         let window = newWindowInternal(with: title, isTransparent: isTransparent)
         window.contentView = NSHostingView(rootView: self)
         NSApp.activate(ignoringOtherApps: true)

@@ -11,10 +11,10 @@ import YouTubePlayerKit
 struct PopupPlayerView: View {
     let youtubePlayer: YouTubePlayer
     @State var isHoveringOnPlayer = false
-    
+
     var body: some View {
         ZStack(alignment: .topLeading) {
-            VStack{
+            VStack {
                 VideoPlayerView(youtubePlayer: youtubePlayer)
                     .cornerRadius(20)
                     .onHover { hovering in
@@ -22,12 +22,12 @@ struct PopupPlayerView: View {
                             isHoveringOnPlayer = hovering
                         }
                     }
-                
+
                 VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
                     .padding(.horizontal)
                     .padding(.bottom, 5)
             }
-            
+
             if isHoveringOnPlayer {
                 PopUpPlayerCloseButton()
                     .onTapGesture {
@@ -43,7 +43,7 @@ struct PopupPlayerView: View {
 // MARK: - Close Button for Popup Player
 
 struct PopUpPlayerCloseButton: View {
-    var body: some View{
+    var body: some View {
         Label("Close", systemImage: "xmark")
             .font(.title3.bold())
             .labelStyle(.iconOnly)

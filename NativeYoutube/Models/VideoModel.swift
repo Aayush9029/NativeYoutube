@@ -25,13 +25,13 @@ struct VideoModel {
         channelTitle: "OliviaRodrigoVEVO"
     )
 
-    var cleanTitle: String{
+    var cleanTitle: String {
         var tt =  String(title.split(separator: "(")[0])
-        
-        if tt.split(separator: "-").count > 1{
+
+        if tt.split(separator: "-").count > 1 {
             tt = String(tt.split(separator: "-")[1])
         }
-        if tt.split(separator: ":").count > 1{
+        if tt.split(separator: ":").count > 1 {
             tt = String(tt.split(separator: ":")[1])
         }
         return tt

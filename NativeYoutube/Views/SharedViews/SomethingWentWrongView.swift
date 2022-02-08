@@ -11,14 +11,14 @@ struct SomethingWentWrongView: View {
     @EnvironmentObject var appStateViewModel: AppStateViewModel
 
     var body: some View {
-        Group{
-            VStack(spacing: 10){
+        Group {
+            VStack(spacing: 10) {
                 Text("Something went wrong 🥶")
                     .font(.largeTitle.bold())
                 Text("Check your API credentials...")
                     .bold()
                     .foregroundStyle(.primary)
-                HStack{
+                HStack {
                     Spacer()
                     Label(appStateViewModel.showingSettings ? "Settings Window Opened" : "Open settings",
                           systemImage: appStateViewModel.showingSettings ? "rectangle" : "gear")

@@ -17,10 +17,10 @@ class YoutubePreferenceViewModel: ObservableObject {
         }
         if redacted {
             logsText = logsText.replacingOccurrences(of: appState.apiKey, with: "********APIKEY*****")
-        }else{
+        } else {
             logsText += "\n API KEY: \"\(appState.apiKey)\""
         }
-        
+
         let pasteBoard = NSPasteboard.general
         pasteBoard.clearContents()
         pasteBoard.setString(logsText, forType: .string)

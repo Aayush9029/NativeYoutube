@@ -10,7 +10,7 @@ import SwiftUI
 struct LogText: View {
     let text: String
     var color: Color = .gray
-    
+
     var body: some View {
             Text(text)
                 .font(.caption2)

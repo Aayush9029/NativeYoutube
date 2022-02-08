@@ -11,21 +11,20 @@ struct CleanButton: View {
     let title: String
     let image: String
     let isCurrent: Bool
-    
+
     var body: some View {
-        Group{
+        Group {
             Label(title, systemImage: image)
                 .labelStyle(.iconOnly)
                 .font(.callout)
                 .foregroundColor(isCurrent ? .red : .gray)
-                
+
         }
         .padding(6)
         .background(.ultraThinMaterial)
         .cornerRadius(8)
         .shadow(color: isCurrent ? .red : .clear, radius: 2, x: 0, y: 0)
 
-        
     }
 }
 

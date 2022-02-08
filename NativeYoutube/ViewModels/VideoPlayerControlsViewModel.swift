@@ -210,14 +210,13 @@ extension VideoPlayerControlsViewModel {
     }
 }
 
-extension VideoPlayerControlsViewModel{
-    enum PlaybackRate: String{
+extension VideoPlayerControlsViewModel {
+    enum PlaybackRate: String {
         case normal = "speedometer"
         case fast = "hare"
         case slow = "tortoise"
     }
 }
-
 
 extension YouTubePlayer {
     // Allows to observe a value within a time frame.

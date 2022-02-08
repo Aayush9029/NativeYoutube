@@ -9,17 +9,17 @@ import SwiftUI
 
 struct VideoPlayerControlsView: View {
     @StateObject var viewModel: VideoPlayerControlsViewModel
-    
+
     var body: some View {
-        HStack{
-            Group{
+        HStack {
+            Group {
                 Button(action: {
                     viewModel.apply(.prevVideo)
                 }, label: {
                     Label("Previous video", systemImage: "backward.end")
                 })
                     .buttonStyle(VideoPlayerControlsButtonStyle())
-                
+
                 switch viewModel.playbackState {
                 case .playing:
                     Button(action: {
@@ -28,12 +28,12 @@ struct VideoPlayerControlsView: View {
                         Label("Pause video", systemImage: "pause")
                     })
                         .buttonStyle(VideoPlayerControlsButtonStyle())
-                    
+
                 case .buffering:
                     ProgressView()
                         .controlSize(.small)
                         .padding(6)
-                    
+
                 case .paused:
                     Button(action: {
                         viewModel.apply(.playVideo)
@@ -41,7 +41,7 @@ struct VideoPlayerControlsView: View {
                         Label("Play video", systemImage: "play")
                     })
                         .buttonStyle(VideoPlayerControlsButtonStyle())
-                    
+
                 default:
                     Button(action: {
                         viewModel.apply(.playVideo)
@@ -50,7 +50,7 @@ struct VideoPlayerControlsView: View {
                     })
                         .buttonStyle(VideoPlayerControlsButtonStyle())
                 }
-                
+
                 Button(action: {
                     viewModel.apply(.nextVideo)
                 }, label: {
@@ -58,31 +58,31 @@ struct VideoPlayerControlsView: View {
                 })
                     .buttonStyle(VideoPlayerControlsButtonStyle())
             }
-            
+
             Spacer()
-            
+
             Group {
                 Text(String(timeInterval: viewModel.seekbar))
-                
+
                 Slider(value: $viewModel.seekbar, in: 0...viewModel.duration) {
                     viewModel.apply(.seeking($0))
                 }
                 .controlSize(.mini)
-                
+
                 Text(String(timeInterval: viewModel.duration))
             }
-            
+
             Spacer()
-            
-            Group{
-                
+
+            Group {
+
                 Button(action: {
                     viewModel.isMuted ? viewModel.apply(.unmuteVideo) : viewModel.apply(.muteVideo)
                 }, label: {
                     Label("Toggle Mute", systemImage: viewModel.isMuted ? "speaker.slash": "speaker.wave.3")
                 })
                     .buttonStyle(VideoPlayerControlsButtonStyle())
-                
+
                 if !viewModel.isMuted {
                     Slider(value: $viewModel.volume, in: 0...100) {
                         viewModel.apply(.changingVolume($0))
@@ -90,7 +90,7 @@ struct VideoPlayerControlsView: View {
                     .frame(width: 80)
                     .controlSize(.mini)
                 }
-                
+
                 Button(action: {
                     switch viewModel.playbackRate {
                     case .normal:
@@ -122,10 +122,9 @@ struct VideoPlayerControlsView_Previews: PreviewProvider {
     }
 }
 
-
 struct VideoPlayerControlsButtonStyle: ButtonStyle {
     @State private var isHovering: Bool = false
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(6)

@@ -26,7 +26,7 @@ struct SearchView: View {
                         SearchButton()
                             .onTapGesture {
                                 searchViewModel.startSearch(apiKey: appStateViewModel.apiKey)
-                                appStateViewModel.addToLogs(for: .search, message:"Searching for \($searchViewModel.searchQuery)")
+                                appStateViewModel.addToLogs(for: .search, message: "Searching for \($searchViewModel.searchQuery)")
                             }
                     }
                     .padding([.horizontal, .top])
@@ -53,7 +53,7 @@ struct SearchView: View {
 
 struct SearchButton: View {
     var body: some View {
-        Group{
+        Group {
             Text("Search")
                 .font(.callout)
         }
@@ -64,15 +64,14 @@ struct SearchButton: View {
     }
 }
 
-struct SearchView_Previews: PreviewProvider {    
+struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
             .environmentObject(AppStateViewModel())
     }
 }
 
-
-extension SearchView{
+extension SearchView {
     func toggleSidebar() {
         DispatchQueue.main.async {
             NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)

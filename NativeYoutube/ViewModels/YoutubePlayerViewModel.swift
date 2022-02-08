@@ -8,16 +8,15 @@
 import SwiftUI
 import YouTubePlayerKit
 
-
 class YoutubePlayerViewModel: ObservableObject {
     @Published var currentVideo: YouTubePlayer?
 
-    func playVideo(url: String){
+    func playVideo(url: String) {
         currentVideo = YouTubePlayer.init(source: YouTubePlayer.Source.url(url), configuration: YoutubePlayerViewModel.configuration)
         PopupPlayerView(youtubePlayer: currentVideo ?? YoutubePlayerViewModel.exampleVideo)
             .openNewWindow(isTransparent: true)
     }
-    
+
     static let configuration = YouTubePlayer.Configuration(
         isUserInteractionEnabled: false,
         allowsPictureInPictureMediaPlayback: true,
@@ -30,9 +29,8 @@ class YoutubePlayerViewModel: ObservableObject {
     )
 }
 
-
 // MARK: - Example video data
-extension YoutubePlayerViewModel{
+extension YoutubePlayerViewModel {
     static let exampleVideo = YouTubePlayer(
         source: .video(id: "LDU_Txk06tM"),
         configuration:

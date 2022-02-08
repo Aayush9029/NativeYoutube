@@ -7,32 +7,31 @@
 
 import Foundation
 
-func dateToString(date: Date) -> String{
+func dateToString(date: Date) -> String {
     let calendar = Calendar.current
-    
-    if calendar.isDateInToday(date){
+
+    if calendar.isDateInToday(date) {
         return "Today"
-        
-    }else if calendar.isDateInYesterday(date){
+
+    } else if calendar.isDateInYesterday(date) {
         return "Yesterday"
-        
-    }else{
+
+    } else {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         return formatter.string(from: date)
     }
 }
 
+func timestampToDate(timestamp: String) -> String {
 
-func timestampToDate(timestamp: String) -> String{
-    
     let dateStringFormatter = DateFormatter()
     dateStringFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
     let d = dateStringFormatter.date(from: timestamp)
-    
+
     if let d = d {
         return dateToString(date: d)
     }
-    
+
     return timestamp
 }

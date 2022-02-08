@@ -7,14 +7,12 @@
 
 import Foundation
 
-
 struct Constants {
     static let defaultAPIKey: String = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
     static let demoYoutubeVideo: String = "https://www.youtube.com/watch?v=WrFPERZb7uw"
     static let templateYoutubeURL: String = "https://www.youtube.com/watch?v="
     static let defaultPlaylistID: String = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
 }
-
 
 enum StatusStates: String {
     case starting = "Starting.."
@@ -29,7 +27,7 @@ enum StatusStates: String {
     case videoLoaded = "View Has Been Loaded"
 }
 
-enum AppStorageStrings: String{
+enum AppStorageStrings: String {
     case apiKey = "Api Key"
     case playListID = "Playlist ID for your goto playlist"
 }

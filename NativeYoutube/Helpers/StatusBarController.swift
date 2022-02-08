@@ -13,9 +13,8 @@ class StatusBarController: ObservableObject {
     private var statusItem: NSStatusItem?
     private var popover: NSPopover?
     private var eventMonitor: EventMonitor?
-    
-    init()
-    {
+
+    init() {
         eventMonitor = EventMonitor(mask: [.leftMouseDown, .rightMouseDown], handler: mouseEventHandler)
     }
 
@@ -31,10 +30,9 @@ class StatusBarController: ObservableObject {
 
     @objc private func togglePopover(sender: AnyObject) {
         if let popover = popover {
-            if(popover.isShown) {
+            if popover.isShown {
                 hidePopover(sender)
-            }
-            else {
+            } else {
                 showPopover(sender)
             }
         }
@@ -47,12 +45,12 @@ class StatusBarController: ObservableObject {
             eventMonitor?.start()
         }
     }
-    
+
     private func hidePopover(_ sender: AnyObject) {
         popover?.performClose(sender)
         eventMonitor?.stop()
     }
-    
+
     private func mouseEventHandler(_ event: NSEvent?) {
         if let popover = popover {
             if popover.isShown, let event = event {
@@ -71,7 +69,7 @@ class StatusBarController: ObservableObject {
             statusBarButton.image = #imageLiteral(resourceName: "StatusBarIcon")
             statusBarButton.image?.size = NSSize(width: 18.0, height: 18.0)
             statusBarButton.image?.isTemplate = true
-                
+
             statusBarButton.action = #selector(togglePopover(sender:))
             statusBarButton.target = self
         }

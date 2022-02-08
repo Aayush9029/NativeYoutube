@@ -16,17 +16,17 @@ struct VideoRowView: View {
         Group {
             HStack {
                 ThumbnailView(url: video.thumbnail)
-                
+
                 VStack(alignment: .leading, spacing: 2) {
                     Text(video.title)
                         .foregroundStyle(.primary)
                         .font(.title3.bold())
                         .lineLimit(1)
-                    
+
                     Text(video.publishedAt)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
-                    
+
                     Text(video.channelTitle)
                         .foregroundStyle(.tertiary)
                         .font(.caption)

@@ -24,7 +24,7 @@ struct YoutubePreferenceView: View {
                 Link(
                     destination: URL(string: Constants.demoYoutubeVideo)!,
                     label: {
-                        HStack{
+                        HStack {
                             Spacer()
                             Label("How to get Google API Key?", systemImage: "globe")
                             Spacer()
@@ -54,11 +54,11 @@ struct YoutubePreferenceView: View {
                             youtubePreferenceViewModel.copyLogsToClipboard(redacted: true, appState: appStateViewModel)
                         }
                         .contextMenu {
-                            Button("Copy raw"){
+                            Button("Copy raw") {
                                 youtubePreferenceViewModel.copyLogsToClipboard(redacted: false, appState: appStateViewModel)
                             }
                         }
-                    
+
                     Label(showLogs ? "Hide" : "Show", systemImage: showLogs ? "chevron.up" : "chevron.down")
                         .padding(8)
                         .background(.thinMaterial)

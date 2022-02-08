@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftyJSON
 
 class PlayListViewModel: ObservableObject {
-    
+
     @Published var videos = [VideoModel]()
     @Published var currentStatus: RequestStatus = .none
 
@@ -32,14 +32,13 @@ class PlayListViewModel: ObservableObject {
                     self.currentStatus = .startedFetching
                 }
                 try await self.fetchPlayListVideos(apiKey: apiKey, playListID: playListID)
-            }
-            catch {
+            } catch {
                 print("Couldn't load playlist videos")
             }
         }
     }
 
-    private func fetchPlayListVideos(apiKey: String, playListID: String) async throws{
+    private func fetchPlayListVideos(apiKey: String, playListID: String) async throws {
         DispatchQueue.main.sync {
             self.videos = []
         }
@@ -71,8 +70,7 @@ class PlayListViewModel: ObservableObject {
                     self.currentStatus = .doneFetching
                 }
             }
-        }
-        catch {
+        } catch {
             DispatchQueue.main.sync {
                 self.currentStatus = .unknownError
             }
@@ -80,4 +78,3 @@ class PlayListViewModel: ObservableObject {
         }
     }
 }
-

@@ -13,8 +13,8 @@ struct BottomBarView: View {
     @Binding var currentPage: Pages
 
     var body: some View {
-        Group{
-            HStack{
+        Group {
+            HStack {
                 CleanButton(title: "Playlists", image: "music.note.list", isCurrent: currentPage == .playlists)
                     .onTapGesture {
                         withAnimation {
@@ -28,18 +28,18 @@ struct BottomBarView: View {
                         }
                     }
                 if appStateViewModel.isPlaying {
-                    ScrollView(.horizontal, showsIndicators: false){
+                    ScrollView(.horizontal, showsIndicators: false) {
                     Text("\(appStateViewModel.currentlyPlaying)")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                        
+
                     }
                     .lineLimit(1)
                 }
                 Spacer()
                 CleanButton(title: "Settings", image: appStateViewModel.showingSettings ? "rectangle" : "gear", isCurrent: false)
                     .contextMenu(menuItems: {
-                        Button("Close App"){
+                        Button("Close App") {
                             NSApplication.shared.terminate(self)
                         }
                     })
@@ -59,7 +59,6 @@ struct BottomBarView: View {
         }
     }
 }
-
 
 struct BottomBarView_Previews: PreviewProvider {
     static var previews: some View {

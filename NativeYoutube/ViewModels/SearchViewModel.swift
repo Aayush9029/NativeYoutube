@@ -22,7 +22,7 @@ class SearchViewModel: ObservableObject {
 
         case invalidURL = "The api URL is invalid"
         case invalidResponse = "The response we got from server is invalid"
-        
+
         case unknownError = "I've never seen an error like this before"
     }
 
@@ -33,8 +33,7 @@ class SearchViewModel: ObservableObject {
                     self.currentStatus = .startedFetching
                 }
                 try await self.fetchVideos(apiKey: apiKey)
-            }
-            catch {
+            } catch {
                 print(error.localizedDescription)
             }
         }
@@ -73,8 +72,7 @@ class SearchViewModel: ObservableObject {
                     self.currentStatus = .doneFetching
                 }
             }
-        }
-        catch {
+        } catch {
             DispatchQueue.main.sync {
                 self.currentStatus = .unknownError
             }
@@ -82,4 +80,3 @@ class SearchViewModel: ObservableObject {
         }
     }
 }
-
