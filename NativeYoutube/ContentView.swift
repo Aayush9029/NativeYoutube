@@ -9,32 +9,25 @@ import SwiftUI
 import AppKit
 
 struct ContentView: View {
-    @StateObject var searchViewModel = SearchViewModel()
-    @StateObject var playlistViewModel = PlayListViewModel()
-    @StateObject var settingsViewModel = SettingsViewModel()
+    @EnvironmentObject var appStateViewModel: AppStateViewModel
+
     @StateObject var youtubePlayerViewModel = YoutubePlayerViewModel()
-    
+
+    @State private var currentPage: Pages = .playlists
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            switch settingsViewModel.currentPage {
+        VStack(alignment: .center, spacing: 0) {
+            switch currentPage {
             case .playlists:
                 PlayListView()
-                    .environmentObject(playlistViewModel)
-                    .environmentObject(settingsViewModel)
                     .environmentObject(youtubePlayerViewModel)
             case .search:
                 SearchView()
-                    .environmentObject(searchViewModel)
-                    .environmentObject(settingsViewModel)
                     .environmentObject(youtubePlayerViewModel)
             }
-            BottomBarView()
-                .environmentObject(settingsViewModel)
+            BottomBarView(currentPage: $currentPage)
         }
         .frame(width: 380.0)
-        .onChange(of: playlistViewModel.currentStatus) { newValue in
-            settingsViewModel.addToLogs(for: settingsViewModel.currentPage, message: newValue.rawValue)
-        }
     }
 }
 
@@ -46,6 +39,7 @@ enum Pages: String{
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(AppStateViewModel())
     }
 }
 

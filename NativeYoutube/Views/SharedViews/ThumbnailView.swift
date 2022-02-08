@@ -23,6 +23,6 @@ struct ThumbnailView: View {
 
 struct ThumbnailView_Previews: PreviewProvider {
     static var previews: some View {
-        ThumbnailView(url: PlayListModel.exampleData.thumbnail)
+        ThumbnailView(url: VideoModel.exampleData.thumbnail)
     }
 }

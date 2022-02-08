@@ -1,13 +1,14 @@
 //
-//  MainViewController.swift
+//  MainHostingViewController.swift
 //  NativeYoutube
 //
 //  Created by Aayush Pokharel on 2021-10-29.
 //
 
 import AppKit
+import SwiftUI
 
-class MainViewController: NSViewController {
+class MainHostingViewController<Content>: NSHostingController<Content> where Content: View {
     override func viewDidAppear()
     {
         super.viewDidAppear()
