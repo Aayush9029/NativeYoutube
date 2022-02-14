@@ -9,7 +9,7 @@ import SwiftUI
 import YouTubePlayerKit
 
 struct PopupPlayerView: View {
-    let youtubePlayer: YouTubePlayer
+    @StateObject var youtubePlayer: YouTubePlayer
     @State var isHoveringOnPlayer = false
 
     var body: some View {
