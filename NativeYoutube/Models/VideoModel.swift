@@ -26,15 +26,15 @@ struct VideoModel {
     )
 
     var cleanTitle: String {
-        var tt =  String(title.split(separator: "(")[0])
+        var title =  String(title.split(separator: "(")[0])
 
-        if tt.split(separator: "-").count > 1 {
-            tt = String(tt.split(separator: "-")[1])
+        if title.split(separator: "-").count > 1 {
+            title = String(title.split(separator: "-")[1])
         }
-        if tt.split(separator: ":").count > 1 {
-            tt = String(tt.split(separator: ":")[1])
+        if title.split(separator: ":").count > 1 {
+            title = String(title.split(separator: ":")[1])
         }
-        return tt
+        return title
     }
 
     enum VideoKind: String {
