@@ -16,6 +16,7 @@
 		133DCE5227ADF16600AE6F1F /* GeneralPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133DCE5127ADF16600AE6F1F /* GeneralPreferenceView.swift */; };
 		133DCE5627ADF29C00AE6F1F /* YoutubePreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133DCE5527ADF29C00AE6F1F /* YoutubePreferenceView.swift */; };
 		138F4D1427ACFCBC00DF099D /* NativeYoutubeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138F4D1327ACFCBC00DF099D /* NativeYoutubeApp.swift */; };
+		139EF52F27BAC7950031BF1D /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EF52E27BAC7950031BF1D /* URL+Extension.swift */; };
 		13E02D0A27ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E02D0927ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift */; };
 		13E02D0C27ABD2FE00B4A648 /* String+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E02D0B27ABD2FE00B4A648 /* String+Time.swift */; };
 		13FA3CF127AF820D005555C3 /* VideoRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FA3CF027AF820C005555C3 /* VideoRowView.swift */; };
@@ -64,6 +65,7 @@
 		133DCE5127ADF16600AE6F1F /* GeneralPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferenceView.swift; sourceTree = "<group>"; };
 		133DCE5527ADF29C00AE6F1F /* YoutubePreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePreferenceView.swift; sourceTree = "<group>"; };
 		138F4D1327ACFCBC00DF099D /* NativeYoutubeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeYoutubeApp.swift; sourceTree = "<group>"; };
+		139EF52E27BAC7950031BF1D /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		13E02D0927ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControlsViewModel.swift; sourceTree = "<group>"; };
 		13E02D0B27ABD2FE00B4A648 /* String+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Time.swift"; sourceTree = "<group>"; };
 		13FA3CF027AF820C005555C3 /* VideoRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRowView.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				C27DD3A9272CB9FD00B4DC16 /* View+Extension.swift */,
 				C27DD3AB272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift */,
 				13E02D0B27ABD2FE00B4A648 /* String+Time.swift */,
+				139EF52E27BAC7950031BF1D /* URL+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				C27DD3B7272CE9DF00B4DC16 /* BottomBarView.swift in Sources */,
 				C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */,
 				C27DD373272C8A8900B4DC16 /* Collections+Extension.swift in Sources */,
+				139EF52F27BAC7950031BF1D /* URL+Extension.swift in Sources */,
 				C2A7FC29274D808D000D6D33 /* VideoContextMenuView.swift in Sources */,
 				138F4D1427ACFCBC00DF099D /* NativeYoutubeApp.swift in Sources */,
 				C27DD386272C8DD100B4DC16 /* Constants.swift in Sources */,

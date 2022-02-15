@@ -9,10 +9,6 @@ import SwiftUI
 import AppKit
 
 struct ContentView: View {
-    @EnvironmentObject var appStateViewModel: AppStateViewModel
-
-    @StateObject var youtubePlayerViewModel = YoutubePlayerViewModel()
-
     @State private var currentPage: Pages = .playlists
 
     var body: some View {
@@ -20,10 +16,8 @@ struct ContentView: View {
             switch currentPage {
             case .playlists:
                 PlayListView()
-                    .environmentObject(youtubePlayerViewModel)
             case .search:
                 SearchView()
-                    .environmentObject(youtubePlayerViewModel)
             }
             BottomBarView(currentPage: $currentPage)
         }
@@ -39,6 +33,5 @@ enum Pages: String {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(AppStateViewModel())
     }
 }
