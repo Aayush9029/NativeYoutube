@@ -43,3 +43,10 @@ Mubbii required mpv and youtube-dl to be installed. This is a standalone app. In
 7. A screen will appear with the API key.
 
 *Here's a [video link](https://www.youtube.com/watch?v=WrFPERZb7uw) for old version of app, process of api key retrival is similar*
+
+
+> **How do I add custom playlist?**
+
+1. Find a playlist you like, eg: https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PL634F2B56B8C346A2
+2. Copy the word after "list=" it's `PL634F2B56B8C346A2` in this case
+3. Paste it in the prefrence window (NativeYoutube > Prefrence (Command + , ) > General > Custom Playlist)
