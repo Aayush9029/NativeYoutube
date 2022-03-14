@@ -12,11 +12,11 @@ struct PreferencesView: View {
 
     var body: some View {
         TabView {
-            // Not fully implemented as of now
-//            GeneralPreferenceView()
-//                .tabItem {
-//                    Label("General", systemImage: "gearshape")
-//                }
+//             Not fully implemented as of now
+            GeneralPreferenceView()
+                .tabItem {
+                    Label("General", systemImage: "gearshape")
+                }
 
             YoutubePreferenceView()
                 .tabItem {

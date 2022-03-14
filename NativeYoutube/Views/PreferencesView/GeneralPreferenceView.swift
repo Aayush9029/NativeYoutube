@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct GeneralPreferenceView: View {
+    @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = Constants.defaultPlaylistID
+    
     var body: some View {
-        Text("General settings go here.")
+        VStack(alignment: .leading){
+            Text("Custom Playlist ID")
+                .font(.title3.bold())
+                .padding(.top)
+            
+            TextField("Playlist ID", text: $playListID)
+                .padding([.bottom], 10)
+                .textFieldStyle(.roundedBorder)
+        }
+        .padding(.horizontal)
+        .frame(width: 350)
+        
+
     }
 }
 
