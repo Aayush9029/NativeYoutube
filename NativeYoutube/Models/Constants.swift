@@ -30,4 +30,7 @@ enum StatusStates: String {
 enum AppStorageStrings: String {
     case apiKey = "Api Key"
     case playListID = "Playlist ID for your goto playlist"
+
+//    iina plus works much better, this could potentially replace youtubeplayerkit
+    case useIINA = "Use IINA Plus"
 }

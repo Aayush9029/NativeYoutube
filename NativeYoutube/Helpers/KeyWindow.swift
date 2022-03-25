@@ -8,9 +8,6 @@
 import AppKit
 
 class KeyWindow: NSWindow {
-    // This fixes issue when cannot set key window
-    // when dynamically creating via SwiftUI
-
     override var canBecomeKey: Bool {
         return true
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 class YoutubePreferenceViewModel: ObservableObject {
-
+    
     func copyLogsToClipboard(redacted: Bool = true, appState: AppStateViewModel) {
         var logsText = ""
         for log in appState.logs {

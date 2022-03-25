@@ -15,6 +15,16 @@ struct VideoContextMenuView: View {
 
     var body: some View {
         Group {
+            Group {
+                if appStateViewModel.useIINA {
+                    Button(action: {
+                        appStateViewModel.playVideoIINA(url: video.url, title: video.title)
+                    }, label: {
+                        Label("Play Video in IINA", systemImage: "play.circle")
+                    })
+                    Divider()
+                }
+            }
             VStack {
                 Button(action: {
                     appStateViewModel.playAudioYTDL(url: video.url, title: video.title)

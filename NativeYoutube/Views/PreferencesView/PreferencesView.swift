@@ -12,8 +12,8 @@ struct PreferencesView: View {
 
     var body: some View {
         TabView {
-//             Not fully implemented as of now
             GeneralPreferenceView()
+                .environmentObject(appStateViewModel)
                 .tabItem {
                     Label("General", systemImage: "gearshape")
                 }

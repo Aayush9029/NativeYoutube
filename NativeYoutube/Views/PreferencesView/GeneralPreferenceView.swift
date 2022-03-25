@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GeneralPreferenceView: View {
+    @EnvironmentObject var appStateViewModel: AppStateViewModel
+
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = Constants.defaultPlaylistID
     
     var body: some View {
@@ -19,6 +21,17 @@ struct GeneralPreferenceView: View {
             TextField("Playlist ID", text: $playListID)
                 .padding([.bottom], 10)
                 .textFieldStyle(.roundedBorder)
+            
+            Divider()
+            
+                HStack{
+                    Text("Use IINA for video playback")
+                        .font(.title3.bold())
+                    Spacer()
+                    Toggle(isOn: $appStateViewModel.useIINA) {}
+                        .toggleStyle(.switch)
+                }
+            .padding(.bottom)
         }
         .padding(.horizontal)
         .frame(width: 350)
