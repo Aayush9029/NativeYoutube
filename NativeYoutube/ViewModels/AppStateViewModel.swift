@@ -14,7 +14,7 @@ class AppStateViewModel: ObservableObject {
     @AppStorage(AppStorageStrings.apiKey.rawValue) var apiKey = Constants.defaultAPIKey
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = Constants.defaultPlaylistID
     @AppStorage(AppStorageStrings.useIINA.rawValue) var useIINA: Bool = false
-    
+
     // MARK: States
 
     @Published var showingSettings: Bool = false
@@ -69,7 +69,7 @@ class AppStateViewModel: ObservableObject {
         isPlaying.toggle()
         currentlyPlaying = title
     }
-    
+
     func playVideoIINA(url: URL, title: String) {
 //        togglePlaying(title)
         Task {

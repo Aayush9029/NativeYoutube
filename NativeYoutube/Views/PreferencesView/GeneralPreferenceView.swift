@@ -11,20 +11,20 @@ struct GeneralPreferenceView: View {
     @EnvironmentObject var appStateViewModel: AppStateViewModel
 
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = Constants.defaultPlaylistID
-    
+
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading) {
             Text("Custom Playlist ID")
                 .font(.title3.bold())
                 .padding(.top)
-            
+
             TextField("Playlist ID", text: $playListID)
                 .padding([.bottom], 10)
                 .textFieldStyle(.roundedBorder)
-            
+
             Divider()
-            
-                HStack{
+
+                HStack {
                     Text("Use IINA for video playback")
                         .font(.title3.bold())
                     Spacer()
@@ -35,7 +35,6 @@ struct GeneralPreferenceView: View {
         }
         .padding(.horizontal)
         .frame(width: 350)
-        
 
     }
 }
