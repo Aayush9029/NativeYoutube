@@ -1,14 +1,18 @@
 
 <div align="center">
-  <h1>NativeYoutube</h1>
-      <img src="https://user-images.githubusercontent.com/43297314/140234524-4b128551-8f1b-45b5-b61a-8394cca49388.png" width="200px">
-  
-Personal App that turned into "alpha released app"
-      
-  <img src="https://user-images.githubusercontent.com/43297314/140234639-3f9b8621-708f-41e2-9a3f-8ce8136e88e9.png" width='305px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'> <img src="https://user-images.githubusercontent.com/43297314/143126072-7f2902fd-f382-4961-9061-9577e47556d4.png" width='500px'>
- 
-</div>
+    <img src="https://user-images.githubusercontent.com/43297314/140234524-4b128551-8f1b-45b5-b61a-8394cca49388.png" width="200px">
 
+  <h1>NativeYoutube</h1>
+
+  <a href="https://github.com/Aayush9029/NativeYoutube/releases/download/v2.2.3/NativeYoutube.app.zip" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192051-dc8cfd47-1c2d-43f1-bb95-275ae70ef8dd.svg" alt="Buy Me a Coffee" ></a>&nbsp;&nbsp;<a href="https://www.buymeacoffee.com/swiftdev" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192056-015e7f19-d47c-4d80-9843-75946a882078.svg" alt="Download App" ></a>
+	<br>
+	<br>
+  
+
+ <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/lofi.png" width='300px'> <img src="https://raw.githubusercontent.com/Aayush9029/Native-Youtube/main/ReadmeAssets/mkbhd.png" width='300px'> <img src="https://user-images.githubusercontent.com/43297314/143126072-7f2902fd-f382-4961-9061-9577e47556d4.png" width='500px'>
+  
+
+</div>
 
 ## Requirements:
 - MacOS 12.0 or above
