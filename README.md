@@ -4,7 +4,7 @@
 
   <h1>NativeYoutube</h1>
 
-  <a href="https://github.com/Aayush9029/NativeYoutube/releases/download/v2.2.3/NativeYoutube.app.zip" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192051-dc8cfd47-1c2d-43f1-bb95-275ae70ef8dd.svg" alt="Buy Me a Coffee" ></a>&nbsp;&nbsp;<a href="https://www.buymeacoffee.com/swiftdev" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192056-015e7f19-d47c-4d80-9843-75946a882078.svg" alt="Download App" ></a>
+  <a href="https://www.buymeacoffee.com/swiftdev" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192051-dc8cfd47-1c2d-43f1-bb95-275ae70ef8dd.svg" alt="Buy Me a Coffee" ></a>&nbsp;&nbsp;<a href="https://github.com/Aayush9029/NativeYoutube/releases/download/v2.2.3/NativeYoutube.app.zip" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192056-015e7f19-d47c-4d80-9843-75946a882078.svg" alt="Download App" ></a>
 	<br>
 	<br>
   
