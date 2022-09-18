@@ -25,18 +25,6 @@
 
 - Click on the gear icon > paste your api key, you're done.
 
-## FAQ:
-
-> **Where's the non menu bar version that worked on BigSur?**
-
-It's in the [Mubbii branch](https://github.com/Aayush9029/Native-Youtube/tree/Mubbii)
-It is no longer being maintained however there are forks of the "Mubbii" which are being maintained.
-*Note: The codebase for Mubbii is very bad as it was hacked together in couple hours*
-
-> **Why drop support for Mubbii?**
-
-Mubbii required mpv and youtube-dl to be installed. This is a standalone app. Internals have been reworked from the ground up for new macOS version.
-
 > **How do I Get a YouTube API Key?**
 1. Log in to Google Developers Console
 2. Create a new project.
