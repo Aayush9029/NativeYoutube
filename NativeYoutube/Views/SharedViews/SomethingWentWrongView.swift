@@ -20,17 +20,19 @@ struct SomethingWentWrongView: View {
                     .foregroundStyle(.primary)
                 HStack {
                     Spacer()
-                    Label(appStateViewModel.showingSettings ? "Settings Window Opened" : "Open settings",
-                          systemImage: appStateViewModel.showingSettings ? "rectangle" : "gear")
-                        .padding(10)
+                    Button(action: {
+                        if  !appStateViewModel.showingSettings {
+//                          Since MacOS Ventura (13.0), settings window shows by calling showSettingsWindow and not showPreferencesWindow.
+                            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                        }
+                    }, label: {
+                        Label(appStateViewModel.showingSettings ? "Settings Window Opened" : "Open settings",
+                              systemImage: appStateViewModel.showingSettings ? "rectangle" : "gear")
+                    }).padding(10)
                         .background(.ultraThickMaterial)
                         .cornerRadius(10)
+                        .buttonStyle(PlainButtonStyle())
                     Spacer()
-                }
-                .onTapGesture {
-                    if  !appStateViewModel.showingSettings {
-                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                    }
                 }
                 Spacer()
             }

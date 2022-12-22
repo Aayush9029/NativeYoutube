@@ -15,17 +15,18 @@ struct PopupPlayerView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack {
-                VideoPlayerView(youtubePlayer: youtubePlayer)
-                    .cornerRadius(20)
-                    .onHover { hovering in
-                        withAnimation {
-                            isHoveringOnPlayer = hovering
-                        }
-                    }
-
-                VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
-                    .padding(.horizontal)
-                    .padding(.bottom, 5)
+                ZStack {
+//                  Add a rectangle to block the Youtube web UI and therefore improving onHover behaviours.
+                    Rectangle()
+                        .foregroundColor(.clear)
+                    VideoPlayerView(youtubePlayer: youtubePlayer)
+                }
+//              Only show controls if hovering.
+                if isHoveringOnPlayer {
+                    VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
+                        .padding(.horizontal)
+                        .padding(.bottom, 5)
+                }
             }
 
             if isHoveringOnPlayer {
@@ -35,8 +36,15 @@ struct PopupPlayerView: View {
                     }
             }
         }
-        .background(.ultraThinMaterial)
-        .cornerRadius(20)
+//        Detect hover on all the view
+        .onHover { hovering in
+            withAnimation {
+                isHoveringOnPlayer = hovering
+            }
+        }
+        .background(VisualEffectView(material: .popover, blendingMode: .behindWindow))
+        .cornerRadius(10)
+        .frame(minWidth: 480, minHeight: 270)
     }
 }
 

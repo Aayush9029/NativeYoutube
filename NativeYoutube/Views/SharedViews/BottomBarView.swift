@@ -45,7 +45,7 @@ struct BottomBarView: View {
                     })
                     .onTapGesture {
                         if !appStateViewModel.showingSettings {
-                            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
                         }
                     }
                     .disabled(appStateViewModel.showingSettings)

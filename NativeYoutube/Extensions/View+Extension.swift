@@ -12,7 +12,7 @@ extension View {
     private func newWindowInternal(with title: String, isTransparent: Bool = false) -> NSWindow {
         let window = KeyWindow(
             contentRect: NSRect(x: 20, y: 20, width: 640, height: 360),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            styleMask: [.titled, .closable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
@@ -22,10 +22,12 @@ extension View {
         window.title = title
         window.makeKeyAndOrderFront(self)
         window.level = .floating
+        // Failed attempt to make the window sticks at the right aspect ratio, keeping it in comment as it should work (see https://developer.apple.com/documentation/appkit/nswindow/1419507-aspectratio)
+//        window.aspectRatio = NSMakeSize(16.0, 9.0)
         if isTransparent {
-            window.backgroundColor =  .clear
+            window.backgroundColor = .clear
             window.isOpaque = false
-            window.styleMask = [.hudWindow, .closable]
+            window.styleMask = [.hudWindow, .closable, .resizable]
             window.isMovableByWindowBackground = true
             window.makeKeyAndOrderFront(self)
         }

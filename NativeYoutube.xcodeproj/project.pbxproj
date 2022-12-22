@@ -27,7 +27,6 @@
 		C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD354272C853F00B4DC16 /* Preview Assets.xcassets */; };
 		C27DD364272C85C400B4DC16 /* MainHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD363272C85C400B4DC16 /* MainHostingViewController.swift */; };
 		C27DD366272C85E400B4DC16 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD365272C85E400B4DC16 /* EventMonitor.swift */; };
-		C27DD368272C85F900B4DC16 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD367272C85F900B4DC16 /* StatusBarController.swift */; };
 		C27DD373272C8A8900B4DC16 /* Collections+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD372272C8A8900B4DC16 /* Collections+Extension.swift */; };
 		C27DD37C272C8CCF00B4DC16 /* PlayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD37B272C8CCF00B4DC16 /* PlayListView.swift */; };
 		C27DD384272C8D9D00B4DC16 /* YoutubePreferenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD383272C8D9D00B4DC16 /* YoutubePreferenceViewModel.swift */; };
@@ -78,7 +77,6 @@
 		C27DD356272C853F00B4DC16 /* NativeYoutube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NativeYoutube.entitlements; sourceTree = "<group>"; };
 		C27DD363272C85C400B4DC16 /* MainHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHostingViewController.swift; sourceTree = "<group>"; };
 		C27DD365272C85E400B4DC16 /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
-		C27DD367272C85F900B4DC16 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		C27DD36B272C899600B4DC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C27DD36F272C8A6200B4DC16 /* PlayListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListViewModel.swift; sourceTree = "<group>"; };
 		C27DD372272C8A8900B4DC16 /* Collections+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collections+Extension.swift"; sourceTree = "<group>"; };
@@ -199,7 +197,6 @@
 		C27DD35D272C857300B4DC16 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C27DD367272C85F900B4DC16 /* StatusBarController.swift */,
 				C27DD365272C85E400B4DC16 /* EventMonitor.swift */,
 				C27DD39C272CA96700B4DC16 /* DateConverter.swift */,
 				132F7F5C27AE244E00D0F607 /* KeyWindow.swift */,
@@ -390,7 +387,6 @@
 				C294A6FF272E26AB00DD5E73 /* Utility.swift in Sources */,
 				C27DD39B272CA54A00B4DC16 /* SearchViewModel.swift in Sources */,
 				131A386B27AF02F400B67A1B /* AppStateViewModel.swift in Sources */,
-				C27DD368272C85F900B4DC16 /* StatusBarController.swift in Sources */,
 				C2A7FC2B274D8455000D6D33 /* PopupPlayerView.swift in Sources */,
 				C27DD37C272C8CCF00B4DC16 /* PlayListView.swift in Sources */,
 				C27DD397272CA3F900B4DC16 /* ThumbnailView.swift in Sources */,
@@ -551,7 +547,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 4538W4A79B;
+				DEVELOPMENT_TEAM = 2CPY2SAJ3X;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -562,7 +558,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aayushpokharel.opensource.NativeYoutube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -582,7 +578,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 4538W4A79B;
+				DEVELOPMENT_TEAM = 2CPY2SAJ3X;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -593,7 +589,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aayushpokharel.opensource.NativeYoutube;
 				PRODUCT_NAME = "$(TARGET_NAME)";

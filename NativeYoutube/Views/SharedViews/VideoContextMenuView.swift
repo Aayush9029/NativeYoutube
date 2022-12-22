@@ -26,11 +26,14 @@ struct VideoContextMenuView: View {
                 }
             }
             VStack {
-                Button(action: {
-                    appStateViewModel.playAudioYTDL(url: video.url, title: video.title)
-                }, label: {
-                    Label("Play Audio in IINA", systemImage: "music.note")
-                })
+//              Only IINA related controls if user toggeled "Use IINA" setting
+                if appStateViewModel.useIINA {
+                    Button(action: {
+                        appStateViewModel.playAudioYTDL(url: video.url, title: video.title)
+                    }, label: {
+                        Label("Play Audio in IINA", systemImage: "music.note")
+                    })
+                }
                 Button {
                     appStateViewModel.togglePlaying(video.title)
                     youtubePlayerViewModel.playVideo(url: video.url.absoluteString)
