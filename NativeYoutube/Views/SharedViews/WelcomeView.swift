@@ -17,7 +17,8 @@ struct WelcomeView: View {
                 Text("Welcome to")
                     .foregroundStyle(.secondary)
                 Text("Native Youtube")
-                    .font(.largeTitle.bold())
+                    .font(.system(size: 64, design: .serif)).bold()
+
                     .foregroundStyle(.primary)
                 Text("Enter your API credentials...")
                     .foregroundStyle(.tertiary)
