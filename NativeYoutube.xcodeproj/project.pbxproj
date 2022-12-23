@@ -24,6 +24,7 @@
 		13FA3CF527AF8B6B005555C3 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FA3CF427AF8B6B005555C3 /* Request.swift */; };
 		70A3843C2955B35E000941F5 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A3843B2955B35E000941F5 /* Enums.swift */; };
 		70A3843F2955D1A1000941F5 /* YouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3843E2955D1A1000941F5 /* YouTubeKit */; };
+		70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3844429561851000941F5 /* SDWebImageSwiftUI */; };
 		C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD34F272C853E00B4DC16 /* ContentView.swift */; };
 		C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD351272C853F00B4DC16 /* Assets.xcassets */; };
 		C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD354272C853F00B4DC16 /* Preview Assets.xcassets */; };
@@ -99,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */,
 				C2A7FC23274D78F0000D6D33 /* YouTubePlayerKit in Frameworks */,
 				C27DD38E272C93AD00B4DC16 /* SwiftyJSON in Frameworks */,
 				70A3843F2955D1A1000941F5 /* YouTubeKit in Frameworks */,
@@ -279,6 +281,7 @@
 				C27DD38D272C93AD00B4DC16 /* SwiftyJSON */,
 				C2A7FC22274D78F0000D6D33 /* YouTubePlayerKit */,
 				70A3843E2955D1A1000941F5 /* YouTubeKit */,
+				70A3844429561851000941F5 /* SDWebImageSwiftUI */,
 			);
 			productName = NativeYoutube;
 			productReference = C27DD34A272C853E00B4DC16 /* NativeYoutube.app */;
@@ -312,6 +315,7 @@
 				C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				C2A7FC21274D78F0000D6D33 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 				70A3843D2955D1A1000941F5 /* XCRemoteSwiftPackageReference "YouTubeKit" */,
+				70A3844329561850000941F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = C27DD34B272C853E00B4DC16 /* Products */;
 			projectDirPath = "";
@@ -596,6 +600,14 @@
 				minimumVersion = 0.1.6;
 			};
 		};
+		70A3844329561850000941F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -619,6 +631,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 70A3843D2955D1A1000941F5 /* XCRemoteSwiftPackageReference "YouTubeKit" */;
 			productName = YouTubeKit;
+		};
+		70A3844429561851000941F5 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70A3844329561850000941F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 		C27DD38D272C93AD00B4DC16 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;

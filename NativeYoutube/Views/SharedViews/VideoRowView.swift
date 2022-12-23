@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct VideoRowView: View {
     let video: VideoModel
@@ -15,38 +16,25 @@ struct VideoRowView: View {
     var body: some View {
         Group {
             ZStack {
-                AsyncImage(url: video.thumbnail, content: { image in
-                    image
-                        .resizable()
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(hovered ? .ultraThinMaterial : .ultraThickMaterial)
-                        }
-                }, placeholder: {
-                    Spacer()
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(hovered ? .ultraThinMaterial : .ultraThickMaterial)
-                        }
-                })
+                WebImage(url: video.thumbnail)
+                    .resizable()
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(hovered ? .ultraThinMaterial : .ultraThickMaterial)
+                    }
 
                 HStack() {
-                    AsyncImage(url: video.thumbnail, content: { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                        // When hovered, reduce size of the thumbnail...
-                            .frame(width: hovered ? 64 : 128, height: hovered ? 36 : 72)
-                            .cornerRadius(5)
-                            .shadow(radius: 6, x: 2)
-                        // ...and move it a bit on the left to avoid looking weird.
-                            .padding(.leading, hovered ? 10 : 4)
-                            .padding(.vertical, 2)
-                            .transition(.offset(x: -128))
-                    }, placeholder: {
-                        ProgressView().scaleEffect(0.2)
-                            .frame(width: hovered ? 64 : 128, height: hovered ? 36 : 72)
-                    })
+                    WebImage(url: video.thumbnail)
+                        .resizable()
+                        .scaledToFill()
+                    // When hovered, reduce size of the thumbnail...
+                        .frame(width: hovered ? 64 : 128, height: hovered ? 36 : 72)
+                        .cornerRadius(5)
+                        .shadow(radius: 6, x: 2)
+                    // ...and move it a bit on the left to avoid looking weird.
+                        .padding(.leading, hovered ? 10 : 4)
+                        .padding(.vertical, 2)
+                        .transition(.offset(x: -128))
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(video.title)
