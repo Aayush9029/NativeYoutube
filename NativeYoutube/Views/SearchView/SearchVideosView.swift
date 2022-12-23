@@ -15,21 +15,21 @@ struct SearchView: View {
     var body: some View {
         Group {
             ZStack(alignment: .center) {
-                ScrollView(.vertical, showsIndicators: false) {
-                    HStack(spacing: 14) {
+                VStack {
+                    HStack {
                         TextField("Search..", text: $searchViewModel.searchQuery)
                             .textFieldStyle(.plain)
                             .padding(8)
-                            .background(Color(nsColor: NSColor.windowBackgroundColor))
-                            .cornerRadius(8)
-
-                        SearchButton()
-                            .onTapGesture {
+                            .background(.gray.opacity(0.125))
+                            .cornerRadius(6)
+                            .padding(.horizontal)
+                            .onSubmit {
                                 searchViewModel.startSearch(apiKey: appStateViewModel.apiKey)
                                 appStateViewModel.addToLogs(for: .search, message: "Searching for \($searchViewModel.searchQuery)")
                             }
                     }
-                    .padding([.horizontal, .top])
+                    .padding(.top, 6)
+                    Spacer()
                     Group {
                         switch searchViewModel.currentStatus {
                         case .none,
@@ -52,30 +52,9 @@ struct SearchView: View {
     }
 }
 
-struct SearchButton: View {
-    var body: some View {
-        Group {
-            Text("Search")
-                .font(.callout)
-        }
-        .padding(8)
-        .background(Color(nsColor: .controlColor))
-        .cornerRadius(8)
-        .shadow(color: .black.opacity(0.125), radius: 1, x: 0, y: 1)
-    }
-}
-
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
             .environmentObject(AppStateViewModel())
-    }
-}
-
-extension SearchView {
-    func toggleSidebar() {
-        DispatchQueue.main.async {
-            NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-        }
     }
 }

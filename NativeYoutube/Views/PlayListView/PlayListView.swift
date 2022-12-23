@@ -20,6 +20,7 @@ struct PlayListView: View {
             case .none,
                  .doneFetching:
                 VideoListView(videos: playlistViewModel.videos)
+
             default:
                 SomethingWentWrongView()
             }

@@ -14,14 +14,28 @@ struct VideoListView: View {
 
     var body: some View {
         Group {
-            ScrollView(.vertical, showsIndicators: false) {
-                ForEach(videos, id: \.self.id) { vid in
-                    VideoRowView(video: vid)
-                        .contextMenu(ContextMenu(menuItems: {
-                            VideoContextMenuView(video: vid)
-                        }))
+            if videos.isEmpty {
+                VStack {
+                    Image(systemName: "magnifyingglass.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 128)
+                        .padding()
+                    Text("Search for a Video")
+                        .font(.title3)
                 }
-                .padding()
+                .foregroundStyle(.quaternary)
+            } else {
+                ScrollView(.vertical, showsIndicators: false) {
+                    ForEach(videos, id: \.self.id) { vid in
+                        VideoRowView(video: vid)
+                            .contextMenu(ContextMenu(menuItems: {
+                                VideoContextMenuView(video: vid)
+                            }))
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 6)
+                }
             }
         }
     }
@@ -29,7 +43,7 @@ struct VideoListView: View {
 
 struct VideowListView_Previews: PreviewProvider {
     static var previews: some View {
-        VideoListView(videos: [.exampleData, .exampleData])
+        VideoListView(videos: [])
             .environmentObject(AppStateViewModel())
     }
 }

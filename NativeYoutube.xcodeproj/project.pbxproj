@@ -22,10 +22,10 @@
 		13FA3CF127AF820D005555C3 /* VideoRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FA3CF027AF820C005555C3 /* VideoRowView.swift */; };
 		13FA3CF327AF82B2005555C3 /* VideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FA3CF227AF82B2005555C3 /* VideoListView.swift */; };
 		13FA3CF527AF8B6B005555C3 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FA3CF427AF8B6B005555C3 /* Request.swift */; };
+		C22D70B829557E71000DE71E /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = C22D70B729557E71000DE71E /* SDWebImageSwiftUI */; };
 		C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD34F272C853E00B4DC16 /* ContentView.swift */; };
 		C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD351272C853F00B4DC16 /* Assets.xcassets */; };
 		C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD354272C853F00B4DC16 /* Preview Assets.xcassets */; };
-		C27DD364272C85C400B4DC16 /* MainHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD363272C85C400B4DC16 /* MainHostingViewController.swift */; };
 		C27DD366272C85E400B4DC16 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD365272C85E400B4DC16 /* EventMonitor.swift */; };
 		C27DD373272C8A8900B4DC16 /* Collections+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD372272C8A8900B4DC16 /* Collections+Extension.swift */; };
 		C27DD37C272C8CCF00B4DC16 /* PlayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD37B272C8CCF00B4DC16 /* PlayListView.swift */; };
@@ -51,7 +51,6 @@
 		C2A7FC29274D808D000D6D33 /* VideoContextMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A7FC28274D808D000D6D33 /* VideoContextMenuView.swift */; };
 		C2A7FC2B274D8455000D6D33 /* PopupPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A7FC2A274D8455000D6D33 /* PopupPlayerView.swift */; };
 		C2A7FC2D274D8572000D6D33 /* VideoPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A7FC2C274D8572000D6D33 /* VideoPlayerControlsView.swift */; };
-		C2BB85C9272CFDC100AC3578 /* youtube-dl in Resources */ = {isa = PBXBuildFile; fileRef = C2BB85C8272CFDC100AC3578 /* youtube-dl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,7 +74,6 @@
 		C27DD351272C853F00B4DC16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C27DD354272C853F00B4DC16 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C27DD356272C853F00B4DC16 /* NativeYoutube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NativeYoutube.entitlements; sourceTree = "<group>"; };
-		C27DD363272C85C400B4DC16 /* MainHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHostingViewController.swift; sourceTree = "<group>"; };
 		C27DD365272C85E400B4DC16 /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
 		C27DD36B272C899600B4DC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C27DD36F272C8A6200B4DC16 /* PlayListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListViewModel.swift; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 		C2A7FC28274D808D000D6D33 /* VideoContextMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoContextMenuView.swift; sourceTree = "<group>"; };
 		C2A7FC2A274D8455000D6D33 /* PopupPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupPlayerView.swift; sourceTree = "<group>"; };
 		C2A7FC2C274D8572000D6D33 /* VideoPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerControlsView.swift; sourceTree = "<group>"; };
-		C2BB85C8272CFDC100AC3578 /* youtube-dl */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youtube-dl"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C22D70B829557E71000DE71E /* SDWebImageSwiftUI in Frameworks */,
 				C2A7FC23274D78F0000D6D33 /* YouTubePlayerKit in Frameworks */,
 				C27DD38E272C93AD00B4DC16 /* SwiftyJSON in Frameworks */,
 			);
@@ -163,10 +161,8 @@
 				C27DD35C272C856B00B4DC16 /* Views */,
 				C27DD35F272C857C00B4DC16 /* ViewModels */,
 				C27DD35D272C857300B4DC16 /* Helpers */,
-				C27DD36C272C89FA00B4DC16 /* ViewControllers */,
 				C27DD371272C8A7600B4DC16 /* Extensions */,
 				C294A6FB272E265600DD5E73 /* AVPlayer */,
-				C2BB85C7272CFDB200AC3578 /* Executables */,
 				C27DD351272C853F00B4DC16 /* Assets.xcassets */,
 				C27DD356272C853F00B4DC16 /* NativeYoutube.entitlements */,
 				C27DD36B272C899600B4DC16 /* Info.plist */,
@@ -226,14 +222,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		C27DD36C272C89FA00B4DC16 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				C27DD363272C85C400B4DC16 /* MainHostingViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		C27DD371272C8A7600B4DC16 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,14 +276,6 @@
 			path = AVPlayer;
 			sourceTree = "<group>";
 		};
-		C2BB85C7272CFDB200AC3578 /* Executables */ = {
-			isa = PBXGroup;
-			children = (
-				C2BB85C8272CFDC100AC3578 /* youtube-dl */,
-			);
-			path = Executables;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -315,6 +295,7 @@
 			packageProductDependencies = (
 				C27DD38D272C93AD00B4DC16 /* SwiftyJSON */,
 				C2A7FC22274D78F0000D6D33 /* YouTubePlayerKit */,
+				C22D70B729557E71000DE71E /* SDWebImageSwiftUI */,
 			);
 			productName = NativeYoutube;
 			productReference = C27DD34A272C853E00B4DC16 /* NativeYoutube.app */;
@@ -328,7 +309,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1310;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					C27DD349272C853E00B4DC16 = {
 						CreatedOnToolsVersion = 13.1;
@@ -347,6 +328,7 @@
 			packageReferences = (
 				C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				C2A7FC21274D78F0000D6D33 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				C22D70B629557E71000DE71E /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = C27DD34B272C853E00B4DC16 /* Products */;
 			projectDirPath = "";
@@ -362,7 +344,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2BB85C9272CFDC100AC3578 /* youtube-dl in Resources */,
 				C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */,
 				C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */,
 			);
@@ -403,7 +384,6 @@
 				C2A7FC29274D808D000D6D33 /* VideoContextMenuView.swift in Sources */,
 				138F4D1427ACFCBC00DF099D /* NativeYoutubeApp.swift in Sources */,
 				C27DD386272C8DD100B4DC16 /* Constants.swift in Sources */,
-				C27DD364272C85C400B4DC16 /* MainHostingViewController.swift in Sources */,
 				C27DD3AA272CB9FD00B4DC16 /* View+Extension.swift in Sources */,
 				131A387327AF259000B67A1B /* PlaylistsRequest.swift in Sources */,
 				13E02D0A27ABB35E00B4A648 /* VideoPlayerControlsViewModel.swift in Sources */,
@@ -455,6 +435,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -516,6 +497,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -546,8 +528,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 2CPY2SAJ3X;
+				DEVELOPMENT_TEAM = 4538W4A79B;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -577,8 +560,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 2CPY2SAJ3X;
+				DEVELOPMENT_TEAM = 4538W4A79B;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -622,6 +606,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C22D70B629557E71000DE71E /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -641,6 +633,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C22D70B729557E71000DE71E /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C22D70B629557E71000DE71E /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
 		C27DD38D272C93AD00B4DC16 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
