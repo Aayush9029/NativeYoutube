@@ -8,6 +8,7 @@
 import AppKit
 
 class KeyWindow: NSWindow {
+    var appState: AppStateViewModel?
     override var canBecomeKey: Bool {
         return true
     }
@@ -18,6 +19,9 @@ class KeyWindow: NSWindow {
 extension KeyWindow {
     override func keyDown(with event: NSEvent) {
         if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .command && event.charactersIgnoringModifiers == "w" {
+            if self.appState != nil {
+                self.appState!.stopPlaying()
+            }
             close()
             return
         } else {

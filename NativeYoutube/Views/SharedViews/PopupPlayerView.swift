@@ -50,7 +50,7 @@ struct PopupPlayerView: View {
             if isHoveringOnPlayer {
                 PopUpPlayerCloseButton()
                     .onTapGesture {
-                        appStateViewModel.togglePlaying("")
+                        appStateViewModel.stopPlaying()
                         NSApp.keyWindow?.close()
                     }
             }
@@ -77,7 +77,8 @@ struct PopupPlayerView: View {
         }
         .background(VisualEffectView(material: .popover, blendingMode: .behindWindow))
         .cornerRadius(10)
-        .frame(minWidth: 320, minHeight: 180)
+        .frame(minWidth: 320, maxWidth: 1600, minHeight: 180, maxHeight: 900)
+        .aspectRatio((16/9), contentMode: .fit)
     }
 }
 
