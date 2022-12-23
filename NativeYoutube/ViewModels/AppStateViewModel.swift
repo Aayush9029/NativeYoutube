@@ -17,13 +17,8 @@ class AppStateViewModel: ObservableObject {
 
     // MARK: States
 
-    @Published var showingSettings: Bool = false
-
-    // This is passed among views, it's not logs it's OUR logs.
     @Published var logs: [String] = .init()
-
     @Published var isPlaying: Bool = false
-
     @Published var currentlyPlaying: String = ""
 
     func changePlayListID(for playlistURL: String) -> Bool {
@@ -46,11 +41,6 @@ class AppStateViewModel: ObservableObject {
 
     func addToLogs(for page: Pages, message: String) {
         logs.append("Log at: \(Date()), from \(page.rawValue), message => \(message)")
-    }
-
-    func isValidPath(for path: String) -> Bool {
-        //        need to change to a better path checking function (template for now)
-        return path.contains("/")
     }
 
     func stopPlaying() {

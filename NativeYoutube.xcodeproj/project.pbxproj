@@ -39,7 +39,7 @@
 		C27DD3AA272CB9FD00B4DC16 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3A9272CB9FD00B4DC16 /* View+Extension.swift */; };
 		C27DD3AC272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3AB272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift */; };
 		C27DD3B1272CBBD500B4DC16 /* LogTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */; };
-		C27DD3B5272CE7A500B4DC16 /* SomethingWentWrongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */; };
+		C27DD3B5272CE7A500B4DC16 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B4272CE7A500B4DC16 /* WelcomeView.swift */; };
 		C27DD3B7272CE9DF00B4DC16 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */; };
 		C2A7FC23274D78F0000D6D33 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = C2A7FC22274D78F0000D6D33 /* YouTubePlayerKit */; };
 		C2A7FC25274D791D000D6D33 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A7FC24274D791D000D6D33 /* VideoPlayerView.swift */; };
@@ -83,7 +83,7 @@
 		C27DD3A9272CB9FD00B4DC16 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		C27DD3AB272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSViewRepresentable+Extension.swift"; sourceTree = "<group>"; };
 		C27DD3B0272CBBD500B4DC16 /* LogTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTextView.swift; sourceTree = "<group>"; };
-		C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingWentWrongView.swift; sourceTree = "<group>"; };
+		C27DD3B4272CE7A500B4DC16 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		C2A7FC24274D791D000D6D33 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		C2A7FC26274D79E6000D6D33 /* YoutubePlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerViewModel.swift; sourceTree = "<group>"; };
@@ -227,8 +227,8 @@
 		C27DD378272C8CAE00B4DC16 /* SharedViews */ = {
 			isa = PBXGroup;
 			children = (
+				C27DD3B4272CE7A500B4DC16 /* WelcomeView.swift */,
 				C27DD3A7272CB48700B4DC16 /* CleanButton.swift */,
-				C27DD3B4272CE7A500B4DC16 /* SomethingWentWrongView.swift */,
 				C27DD3B6272CE9DF00B4DC16 /* BottomBarView.swift */,
 				C2A7FC24274D791D000D6D33 /* VideoPlayerView.swift */,
 				C2A7FC28274D808D000D6D33 /* VideoContextMenuView.swift */,
@@ -350,7 +350,7 @@
 				C27DD37C272C8CCF00B4DC16 /* PlayListView.swift in Sources */,
 				C27DD38B272C934C00B4DC16 /* PlayListViewModel.swift in Sources */,
 				C27DD39E272CAA1E00B4DC16 /* SearchVideosView.swift in Sources */,
-				C27DD3B5272CE7A500B4DC16 /* SomethingWentWrongView.swift in Sources */,
+				C27DD3B5272CE7A500B4DC16 /* WelcomeView.swift in Sources */,
 				13FA3CF327AF82B2005555C3 /* VideoListView.swift in Sources */,
 				C2A7FC27274D79E6000D6D33 /* YoutubePlayerViewModel.swift in Sources */,
 				C27DD3B7272CE9DF00B4DC16 /* BottomBarView.swift in Sources */,
@@ -429,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -485,7 +485,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -503,7 +503,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
 				DEVELOPMENT_TEAM = 4538W4A79B;
@@ -511,6 +511,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NativeYoutube/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NativeYoutube;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Aayush Pokharel. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -518,7 +519,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aayushpokharel.opensource.NativeYoutube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -535,7 +536,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
 				DEVELOPMENT_TEAM = 4538W4A79B;
@@ -543,6 +544,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NativeYoutube/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NativeYoutube;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 Aayush Pokharel. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -550,7 +552,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aayushpokharel.opensource.NativeYoutube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -8,33 +8,17 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    @EnvironmentObject var appStateViewModel: AppStateViewModel
-
     var body: some View {
-        TabView {
+        VStack(alignment: .leading) {
             GeneralPreferenceView()
-                .environmentObject(appStateViewModel)
-                .tabItem {
-                    Label("General", systemImage: "gearshape")
-                }
+
+            Divider()
+                .opacity(0.25)
 
             YoutubePreferenceView()
-                .tabItem {
-                    Label("Youtube", systemImage: "play")
-                }
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification, object: nil), perform: { notification in
-            if let prefWindow = notification.object as? NSWindow, prefWindow.toolbarStyle == .preference {
-                appStateViewModel.showingSettings = true
-            }
-        })
-        .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification, object: nil), perform: { notification in
-            if let prefWindow = notification.object as? NSWindow, prefWindow.toolbarStyle == .preference {
-                // We listen to events when the the preference window is closing.
-                // .onDisappear does not work well when we use `Settings` scene. Bug on SwiftUI?
-                appStateViewModel.showingSettings = false
-            }
-        })
+        .padding(.horizontal)
+        .padding(.vertical, 6)
     }
 }
 

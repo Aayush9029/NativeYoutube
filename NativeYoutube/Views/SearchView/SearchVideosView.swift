@@ -22,7 +22,7 @@ struct SearchView: View {
                     case .startedFetching:
                         EmptyView()
                     default:
-                        SomethingWentWrongView()
+                        WelcomeView()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

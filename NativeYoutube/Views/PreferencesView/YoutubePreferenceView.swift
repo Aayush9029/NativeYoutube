@@ -9,15 +9,19 @@ import SwiftUI
 
 struct YoutubePreferenceView: View {
     @EnvironmentObject var appStateViewModel: AppStateViewModel
-
     @StateObject var youtubePreferenceViewModel = YoutubePreferenceViewModel()
 
     var body: some View {
-        VStack {
-            Group {
+        VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                Label("Your Youtube API Key", systemImage: "person.badge.key.fill")
+                    .bold()
+
                 TextField("Your Google API Key", text: $appStateViewModel.apiKey)
-                    .padding([.top, .bottom], 10)
-                    .textFieldStyle(.roundedBorder)
+                    .textFieldStyle(.plain)
+                    .padding(8)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(6)
 
                 Link(
                     destination: URL(string: Constants.demoYoutubeVideo)!,
@@ -27,33 +31,36 @@ struct YoutubePreferenceView: View {
                             Label("How to get Google API Key?", systemImage: "globe")
                             Spacer()
                         }
-                        .padding(10)
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(8)
                     }
                 )
             }
+            .padding()
+            .background(.ultraThinMaterial)
+            .cornerRadius(6)
 
             Divider()
 
-            Group {
+            VStack(alignment: .leading) {
                 HStack {
-                    Text("Logs")
-                        .font(.title3.bold())
+                    Label("Logs", systemImage: "newspaper.fill")
+                        .bold()
                         .padding(.top, 5)
 
                     Spacer()
 
-                    Label("Copy Logs", systemImage: "paperclip")
+                    Label("Copy", systemImage: "clipboard.fill")
+                        .labelStyle(.iconOnly)
                         .padding(8)
                         .background(.thinMaterial)
-                        .cornerRadius(20)
+                        .clipShape(Circle())
                         .onTapGesture {
                             youtubePreferenceViewModel.copyLogsToClipboard(redacted: true, appState: appStateViewModel)
                         }
                         .contextMenu {
-                            Button("Copy raw") {
+                            Button {
                                 youtubePreferenceViewModel.copyLogsToClipboard(redacted: false, appState: appStateViewModel)
+                            } label: {
+                                Label("Copy Raw", systemImage: "key.radiowaves.forward.fill")
                             }
                         }
                 }
@@ -65,13 +72,11 @@ struct YoutubePreferenceView: View {
                         }
                     }
                 }
-                .padding(.bottom)
             }
-            Spacer()
+            .padding()
+            .background(.ultraThinMaterial)
+            .cornerRadius(6)
         }
-
-        .padding(.horizontal)
-        .frame(maxWidth: 350)
     }
 }
 

@@ -15,7 +15,7 @@ struct NativeYoutubeApp: App {
     var body: some Scene {
         MenuBarExtra("Native Youtube", systemImage: "play.circle") {
             ContentView()
-                .frame(width: 360, height: 400)
+                .frame(width: 360, height: 512)
                 .environmentObject(appStateViewModel)
                 .environmentObject(youtubePlayerViewModel)
                 .environmentObject(searchViewModel)
@@ -24,7 +24,10 @@ struct NativeYoutubeApp: App {
 
         Settings {
             PreferencesView()
+                .padding(-12)
+                .frame(minWidth: 320, minHeight: 512)
                 .environmentObject(appStateViewModel)
         }
+        .windowStyle(.hiddenTitleBar)
     }
 }
