@@ -32,7 +32,6 @@ struct VideoListView: View {
                             .contextMenu(ContextMenu(menuItems: {
                                 VideoContextMenuView(video: video)
                             }))
-                            // On double tap gesture, make the action according to user's preferences.
                             .onTapGesture(count: 2) {
                                 switch appStateViewModel.vidClickBehaviour {
                                 case .nothing:
@@ -47,8 +46,7 @@ struct VideoListView: View {
                                 }
                             }
                     }
-                    .padding(.horizontal, 6)
-                    .padding(.top, 6)
+                    .padding(6)
                 }
             }
         }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SearchView: View {
-    @EnvironmentObject var appStateViewModel: AppStateViewModel
     @EnvironmentObject var searchViewModel: SearchViewModel
 
     var body: some View {
@@ -38,6 +37,6 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         SearchView()
-            .environmentObject(AppStateViewModel())
+            .environmentObject(SearchViewModel())
     }
 }

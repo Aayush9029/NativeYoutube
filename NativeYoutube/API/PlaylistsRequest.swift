@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct PlaylistsRequest: Request {
+struct PlaylistsRequest {
     let apiKey: String
     let playListID: String
     let maxResults: String

@@ -8,10 +8,8 @@
 import AVKit
 import SwiftUI
 import YouTubeKit
-import YouTubePlayerKit
 
 struct PopupPlayerView: View {
-    // As view is displayed via a function, can't use EnvironnementObject -> Re-declaring useNativePlayer var in the view.
     @ObservedObject var appStateViewModel: AppStateViewModel
 
     let videoURL: URL
@@ -47,7 +45,6 @@ struct PopupPlayerView: View {
             }
         }
         .task {
-            // We need to get the video's stream in async, so we set a task who runs when view appears to set the value of the player to the video stream.
             let video = YouTube(url: videoURL)
             do {
                 let streams = try await video.streams

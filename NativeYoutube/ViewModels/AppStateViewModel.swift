@@ -22,24 +22,6 @@ class AppStateViewModel: ObservableObject {
     @Published var isPlaying: Bool = false
     @Published var currentlyPlaying: String = ""
 
-    func changePlayListID(for playlistURL: String) -> Bool {
-        //        Using regex would be 100% better (this is a quick and dirty method)
-        var changed = false
-        let splitted = playlistURL.split(separator: "&")
-        for splitted in splitted {
-            if splitted.contains("list") {
-                let id = splitted.split(separator: "=")
-                if let idCount = id.last?.count {
-                    if idCount > 6 {
-                        playListID = String(id.last!)
-                        changed = true
-                    }
-                }
-            }
-        }
-        return changed
-    }
-
     func addToLogs(for page: Pages, message: String) {
         logs.append("Log at: \(Date()), from \(page.rawValue), message => \(message)")
     }
@@ -64,7 +46,7 @@ class AppStateViewModel: ObservableObject {
     }
 
     func playVideoIINA(url: URL, title: String) {
-//        togglePlaying(title)
+        togglePlaying(title)
         Task {
             DispatchQueue.main.async {
                 self.logs.append(self.shell("open -a iina '\(url)'"))
