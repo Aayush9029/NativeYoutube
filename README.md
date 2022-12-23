@@ -1,6 +1,6 @@
 
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/43297314/140234524-4b128551-8f1b-45b5-b61a-8394cca49388.png" width="200px">
+<img width="256" alt="AppIcon" src="https://user-images.githubusercontent.com/43297314/209301276-f93ea3b0-4466-4c9a-8f60-2d8e8523526f.png">
 
   <h1>NativeYoutube</h1>
 
@@ -8,6 +8,7 @@
 	<br>
 	<br>
 <br>
+
 
 
 <img src="https://user-images.githubusercontent.com/43297314/209300521-43594e99-fc62-4201-b635-bb2559e5cbfe.png" width="420"> &nbsp;  &nbsp;<img src="https://user-images.githubusercontent.com/43297314/209300526-1b55652a-bbe5-4570-8945-e3cf5644b205.png" width="420">
@@ -43,3 +44,6 @@
 > 1. Find a playlist you like, eg: https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PL634F2B56B8C346A2
 > 2. Copy the word after "list=" it's `PL634F2B56B8C346A2` in this case
 > 3. Paste it in the prefrence window (NativeYoutube > Settings (Command + , ) > Custom Playlist ID)
+
+
+[Icon By u/Rebirth](https://macosicons.com/#/u/Rebirth%20Ego)
