@@ -70,7 +70,7 @@ struct BottomBarView: View {
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 7)
             .padding(.vertical, 6)
             .labelStyle(.iconOnly)
             .background(.ultraThinMaterial)

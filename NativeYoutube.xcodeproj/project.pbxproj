@@ -25,6 +25,7 @@
 		70A3843C2955B35E000941F5 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A3843B2955B35E000941F5 /* Enums.swift */; };
 		70A3843F2955D1A1000941F5 /* YouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3843E2955D1A1000941F5 /* YouTubeKit */; };
 		70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3844429561851000941F5 /* SDWebImageSwiftUI */; };
+		70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A3845D295644A1000941F5 /* AVKit.framework */; };
 		C27DD350272C853E00B4DC16 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27DD34F272C853E00B4DC16 /* ContentView.swift */; };
 		C27DD352272C853F00B4DC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD351272C853F00B4DC16 /* Assets.xcassets */; };
 		C27DD355272C853F00B4DC16 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C27DD354272C853F00B4DC16 /* Preview Assets.xcassets */; };
@@ -68,6 +69,7 @@
 		13FA3CF227AF82B2005555C3 /* VideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListView.swift; sourceTree = "<group>"; };
 		13FA3CF427AF8B6B005555C3 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		70A3843B2955B35E000941F5 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		70A3845D295644A1000941F5 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		C27DD34A272C853E00B4DC16 /* NativeYoutube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeYoutube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27DD34F272C853E00B4DC16 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C27DD351272C853F00B4DC16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */,
 				70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */,
 				C2A7FC23274D78F0000D6D33 /* YouTubePlayerKit in Frameworks */,
 				C27DD38E272C93AD00B4DC16 /* SwiftyJSON in Frameworks */,
@@ -131,11 +134,20 @@
 			path = PreferencesView;
 			sourceTree = "<group>";
 		};
+		70A3845C295644A1000941F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				70A3845D295644A1000941F5 /* AVKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C27DD341272C853E00B4DC16 = {
 			isa = PBXGroup;
 			children = (
 				C27DD34C272C853E00B4DC16 /* NativeYoutube */,
 				C27DD34B272C853E00B4DC16 /* Products */,
+				70A3845C295644A1000941F5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

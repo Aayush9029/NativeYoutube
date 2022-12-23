@@ -48,7 +48,7 @@ struct VideoListView: View {
                                 }
                             }
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 6)
                     .padding(.top, 6)
                 }
             }
