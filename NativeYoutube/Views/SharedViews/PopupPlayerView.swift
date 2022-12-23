@@ -5,34 +5,57 @@
 //  Created by Aayush Pokharel on 2021-11-23.
 //
 
+import AVKit
 import SwiftUI
-import YouTubePlayerKit
+import YouTubeKit
 
 struct PopupPlayerView: View {
-    @StateObject var youtubePlayer: YouTubePlayer
+    @ObservedObject var appStateViewModel: AppStateViewModel
+
+    let videoURL: URL
+    @State var player: AVPlayer? = nil
     @State var isHoveringOnPlayer = false
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.clear)
-                    VideoPlayerView(youtubePlayer: youtubePlayer)
-                }
-                if isHoveringOnPlayer {
-                    VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
-                        .padding(.horizontal)
-                        .padding(.bottom, 5)
+                if player != nil {
+                    VideoPlayer(player: player)
+                } else {
+                    VStack {
+                        ProgressView()
+                        Text("\(appStateViewModel.currentlyPlaying)")
+                            .frame(width: 420)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.tertiary)
+                            .padding()
+                    }
+                    .padding()
+                    .frame(width: 600, height: 400)
+                    .background(.black)
                 }
             }
 
             if isHoveringOnPlayer {
                 PopUpPlayerCloseButton()
                     .onTapGesture {
+                        appStateViewModel.stopPlaying()
                         NSApp.keyWindow?.close()
                     }
             }
+        }
+        .task {
+            let video = YouTube(url: videoURL)
+            do {
+                let streams = try await video.streams
+                let streamHQ = streams
+                    .filter { $0.isProgressive }
+                    .highestResolutionStream()?.url
+                if let streamHQ {
+                    player = AVPlayer(url: streamHQ)
+                }
+                player?.play()
+            } catch {}
         }
         .onHover { hovering in
             withAnimation {
@@ -41,7 +64,8 @@ struct PopupPlayerView: View {
         }
         .background(VisualEffectView(material: .popover, blendingMode: .behindWindow))
         .cornerRadius(10)
-        .frame(minWidth: 480, minHeight: 270)
+        .frame(minWidth: 320, maxWidth: 1600, minHeight: 180, maxHeight: 900)
+        .aspectRatio(16/9, contentMode: .fit)
     }
 }
 
@@ -58,11 +82,5 @@ struct PopUpPlayerCloseButton: View {
             .clipShape(Circle())
             .frame(width: 28, height: 28)
             .offset(x: 28/2, y: 28/2)
-    }
-}
-
-struct PopupPlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        PopupPlayerView(youtubePlayer: YoutubePlayerViewModel.exampleVideo)
     }
 }

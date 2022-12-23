@@ -24,9 +24,7 @@ struct CleanButton: View {
                     .font(.callout)
                     .foregroundColor(binded == page ? .red : .gray)
             }
-            .padding(6)
-            .background(.ultraThinMaterial)
-            .cornerRadius(8)
+            .thinRoundedBG(padding: 6, radius: 8)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(

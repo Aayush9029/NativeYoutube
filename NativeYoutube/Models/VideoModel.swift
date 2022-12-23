@@ -25,18 +25,6 @@ struct VideoModel {
         channelTitle: "OliviaRodrigoVEVO"
     )
 
-    var cleanTitle: String {
-        var title = String(title.split(separator: "(")[0])
-
-        if title.split(separator: "-").count > 1 {
-            title = String(title.split(separator: "-")[1])
-        }
-        if title.split(separator: ":").count > 1 {
-            title = String(title.split(separator: ":")[1])
-        }
-        return title
-    }
-
     enum VideoKind: String {
         case playlist = "youtube#playlistItem"
         case search = "youtube#searchResult"

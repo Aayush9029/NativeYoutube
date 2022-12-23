@@ -12,10 +12,10 @@
     {
       "identity" : "sdwebimageswiftui",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
+      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI",
       "state" : {
-        "branch" : "master",
-        "revision" : "ed288667c909c89127ab1b690113a3e397af3098"
+        "revision" : "ed288667c909c89127ab1b690113a3e397af3098",
+        "version" : "2.2.1"
       }
     },
     {
@@ -28,12 +28,12 @@
       }
     },
     {
-      "identity" : "youtubeplayerkit",
+      "identity" : "youtubekit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SvenTiigi/YouTubePlayerKit.git",
+      "location" : "https://github.com/alexeichhorn/YouTubeKit",
       "state" : {
-        "revision" : "1f78a2121f58b393bca54bc0a8da9e9b11cab198",
-        "version" : "1.1.9"
+        "revision" : "7dcbb57b39a58dd5c208c40665383de0934e1ce7",
+        "version" : "0.1.6"
       }
     }
   ],

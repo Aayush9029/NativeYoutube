@@ -31,9 +31,7 @@ struct WelcomeView: View {
                     Text("Click Gear Icon")
                     Image(systemName: "arrow.down")
                 }
-                .padding(6)
-                .background(.ultraThinMaterial)
-                .cornerRadius(8)
+                .thinRoundedBG(padding: 4)
                 .shadow(radius: 4)
             }
             .offset(y: jump ? -30 : -10)

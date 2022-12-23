@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct SearchRequest: Request {
+struct SearchRequest {
     let apiKey: String
     let query: String
     let maxResults: String

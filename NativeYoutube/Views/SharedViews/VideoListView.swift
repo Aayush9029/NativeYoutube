@@ -27,14 +27,26 @@ struct VideoListView: View {
                 .foregroundStyle(.quaternary)
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(videos, id: \.self.id) { vid in
-                        VideoRowView(video: vid)
+                    ForEach(videos, id: \.self.id) { video in
+                        VideoRowView(video: video)
                             .contextMenu(ContextMenu(menuItems: {
-                                VideoContextMenuView(video: vid)
+                                VideoContextMenuView(video: video)
                             }))
+                            .onTapGesture(count: 2) {
+                                switch appStateViewModel.vidClickBehaviour {
+                                case .nothing:
+                                    return
+                                case .playVideo:
+                                    appStateViewModel.togglePlaying(video.title)
+                                    playVideo(url: video.url, appState: appStateViewModel)
+                                case .openOnYoutube:
+                                    NSWorkspace.shared.open(video.url)
+                                case .playInIINA:
+                                    appStateViewModel.playVideoIINA(url: video.url, title: video.title)
+                                }
+                            }
                     }
-                    .padding(.horizontal)
-                    .padding(.top, 6)
+                    .padding(6)
                 }
             }
         }

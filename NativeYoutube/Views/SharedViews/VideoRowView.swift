@@ -33,7 +33,7 @@ struct VideoRowView: View {
                             .shadow(radius: 6, x: 2)
                             .padding(.leading, 4)
                             .padding(.vertical, 2)
-                            .transition(.offset(x: -128))
+                            .transition(.offset(x: -130))
                     }
 
                     VStack(alignment: .leading, spacing: 2) {

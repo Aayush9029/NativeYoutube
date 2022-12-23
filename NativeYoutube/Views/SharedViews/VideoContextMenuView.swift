@@ -9,7 +9,6 @@ import SwiftUI
 
 struct VideoContextMenuView: View {
     @EnvironmentObject var appStateViewModel: AppStateViewModel
-    @EnvironmentObject var youtubePlayerViewModel: YoutubePlayerViewModel
 
     let video: VideoModel
 
@@ -28,7 +27,8 @@ struct VideoContextMenuView: View {
             VStack {
                 Button {
                     appStateViewModel.togglePlaying(video.title)
-                    youtubePlayerViewModel.playVideo(url: video.url.absoluteString)
+                    playVideo(url: video.url, appState: appStateViewModel)
+
                 } label: {
                     Label("Play Video", systemImage: "play.circle")
                 }
