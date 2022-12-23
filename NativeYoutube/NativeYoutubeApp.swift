@@ -13,7 +13,7 @@ struct NativeYoutubeApp: App {
     @StateObject private var youtubePlayerViewModel = YoutubePlayerViewModel()
     @StateObject private var searchViewModel = SearchViewModel()
     var body: some Scene {
-        MenuBarExtra("Native Youtube", systemImage: "play.circle") {
+        MenuBarExtra("Native Youtube", systemImage: "play.rectangle.fill") {
             ContentView()
                 .frame(width: 360, height: 512)
                 .environmentObject(appStateViewModel)
