@@ -22,6 +22,7 @@ extension View {
         window.title = title
         window.makeKeyAndOrderFront(self)
         window.level = .floating
+        window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         // Failed attempt to make the window sticks at the right aspect ratio, keeping it in comment as it should work (see https://developer.apple.com/documentation/appkit/nswindow/1419507-aspectratio)
 //        window.aspectRatio = NSMakeSize(16.0, 9.0)
         if isTransparent {
