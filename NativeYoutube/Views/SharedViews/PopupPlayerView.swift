@@ -13,7 +13,6 @@ import YouTubePlayerKit
 struct PopupPlayerView: View {
     // As view is displayed via a function, can't use EnvironnementObject -> Re-declaring useNativePlayer var in the view.
     @ObservedObject var appStateViewModel: AppStateViewModel
-    @StateObject var youtubePlayer: YouTubePlayer
 
     let videoURL: URL
     @State var player: AVPlayer? = nil
@@ -86,11 +85,5 @@ struct PopUpPlayerCloseButton: View {
             .clipShape(Circle())
             .frame(width: 28, height: 28)
             .offset(x: 28/2, y: 28/2)
-    }
-}
-
-struct PopupPlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        PopupPlayerView(appStateViewModel: AppStateViewModel(), youtubePlayer: YoutubePlayerViewModel.exampleVideo, videoURL: URL(string: "https://www.youtube.com/watch?v=EgBJmlPo8Xw")!)
     }
 }

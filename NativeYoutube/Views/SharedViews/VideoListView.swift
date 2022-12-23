@@ -9,7 +9,6 @@ import SwiftUI
 
 struct VideoListView: View {
     @EnvironmentObject var appStateViewModel: AppStateViewModel
-    @EnvironmentObject var youtubePlayerViewModel: YoutubePlayerViewModel
 
     let videos: [VideoModel]
 
@@ -33,14 +32,14 @@ struct VideoListView: View {
                             .contextMenu(ContextMenu(menuItems: {
                                 VideoContextMenuView(video: video)
                             }))
-                        // On double tap gesture, make the action according to user's preferences.
+                            // On double tap gesture, make the action according to user's preferences.
                             .onTapGesture(count: 2) {
                                 switch appStateViewModel.vidClickBehaviour {
                                 case .nothing:
                                     return
                                 case .playVideo:
                                     appStateViewModel.togglePlaying(video.title)
-                                    youtubePlayerViewModel.playVideo(url: video.url, appState: appStateViewModel)
+                                    playVideo(url: video.url, appState: appStateViewModel)
                                 case .openOnYoutube:
                                     NSWorkspace.shared.open(video.url)
                                 case .playInIINA:

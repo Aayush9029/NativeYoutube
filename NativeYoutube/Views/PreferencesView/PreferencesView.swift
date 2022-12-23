@@ -9,16 +9,19 @@ import SwiftUI
 
 struct PreferencesView: View {
     var body: some View {
-        VStack(alignment: .leading) {
+        ScrollView(.vertical, showsIndicators: false) {
             GeneralPreferenceView()
 
             Divider()
-                .opacity(0.25)
+                .opacity(0.5)
 
             YoutubePreferenceView()
+
+            Divider()
+                .opacity(0.5)
+
+            LogPrefrenceView()
         }
-        .padding(.horizontal)
-        .padding(.vertical, 6)
     }
 }
 

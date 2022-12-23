@@ -10,14 +10,12 @@ import SwiftUI
 @main
 struct NativeYoutubeApp: App {
     @StateObject private var appStateViewModel = AppStateViewModel()
-    @StateObject private var youtubePlayerViewModel = YoutubePlayerViewModel()
     @StateObject private var searchViewModel = SearchViewModel()
     var body: some Scene {
         MenuBarExtra("Native Youtube", systemImage: "play.rectangle.fill") {
             ContentView()
                 .frame(width: 360, height: 512)
                 .environmentObject(appStateViewModel)
-                .environmentObject(youtubePlayerViewModel)
                 .environmentObject(searchViewModel)
         }
         .menuBarExtraStyle(WindowMenuBarExtraStyle())

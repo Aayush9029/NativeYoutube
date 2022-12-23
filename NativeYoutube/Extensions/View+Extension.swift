@@ -42,3 +42,10 @@ extension View {
         window.makeKeyAndOrderFront(self)
     }
 }
+
+extension View {
+    func playVideo(url: URL, appState: AppStateViewModel) {
+        PopupPlayerView(appStateViewModel: appState, videoURL: url)
+            .openNewWindow(isTransparent: true, appState: appState)
+    }
+}

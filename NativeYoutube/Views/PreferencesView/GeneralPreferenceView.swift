@@ -13,28 +13,38 @@ struct GeneralPreferenceView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Label("Custom Playlist ID", systemImage: "music.note.list")
-                .bold()
+            DisclosureGroup {
+                TextField("Playlist ID", text: $appStateViewModel.playListID)
+                    .textFieldStyle(.plain)
+                    .thinRoundedBG()
+            } label: {
+                Label("Custom Playlist ID", systemImage: "music.note.list")
+                    .bold()
+            }
+            .thinRoundedBG()
 
-            TextField("Playlist ID", text: $appStateViewModel.playListID)
-                .textFieldStyle(.plain)
-                .padding(8)
-                .background(.ultraThinMaterial)
-                .cornerRadius(6)
+            Divider()
+                .opacity(0.5)
 
-            SpacedToggle("Use IINA", $appStateViewModel.useIINA)
+            DisclosureGroup {
+                VStack {
+                    SpacedToggle("Use IINA", $appStateViewModel.useIINA)
 
-            Picker("Double Click to", selection: $appStateViewModel.vidClickBehaviour) {
-                ForEach(VideoClickBehaviour.allCases, id: \.self) { behaviour in
-                    if behaviour != .playInIINA || appStateViewModel.useIINA {
-                        Text(behaviour.rawValue).tag(behaviour)
+                    Picker("Double Click to", selection: $appStateViewModel.vidClickBehaviour) {
+                        ForEach(VideoClickBehaviour.allCases, id: \.self) { behaviour in
+                            if behaviour != .playInIINA || appStateViewModel.useIINA {
+                                Text(behaviour.rawValue).tag(behaviour)
+                            }
+                        }
                     }
                 }
+                .thinRoundedBG()
+            } label: {
+                Label("Player Settings", systemImage: "play.rectangle.on.rectangle.fill")
+                    .bold()
             }
+            .thinRoundedBG()
         }
-        .padding()
-        .background(.ultraThinMaterial)
-        .cornerRadius(6)
     }
 }
 

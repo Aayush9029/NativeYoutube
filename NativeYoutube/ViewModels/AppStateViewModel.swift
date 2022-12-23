@@ -47,10 +47,12 @@ class AppStateViewModel: ObservableObject {
     func stopPlaying() {
         currentlyPlaying = ""
         isPlaying = false
-        Task {
-            let shellOutput = shell("killall IINA")
-            DispatchQueue.main.async {
-                self.logs.append(shellOutput)
+        if useIINA {
+            Task {
+                let shellOutput = shell("killall IINA")
+                DispatchQueue.main.async {
+                    self.logs.append(shellOutput)
+                }
             }
         }
     }
