@@ -21,7 +21,7 @@ struct SomethingWentWrongView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        if  !appStateViewModel.showingSettings {
+                        if !appStateViewModel.showingSettings {
 //                          Since MacOS Ventura (13.0), settings window shows by calling showSettingsWindow and not showPreferencesWindow.
                             NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
                         }

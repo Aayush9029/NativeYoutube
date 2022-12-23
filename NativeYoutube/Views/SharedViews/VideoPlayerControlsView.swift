@@ -18,7 +18,7 @@ struct VideoPlayerControlsView: View {
                 }, label: {
                     Label("Previous video", systemImage: "backward.end")
                 })
-                    .buttonStyle(VideoPlayerControlsButtonStyle())
+                .buttonStyle(VideoPlayerControlsButtonStyle())
 
                 switch viewModel.playbackState {
                 case .playing:
@@ -27,7 +27,7 @@ struct VideoPlayerControlsView: View {
                     }, label: {
                         Label("Pause video", systemImage: "pause")
                     })
-                        .buttonStyle(VideoPlayerControlsButtonStyle())
+                    .buttonStyle(VideoPlayerControlsButtonStyle())
 
                 case .buffering:
                     ProgressView()
@@ -40,7 +40,7 @@ struct VideoPlayerControlsView: View {
                     }, label: {
                         Label("Play video", systemImage: "play")
                     })
-                        .buttonStyle(VideoPlayerControlsButtonStyle())
+                    .buttonStyle(VideoPlayerControlsButtonStyle())
 
                 default:
                     Button(action: {
@@ -48,7 +48,7 @@ struct VideoPlayerControlsView: View {
                     }, label: {
                         Label("Play pause video", systemImage: "circle")
                     })
-                        .buttonStyle(VideoPlayerControlsButtonStyle())
+                    .buttonStyle(VideoPlayerControlsButtonStyle())
                 }
 
                 Button(action: {
@@ -56,7 +56,7 @@ struct VideoPlayerControlsView: View {
                 }, label: {
                     Label("Next video", systemImage: "forward.end")
                 })
-                    .buttonStyle(VideoPlayerControlsButtonStyle())
+                .buttonStyle(VideoPlayerControlsButtonStyle())
             }
 
             Spacer()
@@ -75,13 +75,12 @@ struct VideoPlayerControlsView: View {
             Spacer()
 
             Group {
-
                 Button(action: {
                     viewModel.isMuted ? viewModel.apply(.unmuteVideo) : viewModel.apply(.muteVideo)
                 }, label: {
-                    Label("Toggle Mute", systemImage: viewModel.isMuted ? "speaker.slash": "speaker.wave.3")
+                    Label("Toggle Mute", systemImage: viewModel.isMuted ? "speaker.slash" : "speaker.wave.3")
                 })
-                    .buttonStyle(VideoPlayerControlsButtonStyle())
+                .buttonStyle(VideoPlayerControlsButtonStyle())
 
                 if !viewModel.isMuted {
                     Slider(value: $viewModel.volume, in: 0...100) {
@@ -103,8 +102,8 @@ struct VideoPlayerControlsView: View {
                 }, label: {
                     Label("Change playback speed", systemImage: viewModel.playbackRate.rawValue)
                 })
-                    .frame(width: 26)
-                    .buttonStyle(VideoPlayerControlsButtonStyle())
+                .frame(width: 26)
+                .buttonStyle(VideoPlayerControlsButtonStyle())
             }
         }
         .symbolVariant(.fill)

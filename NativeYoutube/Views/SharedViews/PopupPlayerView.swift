@@ -16,12 +16,10 @@ struct PopupPlayerView: View {
         ZStack(alignment: .topLeading) {
             VStack {
                 ZStack {
-//                  Add a rectangle to block the Youtube web UI and therefore improving onHover behaviours.
                     Rectangle()
                         .foregroundColor(.clear)
                     VideoPlayerView(youtubePlayer: youtubePlayer)
                 }
-//              Only show controls if hovering.
                 if isHoveringOnPlayer {
                     VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
                         .padding(.horizontal)
@@ -36,7 +34,6 @@ struct PopupPlayerView: View {
                     }
             }
         }
-//        Detect hover on all the view
         .onHover { hovering in
             withAnimation {
                 isHoveringOnPlayer = hovering

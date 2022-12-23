@@ -24,18 +24,17 @@ struct GeneralPreferenceView: View {
 
             Divider()
 
-                HStack {
-                    Text("Use IINA for video playback")
-                        .font(.title3.bold())
-                    Spacer()
-                    Toggle(isOn: $appStateViewModel.useIINA) {}
-                        .toggleStyle(.switch)
-                }
+            HStack {
+                Text("Use IINA for video playback")
+                    .font(.title3.bold())
+                Spacer()
+                Toggle(isOn: $appStateViewModel.useIINA) {}
+                    .toggleStyle(.switch)
+            }
             .padding(.bottom)
         }
         .padding(.horizontal)
         .frame(width: 350)
-
     }
 }
 

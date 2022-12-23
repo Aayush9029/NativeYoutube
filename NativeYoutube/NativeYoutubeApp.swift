@@ -12,16 +12,14 @@ struct NativeYoutubeApp: App {
     @StateObject private var appStateViewModel = AppStateViewModel()
     @StateObject private var youtubePlayerViewModel = YoutubePlayerViewModel()
     var body: some Scene {
-        // In macOS Ventura, we only need to add a MenubarExtra with the content we want.
         MenuBarExtra("Native Youtube", systemImage: "play.circle") {
             ContentView()
                 .frame(width: 360, height: 400)
                 .environmentObject(appStateViewModel)
                 .environmentObject(youtubePlayerViewModel)
         }
-        // Setting MenuBarExtraStyle to Window (equivalent of a popover)
         .menuBarExtraStyle(WindowMenuBarExtraStyle())
-    
+
         Settings {
             PreferencesView()
                 .environmentObject(appStateViewModel)

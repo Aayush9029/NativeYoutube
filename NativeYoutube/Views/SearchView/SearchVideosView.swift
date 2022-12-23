@@ -32,7 +32,8 @@ struct SearchView: View {
                     .padding([.horizontal, .top])
                     Group {
                         switch searchViewModel.currentStatus {
-                        case .none, .doneFetching:
+                        case .none,
+                             .doneFetching:
                             VideoListView(videos: searchViewModel.videos)
                         case .startedFetching:
                             EmptyView()

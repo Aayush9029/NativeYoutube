@@ -29,10 +29,9 @@ struct BottomBarView: View {
                     }
                 if appStateViewModel.isPlaying {
                     ScrollView(.horizontal, showsIndicators: false) {
-                    Text("\(appStateViewModel.currentlyPlaying)")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-
+                        Text("\(appStateViewModel.currentlyPlaying)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
                     .lineLimit(1)
                 }

@@ -5,8 +5,8 @@
 //  Created by Aayush Pokharel on 2021-10-29.
 //
 
-import SwiftUI
 import Cocoa
+import SwiftUI
 
 extension View {
     private func newWindowInternal(with title: String, isTransparent: Bool = false) -> NSWindow {

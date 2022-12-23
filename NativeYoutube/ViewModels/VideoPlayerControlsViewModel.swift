@@ -6,11 +6,10 @@
 //
 
 import Combine
-import YouTubePlayerKit
 import Foundation
+import YouTubePlayerKit
 
 class VideoPlayerControlsViewModel: ObservableObject {
-
     enum Input {
         case onAppear
         case playVideo
@@ -85,7 +84,6 @@ class VideoPlayerControlsViewModel: ObservableObject {
 
 extension VideoPlayerControlsViewModel {
     private func bindInputs() {
-
         let appearSubject = onAppearSubject
             .eraseToAnyPublisher()
             .share()
@@ -93,9 +91,9 @@ extension VideoPlayerControlsViewModel {
         // Bind and observe playback state changes
 
         appearSubject
-            .flatMap({ [youtubePlayer] in
+            .flatMap { [youtubePlayer] in
                 youtubePlayer.playbackStatePublisher
-            })
+            }
             .assign(to: \.playbackState, on: self)
             .store(in: &cancellables)
 
@@ -105,7 +103,7 @@ extension VideoPlayerControlsViewModel {
             .flatMap { [youtubePlayer] in
                 youtubePlayer.playbackRatePublisher
             }
-            .map({ $0 < 1.0 ? .slow : $0 == 1.0 ? .normal : .fast })
+            .map { $0 < 1.0 ? .slow : $0 == 1.0 ? .normal : .fast }
             .assign(to: \.playbackRate, on: self)
             .store(in: &cancellables)
 
@@ -125,7 +123,7 @@ extension VideoPlayerControlsViewModel {
             .flatMap { [youtubePlayer] in
                 youtubePlayer.volumePublisher()
             }
-            .filter({ [unowned self] _ in !self.currentlyChangingVolume })
+            .filter { [unowned self] _ in !self.currentlyChangingVolume }
             .map { Double($0) }
             .assign(to: \.volume, on: self)
             .store(in: &cancellables)
@@ -145,7 +143,7 @@ extension VideoPlayerControlsViewModel {
             .flatMap { [youtubePlayer] in
                 youtubePlayer.currentTimePublisher()
             }
-            .filter({ [unowned self] _ in !self.currentlySeeking })
+            .filter { [unowned self] _ in !self.currentlySeeking }
             .assign(to: \.seekbar, on: self)
             .store(in: &cancellables)
 
@@ -156,7 +154,7 @@ extension VideoPlayerControlsViewModel {
         appearSubject
             .combineLatest($seekbar)
             .map { $1 }
-            .filter({ [unowned self] _ in self.currentlySeeking })
+            .filter { [unowned self] _ in self.currentlySeeking }
             .removeDuplicates()
             .sink(receiveValue: { [youtubePlayer] in youtubePlayer.seek(to: $0, allowSeekAhead: true) })
             .store(in: &cancellables)
@@ -164,8 +162,8 @@ extension VideoPlayerControlsViewModel {
         // Bind and observe any user volume changes and handle the input
 
         appearSubject
-            .flatMap { [unowned self] in  self.$volume }
-            .filter({ [unowned self] _ in self.currentlyChangingVolume })
+            .flatMap { [unowned self] in self.$volume }
+            .filter { [unowned self] _ in self.currentlyChangingVolume }
             .map { Int($0) }
             .removeDuplicates()
             .sink(receiveValue: { [youtubePlayer] in youtubePlayer.set(volume: $0) })
@@ -204,8 +202,8 @@ extension VideoPlayerControlsViewModel {
         playbackRateSubject
             .eraseToAnyPublisher()
             .removeDuplicates()
-            .map({ ($0 == .slow) ? 0.5 : ($0 == .normal) ? 1.0 : 2.0  })
-            .sink(receiveValue: youtubePlayer.set(playbackRate: ))
+            .map { ($0 == .slow) ? 0.5 : ($0 == .normal) ? 1.0 : 2.0 }
+            .sink(receiveValue: youtubePlayer.set(playbackRate:))
             .store(in: &cancellables)
     }
 }

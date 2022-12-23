@@ -5,8 +5,8 @@
 //  Created by Aayush Pokharel on 2021-10-30.
 //
 
-import SwiftUI
 import AVFoundation
+import SwiftUI
 
 struct AudioPlayerControlsView: View {
     private enum PlaybackState: Int {
@@ -25,13 +25,12 @@ struct AudioPlayerControlsView: View {
 
     var body: some View {
         VStack {
-
             if state == .waitingForSelection {
                 Text("Waiting..")
                     .foregroundStyle(.secondary)
                     .font(.caption.bold())
             } else if state == .buffering {
-               ProgressView()
+                ProgressView()
             } else {
                 Text("Playing")
                     .italic()
@@ -39,12 +38,11 @@ struct AudioPlayerControlsView: View {
                     .foregroundStyle(.tertiary)
             }
             Slider(value: $currentTime,
-                   in: 0...currentDuration,
+                   in: 0 ... currentDuration,
                    onEditingChanged: sliderEditingChanged,
                    minimumValueLabel: Text("\(Utility.formatSecondsToHMS(currentTime))"),
-                   maximumValueLabel: Text("\(Utility.formatSecondsToHMS(currentDuration))")) {
-            }
-            .disabled(state != .playing)
+                   maximumValueLabel: Text("\(Utility.formatSecondsToHMS(currentDuration))")) {}
+                .disabled(state != .playing)
         }
         .padding(.top, 10)
         // Listen out for the time observer publishing changes to the player's time
@@ -67,7 +65,7 @@ struct AudioPlayerControlsView: View {
             self.currentTime = 0
             self.currentDuration = 0
         }
-        // TODO the below could replace the above but causes a crash
+        // TODO: the below could replace the above but causes a crash
 //        // Listen out for the player's item changing
 //        .onReceive(player.publisher(for: \.currentItem)) { item in
 //            self.state = item != nil ? .buffering : .waitingForSelection
@@ -77,6 +75,7 @@ struct AudioPlayerControlsView: View {
     }
 
     // MARK: Private functions
+
     private func sliderEditingChanged(editingStarted: Bool) {
         if editingStarted {
             // Tell the PlayerTimeObserver to stop publishing updates while the user is interacting
@@ -104,17 +103,17 @@ struct AudioView: View {
     var body: some View {
         VStack {
             HStack {
-              Group {
-                  Text(title)
-                      .bold()
-                      .foregroundStyle(.primary)
-                      .padding(.top)
-                      .onAppear {
-                          let playerItem = AVPlayerItem(url: url)
-                          self.player.replaceCurrentItem(with: playerItem)
-                          self.player.play()
-                      }
-              }
+                Group {
+                    Text(title)
+                        .bold()
+                        .foregroundStyle(.primary)
+                        .padding(.top)
+                        .onAppear {
+                            let playerItem = AVPlayerItem(url: url)
+                            self.player.replaceCurrentItem(with: playerItem)
+                            self.player.play()
+                        }
+                }
                 Spacer()
             }
             AudioPlayerControlsView(player: player,
@@ -122,7 +121,6 @@ struct AudioView: View {
                                     durationObserver: PlayerDurationObserver(player: player),
                                     itemObserver: PlayerItemObserver(player: player))
                 .padding(.bottom)
-
         }
         .padding()
         .frame(width: 300, height: 120)
@@ -135,6 +133,7 @@ struct AudioView: View {
 }
 
 import Combine
+
 class PlayerTimeObserver {
     let publisher = PassthroughSubject<TimeInterval, Never>()
     private weak var player: AVPlayer?
@@ -146,9 +145,13 @@ class PlayerTimeObserver {
 
         // Periodically observe the player's current time, whilst playing
         timeObservation = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: nil) { [weak self] time in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             // If we've not been told to pause our updates
-            guard !self.paused else { return }
+            guard !self.paused else {
+                return
+            }
             // Publish the new player time
             self.publisher.send(time.seconds)
         }
@@ -156,7 +159,8 @@ class PlayerTimeObserver {
 
     deinit {
         if let player = player,
-            let observer = timeObservation {
+           let observer = timeObservation
+        {
             player.removeTimeObserver(observer)
         }
     }
@@ -173,7 +177,9 @@ class PlayerItemObserver {
     init(player: AVPlayer) {
         // Observe the current item changing
         itemObservation = player.observe(\.currentItem) { [weak self] player, _ in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             // Publish whether the player has an item or not
             self.publisher.send(player.currentItem != nil)
         }
@@ -193,8 +199,12 @@ class PlayerDurationObserver {
     init(player: AVPlayer) {
         let durationKeyPath: KeyPath<AVPlayer, CMTime?> = \.currentItem?.duration
         cancellable = player.publisher(for: durationKeyPath).sink { duration in
-            guard let duration = duration else { return }
-            guard duration.isNumeric else { return }
+            guard let duration = duration else {
+                return
+            }
+            guard duration.isNumeric else {
+                return
+            }
             self.publisher.send(duration.seconds)
         }
     }

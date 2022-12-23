@@ -17,9 +17,6 @@ struct VideoListView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 ForEach(videos, id: \.self.id) { vid in
                     VideoRowView(video: vid)
-                        .onTapGesture(count: 2, perform: {
-                            appStateViewModel.playAudioYTDL(url: vid.url, title: vid.title)
-                        })
                         .contextMenu(ContextMenu(menuItems: {
                             VideoContextMenuView(video: vid)
                         }))

@@ -10,7 +10,7 @@ import YouTubePlayerKit
 
 class YoutubePlayerViewModel: ObservableObject {
     func playVideo(url: String) {
-        let videoPlayer = YouTubePlayer.init(source: YouTubePlayer.Source.url(url), configuration: YoutubePlayerViewModel.configuration)
+        let videoPlayer = YouTubePlayer(source: YouTubePlayer.Source.url(url), configuration: YoutubePlayerViewModel.configuration)
         PopupPlayerView(youtubePlayer: videoPlayer)
             .openNewWindow(isTransparent: true)
     }
@@ -28,10 +28,11 @@ class YoutubePlayerViewModel: ObservableObject {
 }
 
 // MARK: - Example video data
+
 extension YoutubePlayerViewModel {
     static let exampleVideo = YouTubePlayer(
         source: .video(id: "LDU_Txk06tM"),
         configuration:
-            YoutubePlayerViewModel.configuration
+        YoutubePlayerViewModel.configuration
     )
 }

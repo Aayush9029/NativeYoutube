@@ -5,8 +5,8 @@
 //  Created by Aayush Pokharel on 2021-10-29.
 //
 
-import SwiftUI
 import AppKit
+import SwiftUI
 
 struct ContentView: View {
     @State private var currentPage: Pages = .playlists

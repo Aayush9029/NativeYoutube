@@ -18,19 +18,23 @@ struct CleanButton: View {
                 .labelStyle(.iconOnly)
                 .font(.callout)
                 .foregroundColor(isCurrent ? .red : .gray)
-
         }
         .padding(6)
         .background(.ultraThinMaterial)
         .cornerRadius(8)
-        .shadow(color: isCurrent ? .red : .clear, radius: 2, x: 0, y: 0)
-
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(isCurrent ? .red : .gray, lineWidth: isCurrent ? 2 : 0.5)
+        )
     }
 }
 
 struct SmallButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        CleanButton(title: "questions", image: "questionmark", isCurrent: false)
-            .padding()
+        HStack {
+            CleanButton(title: "questions", image: "questionmark", isCurrent: false)
+            CleanButton(title: "questions", image: "questionmark", isCurrent: true)
+        }
+        .padding()
     }
 }
