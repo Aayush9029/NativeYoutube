@@ -13,8 +13,6 @@ extension String {
         formatter.unitsStyle = .positional
         formatter.zeroFormattingBehavior = .pad
 
-        // Hide hour placeholder if there is no hour present
-
         let hasHour = (timeInterval / (60 * 60)) > 1
         if hasHour {
             formatter.allowedUnits = [.hour, .minute, .second]

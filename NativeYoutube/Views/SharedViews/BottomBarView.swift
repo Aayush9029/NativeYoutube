@@ -61,11 +61,14 @@ struct BottomBarView: View {
                     image: "gear",
                     binded: $currentPage
                 )
-                .contextMenu(menuItems: {
-                    Button("Quit App") {
+                .contextMenu {
+                    Button {
                         NSApplication.shared.terminate(self)
+                    } label: {
+                        Label("Quit app", systemImage: "power")
+                            .labelStyle(.titleAndIcon)
                     }
-                })
+                }
             }
             .padding(.horizontal)
             .padding(.vertical, 6)
