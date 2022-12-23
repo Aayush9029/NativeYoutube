@@ -18,6 +18,8 @@ struct ContentView: View {
                 PlayListView()
             case .search:
                 SearchView()
+            case .settings:
+                PreferencesView()
             }
             BottomBarView(currentPage: $currentPage)
         }
@@ -28,6 +30,7 @@ struct ContentView: View {
 enum Pages: String {
     case playlists = "Playlists"
     case search = "Search"
+    case settings = "Settings"
 }
 
 struct ContentView_Previews: PreviewProvider {

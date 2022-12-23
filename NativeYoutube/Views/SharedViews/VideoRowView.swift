@@ -18,7 +18,10 @@ struct VideoRowView: View {
             ZStack {
                 WebImage(url: video.thumbnail)
                     .resizable()
-                    .blur(radius: hovered ? 12 : 32)
+                    .overlay {
+                        Rectangle()
+                            .fill(hovered ? .ultraThinMaterial : .ultraThickMaterial)
+                    }
 
                 HStack {
                     if !hovered {
@@ -37,16 +40,18 @@ struct VideoRowView: View {
                         Text(video.title)
                             .foregroundStyle(.primary)
                             .bold()
-                            .lineLimit(1)
+                            .lineLimit(hovered ? 3 : 1)
 
                         Text(video.channelTitle)
                             .foregroundStyle(.secondary)
-                            .font(.footnote)
+                            .font(hovered ? .caption : .footnote)
 
-                        Text(video.publishedAt)
-                            .font(.caption2)
-                            .foregroundStyle(.tertiary)
-                            .lineLimit(1)
+                        if !hovered {
+                            Text(video.publishedAt)
+                                .font(.caption2)
+                                .foregroundStyle(.tertiary)
+                                .lineLimit(1)
+                        }
                     }
                     .padding(.leading, 10)
                     Spacer()
@@ -58,10 +63,11 @@ struct VideoRowView: View {
             .overlay(RoundedRectangle(cornerRadius: 5)
                 .stroke(hovered ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
                 .shadow(color: hovered ?.pink : .blue.opacity(0), radius: 10)
-            ).onHover { val in
+            )
+            .onHover { val in
                 self.hovered = val
             }
-            .animation(.default, value: hovered)
+            .animation(.easeInOut, value: hovered)
         }
     }
 }

@@ -12,8 +12,6 @@ struct YoutubePreferenceView: View {
 
     @StateObject var youtubePreferenceViewModel = YoutubePreferenceViewModel()
 
-    @State var showLogs = false
-
     var body: some View {
         VStack {
             Group {
@@ -58,33 +56,22 @@ struct YoutubePreferenceView: View {
                                 youtubePreferenceViewModel.copyLogsToClipboard(redacted: false, appState: appStateViewModel)
                             }
                         }
-
-                    Label(showLogs ? "Hide" : "Show", systemImage: showLogs ? "chevron.up" : "chevron.down")
-                        .padding(8)
-                        .background(.thinMaterial)
-                        .cornerRadius(20)
-                        .onTapGesture {
-                            showLogs.toggle()
-                        }
                 }
 
-                Divider()
-
-                if showLogs {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack(alignment: .leading) {
-                            ForEach(appStateViewModel.logs, id: \.self) { log in
-                                LogText(text: log, color: .gray)
-                            }
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading) {
+                        ForEach(appStateViewModel.logs, id: \.self) { log in
+                            LogText(text: log, color: .gray)
                         }
                     }
-                    .padding(.bottom)
-                    .frame(height: 120)
                 }
+                .padding(.bottom)
             }
+            Spacer()
         }
+
         .padding(.horizontal)
-        .frame(width: 350)
+        .frame(maxWidth: 350)
     }
 }
 

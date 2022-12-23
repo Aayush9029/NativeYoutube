@@ -31,10 +31,10 @@ struct GeneralPreferenceView: View {
                 Toggle(isOn: $appStateViewModel.useIINA) {}
                     .toggleStyle(.switch)
             }
-            .padding(.bottom)
+            Spacer()
         }
         .padding(.horizontal)
-        .frame(width: 350)
+        .frame(maxWidth: 350)
     }
 }
 
