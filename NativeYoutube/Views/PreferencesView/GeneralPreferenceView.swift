@@ -10,32 +10,24 @@ import SwiftUI
 struct GeneralPreferenceView: View {
     @EnvironmentObject var appStateViewModel: AppStateViewModel
 
-    @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = Constants.defaultPlaylistID
-
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Custom Playlist ID")
-                .font(.title3.bold())
-                .padding(.top)
+            Label("Custom Playlist ID", systemImage: "music.note.list")
+                .bold()
 
-            TextField("Playlist ID", text: $playListID)
-                .padding([.bottom], 10)
-                .textFieldStyle(.roundedBorder)
+            TextField("Playlist ID", text: $appStateViewModel.playListID)
+                .textFieldStyle(.plain)
+                .padding(8)
+                .background(.ultraThinMaterial)
+                .cornerRadius(6)
 
-            Divider()
-
-                HStack {
-                    Text("Use IINA for video playback")
-                        .font(.title3.bold())
-                    Spacer()
-                    Toggle(isOn: $appStateViewModel.useIINA) {}
-                        .toggleStyle(.switch)
-                }
-            .padding(.bottom)
+            Toggle("Use IINA", isOn: $appStateViewModel.useIINA)
+                .toggleStyle(.switch)
+                .bold()
         }
-        .padding(.horizontal)
-        .frame(width: 350)
-
+        .padding()
+        .background(.ultraThinMaterial)
+        .cornerRadius(6)
     }
 }
 

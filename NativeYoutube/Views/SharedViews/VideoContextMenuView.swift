@@ -26,11 +26,6 @@ struct VideoContextMenuView: View {
                 }
             }
             VStack {
-                Button(action: {
-                    appStateViewModel.playAudioYTDL(url: video.url, title: video.title)
-                }, label: {
-                    Label("Play Audio in IINA", systemImage: "music.note")
-                })
                 Button {
                     appStateViewModel.togglePlaying(video.title)
                     youtubePlayerViewModel.playVideo(url: video.url.absoluteString)
@@ -48,12 +43,3 @@ struct VideoContextMenuView: View {
         }
     }
 }
-
-// struct VideoContextMenu_Preview: PreviewProvider {
-//    static var previews: some View {
-//        VideoContextMenuView(video: .exampleData)
-//            .environmentObject(AppStateViewModel())
-//            .environmentObject(YoutubePlayerViewModel())
-//            .frame(width: 350)
-//    }
-// }

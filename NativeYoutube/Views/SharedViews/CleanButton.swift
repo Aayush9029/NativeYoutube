@@ -8,29 +8,33 @@
 import SwiftUI
 
 struct CleanButton: View {
-    let title: String
+    let page: Pages
     let image: String
-    let isCurrent: Bool
+    @Binding var binded: Pages
 
     var body: some View {
-        Group {
-            Label(title, systemImage: image)
-                .labelStyle(.iconOnly)
-                .font(.callout)
-                .foregroundColor(isCurrent ? .red : .gray)
-
+        Button {
+            withAnimation {
+                binded = page
+            }
+        } label: {
+            Group {
+                Label(page.rawValue, systemImage: image)
+                    .labelStyle(.iconOnly)
+                    .font(.callout)
+                    .foregroundColor(binded == page ? .red : .gray)
+            }
+            .padding(6)
+            .background(.ultraThinMaterial)
+            .cornerRadius(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(
+                        binded == page ? .red : .gray,
+                        lineWidth: binded == page ? 2 : 0.5
+                    )
+            )
         }
-        .padding(6)
-        .background(.ultraThinMaterial)
-        .cornerRadius(8)
-        .shadow(color: isCurrent ? .red : .clear, radius: 2, x: 0, y: 0)
-
-    }
-}
-
-struct SmallButtonView_Previews: PreviewProvider {
-    static var previews: some View {
-        CleanButton(title: "questions", image: "questionmark", isCurrent: false)
-            .padding()
+        .buttonStyle(.plain)
     }
 }

@@ -12,9 +12,9 @@ struct LogText: View {
     var color: Color = .gray
 
     var body: some View {
-            Text(text)
-                .font(.caption2)
-                .foregroundColor(.gray)
+        Text(text)
+            .font(.caption2)
+            .foregroundColor(.gray)
     }
 }
 

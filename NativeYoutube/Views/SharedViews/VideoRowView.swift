@@ -5,46 +5,69 @@
 //  Created by Erik Bautista on 2/5/22.
 //
 
+import SDWebImageSwiftUI
 import SwiftUI
 
 struct VideoRowView: View {
     let video: VideoModel
 
-    @State var isHovered: Bool = false
+    @State var hovered: Bool = false
 
     var body: some View {
         Group {
-            HStack {
-                ThumbnailView(url: video.thumbnail)
+            ZStack {
+                WebImage(url: video.thumbnail)
+                    .resizable()
+                    .overlay {
+                        Rectangle()
+                            .fill(hovered ? .ultraThinMaterial : .ultraThickMaterial)
+                    }
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(video.title)
-                        .foregroundStyle(.primary)
-                        .font(.title3.bold())
-                        .lineLimit(1)
+                HStack {
+                    if !hovered {
+                        WebImage(url: video.thumbnail)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 128, height: 72)
+                            .cornerRadius(5)
+                            .shadow(radius: 6, x: 2)
+                            .padding(.leading, 4)
+                            .padding(.vertical, 2)
+                            .transition(.offset(x: -128))
+                    }
 
-                    Text(video.publishedAt)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(video.title)
+                            .foregroundStyle(.primary)
+                            .bold()
+                            .lineLimit(hovered ? 3 : 1)
 
-                    Text(video.channelTitle)
-                        .foregroundStyle(.tertiary)
-                        .font(.caption)
+                        Text(video.channelTitle)
+                            .foregroundStyle(.secondary)
+                            .font(hovered ? .caption : .footnote)
+
+                        if !hovered {
+                            Text(video.publishedAt)
+                                .font(.caption2)
+                                .foregroundStyle(.tertiary)
+                                .lineLimit(1)
+                        }
+                    }
+                    .padding(.leading, 10)
+                    Spacer()
                 }
-                .padding(.leading, 10)
-
-                Spacer()
             }
-            .background(isHovered ? Color.pink.opacity(0.5) : Color.white.opacity(0.025))
-            .cornerRadius(5)
+            .clipped()
+            .frame(height: 80)
+            .containerShape(RoundedRectangle(cornerRadius: 5))
             .overlay(RoundedRectangle(cornerRadius: 5)
-                        .stroke(isHovered ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
-                        .shadow(color: isHovered ?.pink : .blue.opacity(0), radius: 10)
+                .stroke(hovered ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
+                .shadow(color: hovered ?.pink : .blue.opacity(0), radius: 10)
             )
-            .animation(.default, value: isHovered)
-            .onHover { isHovered in
-                self.isHovered = isHovered
+            .onHover { val in
+                self.hovered = val
             }
+            .animation(.easeInOut, value: hovered)
         }
     }
 }

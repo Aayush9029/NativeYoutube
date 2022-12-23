@@ -15,17 +15,16 @@ struct PopupPlayerView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack {
-                VideoPlayerView(youtubePlayer: youtubePlayer)
-                    .cornerRadius(20)
-                    .onHover { hovering in
-                        withAnimation {
-                            isHoveringOnPlayer = hovering
-                        }
-                    }
-
-                VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
-                    .padding(.horizontal)
-                    .padding(.bottom, 5)
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                    VideoPlayerView(youtubePlayer: youtubePlayer)
+                }
+                if isHoveringOnPlayer {
+                    VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
+                        .padding(.horizontal)
+                        .padding(.bottom, 5)
+                }
             }
 
             if isHoveringOnPlayer {
@@ -35,8 +34,14 @@ struct PopupPlayerView: View {
                     }
             }
         }
-        .background(.ultraThinMaterial)
-        .cornerRadius(20)
+        .onHover { hovering in
+            withAnimation {
+                isHoveringOnPlayer = hovering
+            }
+        }
+        .background(VisualEffectView(material: .popover, blendingMode: .behindWindow))
+        .cornerRadius(10)
+        .frame(minWidth: 480, minHeight: 270)
     }
 }
 

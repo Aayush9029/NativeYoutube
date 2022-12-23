@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftyJSON
 
 class PlayListViewModel: ObservableObject {
-
     @Published var videos = [VideoModel]()
     @Published var currentStatus: RequestStatus = .none
 

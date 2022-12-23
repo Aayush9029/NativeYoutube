@@ -24,7 +24,6 @@ func dateToString(date: Date) -> String {
 }
 
 func timestampToDate(timestamp: String) -> String {
-
     let dateStringFormatter = DateFormatter()
     dateStringFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
     let d = dateStringFormatter.date(from: timestamp)

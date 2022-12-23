@@ -26,7 +26,7 @@ struct VideoModel {
     )
 
     var cleanTitle: String {
-        var title =  String(title.split(separator: "(")[0])
+        var title = String(title.split(separator: "(")[0])
 
         if title.split(separator: "-").count > 1 {
             title = String(title.split(separator: "-")[1])
@@ -71,8 +71,7 @@ extension VideoModel {
                               thumbnail: thumbnailURL,
                               publishedAt: publishedAt,
                               url: url,
-                              channelTitle: channelTitle
-            )
+                              channelTitle: channelTitle)
         }
 
         return nil

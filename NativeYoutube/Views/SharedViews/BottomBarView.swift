@@ -9,46 +9,66 @@ import SwiftUI
 
 struct BottomBarView: View {
     @EnvironmentObject var appStateViewModel: AppStateViewModel
-
+    @EnvironmentObject var searchViewModel: SearchViewModel
     @Binding var currentPage: Pages
 
     var body: some View {
         Group {
             HStack {
-                CleanButton(title: "Playlists", image: "music.note.list", isCurrent: currentPage == .playlists)
-                    .onTapGesture {
-                        withAnimation {
-                            currentPage = .playlists
-                        }
+                CleanButton(
+                    page: .playlists,
+                    image: "music.note.list",
+                    binded: $currentPage
+                )
+                CleanButton(
+                    page: .search,
+                    image: "magnifyingglass",
+                    binded: $currentPage
+                )
+                if currentPage == .search {
+                    HStack {
+                        TextField("Search..", text: $searchViewModel.searchQuery)
+                            .textFieldStyle(.plain)
+                            .padding(6)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.gray.opacity(0.5), lineWidth: 1)
+                            )
+                            .onSubmit {
+                                searchViewModel.startSearch(apiKey: appStateViewModel.apiKey)
+                                appStateViewModel.addToLogs(for: .search, message: "Searching for \($searchViewModel.searchQuery)")
+                            }
                     }
-                CleanButton(title: "Search", image: "magnifyingglass", isCurrent: currentPage == .search)
-                    .onTapGesture {
-                        withAnimation {
-                            currentPage = .search
-                        }
-                    }
-                if appStateViewModel.isPlaying {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                    Text("\(appStateViewModel.currentlyPlaying)")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    .transition(.offset(y: 120))
+                    .animation(.linear, value: currentPage == .search)
 
+                } else {
+                    if appStateViewModel.isPlaying {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            Text("\(appStateViewModel.currentlyPlaying)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .lineLimit(1)
                     }
-                    .lineLimit(1)
+
+                    Spacer()
                 }
-                Spacer()
-                CleanButton(title: "Settings", image: appStateViewModel.showingSettings ? "rectangle" : "gear", isCurrent: false)
-                    .contextMenu(menuItems: {
-                        Button("Close App") {
-                            NSApplication.shared.terminate(self)
-                        }
-                    })
-                    .onTapGesture {
-                        if !appStateViewModel.showingSettings {
-                            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                        }
+                CleanButton(
+                    page: .settings,
+                    image: "gear",
+                    binded: $currentPage
+                )
+                .contextMenu {
+                    Button {
+                        NSApplication.shared.terminate(self)
+                    } label: {
+                        Label("Quit app", systemImage: "power")
+                            .labelStyle(.titleAndIcon)
                     }
-                    .disabled(appStateViewModel.showingSettings)
+                }
             }
             .padding(.horizontal)
             .padding(.vertical, 6)
