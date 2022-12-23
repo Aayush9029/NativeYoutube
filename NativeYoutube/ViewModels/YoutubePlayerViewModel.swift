@@ -13,7 +13,6 @@ class YoutubePlayerViewModel: ObservableObject {
         let videoPlayer = YouTubePlayer(source: YouTubePlayer.Source.url(url.absoluteString), configuration: YoutubePlayerViewModel.configuration)
         PopupPlayerView(appStateViewModel: appState, youtubePlayer: videoPlayer, videoURL: url)
             .openNewWindow(isTransparent: true, appState: appState)
-        
     }
 
     static let configuration = YouTubePlayer.Configuration(

@@ -27,12 +27,9 @@ enum StatusStates: String {
     case videoLoaded = "View Has Been Loaded"
 }
 
-enum AppStorageStrings: String {
-    case apiKey = "Api Key"
-    case playListID = "Playlist ID for your goto playlist"
-    case videoClickBehaviour = "com.aayush.nativeyoutube.videoClickBehaviour"
-    case useNativePlayer = "com.aayush.nativeyoutube.useNativePlayer"
-
-//    iina plus works much better, this could potentially replace youtubeplayerkit
-    case useIINA = "Use IINA Plus"
+enum AppStorageStrings {
+    static let apiKey = "Api Key"
+    static let playListID = "Playlist ID for your goto playlist"
+    static let videoClickBehaviour = "com.aayush.nativeyoutube.videoClickBehaviour"
+    static let useIINA = "com.aayush.nativeyoutube.useIINA"
 }

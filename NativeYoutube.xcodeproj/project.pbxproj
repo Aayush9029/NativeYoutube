@@ -142,6 +142,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C21B533B2956593F00DDCAD8 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		C27DD341272C853E00B4DC16 = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +178,7 @@
 				C27DD35D272C857300B4DC16 /* Helpers */,
 				C27DD371272C8A7600B4DC16 /* Extensions */,
 				C27DD351272C853F00B4DC16 /* Assets.xcassets */,
+				C21B533B2956593F00DDCAD8 /* ViewModifiers */,
 				C27DD356272C853F00B4DC16 /* NativeYoutube.entitlements */,
 				C27DD36B272C899600B4DC16 /* Info.plist */,
 				C27DD353272C853F00B4DC16 /* Preview Content */,
@@ -526,7 +534,7 @@
 				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 2CPY2SAJ3X;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -554,12 +562,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = NativeYoutube/NativeYoutube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = 2CPY2SAJ3X;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -22,20 +22,13 @@ struct GeneralPreferenceView: View {
                 .background(.ultraThinMaterial)
                 .cornerRadius(6)
 
-            Toggle("Use IINA", isOn: $appStateViewModel.useIINA)
-                .toggleStyle(.switch)
-                .bold()
-            
-            Toggle("Use native player", isOn: $appStateViewModel.useNativePlayer)
-                .toggleStyle(.switch)
-                .bold()
-            
-            Picker("When double click on a video...", selection: $appStateViewModel.vidClickBehaviour) {
-                Text("Do nothing").tag(VideoClickBehaviour.nothing)
-                Text("Play video").tag(VideoClickBehaviour.playVideo)
-                Text("Open on YouTube").tag(VideoClickBehaviour.openOnYoutube)
-                if appStateViewModel.useIINA {
-                    Text("Play video in IINA").tag(VideoClickBehaviour.playInIINA)
+            SpacedToggle("Use IINA", $appStateViewModel.useIINA)
+
+            Picker("Double Click to", selection: $appStateViewModel.vidClickBehaviour) {
+                ForEach(VideoClickBehaviour.allCases, id: \.self) { behaviour in
+                    if behaviour != .playInIINA || appStateViewModel.useIINA {
+                        Text(behaviour.rawValue).tag(behaviour)
+                    }
                 }
             }
         }
@@ -48,5 +41,25 @@ struct GeneralPreferenceView: View {
 struct GeneralView_Previews: PreviewProvider {
     static var previews: some View {
         GeneralPreferenceView()
+    }
+}
+
+struct SpacedToggle: View {
+    let title: String
+    @Binding var binded: Bool
+
+    init(_ title: String = "", _ isOn: Binding<Bool>) {
+        self.title = title
+        self._binded = isOn
+    }
+
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Toggle("", isOn: $binded)
+                .toggleStyle(.switch)
+                .bold()
+        }
     }
 }

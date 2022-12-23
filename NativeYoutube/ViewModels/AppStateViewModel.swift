@@ -11,11 +11,10 @@ import SwiftUI
 class AppStateViewModel: ObservableObject {
     // MARK: Global values
 
-    @AppStorage(AppStorageStrings.apiKey.rawValue) var apiKey = Constants.defaultAPIKey
-    @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = Constants.defaultPlaylistID
-    @AppStorage(AppStorageStrings.useIINA.rawValue) var useIINA: Bool = false
-    @AppStorage(AppStorageStrings.videoClickBehaviour.rawValue) var vidClickBehaviour: VideoClickBehaviour = .playVideo
-    @AppStorage(AppStorageStrings.useNativePlayer.rawValue) var useNativePlayer: Bool = true
+    @AppStorage(AppStorageStrings.apiKey) var apiKey = Constants.defaultAPIKey
+    @AppStorage(AppStorageStrings.playListID) var playListID = Constants.defaultPlaylistID
+    @AppStorage(AppStorageStrings.useIINA) var useIINA: Bool = false
+    @AppStorage(AppStorageStrings.videoClickBehaviour) var vidClickBehaviour: VideoClickBehaviour = .playVideo
 
     // MARK: States
 

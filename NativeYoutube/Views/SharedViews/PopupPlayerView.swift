@@ -5,46 +5,38 @@
 //  Created by Aayush Pokharel on 2021-11-23.
 //
 
-import SwiftUI
-import YouTubePlayerKit
 import AVKit
+import SwiftUI
 import YouTubeKit
+import YouTubePlayerKit
 
 struct PopupPlayerView: View {
-    //As view is displayed via a function, can't use EnvironnementObject -> Re-declaring useNativePlayer var in the view.
+    // As view is displayed via a function, can't use EnvironnementObject -> Re-declaring useNativePlayer var in the view.
     @ObservedObject var appStateViewModel: AppStateViewModel
     @StateObject var youtubePlayer: YouTubePlayer
-    
+
     let videoURL: URL
     @State var player: AVPlayer? = nil
     @State var isHoveringOnPlayer = false
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            
             VStack {
-                if appStateViewModel.useNativePlayer {
-                    if player != nil {
-                        ZStack {
-                            VideoPlayer(player: player)
-                        }
-                    } else {
-                        ProgressView().frame(width: 600, height: 400)
-                    }
+                if player != nil {
+                    VideoPlayer(player: player)
                 } else {
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                        VideoPlayerView(youtubePlayer: youtubePlayer)
+                    VStack {
+                        ProgressView()
+                        Text("\(appStateViewModel.currentlyPlaying)")
+                            .frame(width: 420)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.tertiary)
+                            .padding()
                     }
-                    if isHoveringOnPlayer {
-                        VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
-                            .padding(.horizontal)
-                            .padding(.bottom, 5)
-                    }
+                    .padding()
+                    .frame(width: 600, height: 400)
+                    .background(.black)
                 }
-                
-                
             }
 
             if isHoveringOnPlayer {
@@ -56,19 +48,18 @@ struct PopupPlayerView: View {
             }
         }
         .task {
-            if appStateViewModel.useNativePlayer {
-                //We need to get the video's stream in async, so we set a task who runs when view appears to set the value of the player to the video stream.
-                let video = YouTube(url: videoURL)
-                do {
-                    let streams = try await video.streams
-                    //Even though it should return the highest resolution stream for the video, as AVPlayer doesn't support DASH streams, it returns a not-that-great quality stream
-                    player = AVPlayer(url: streams
-                        .filter { $0.isProgressive }
-                        .highestResolutionStream()!.url)
-                    // we need to start playback as it doesn't play automatically
-                    player!.play()
-                } catch {}
-            }
+            // We need to get the video's stream in async, so we set a task who runs when view appears to set the value of the player to the video stream.
+            let video = YouTube(url: videoURL)
+            do {
+                let streams = try await video.streams
+                let streamHQ = streams
+                    .filter { $0.isProgressive }
+                    .highestResolutionStream()?.url
+                if let streamHQ {
+                    player = AVPlayer(url: streamHQ)
+                }
+                player?.play()
+            } catch {}
         }
         .onHover { hovering in
             withAnimation {
@@ -78,7 +69,7 @@ struct PopupPlayerView: View {
         .background(VisualEffectView(material: .popover, blendingMode: .behindWindow))
         .cornerRadius(10)
         .frame(minWidth: 320, maxWidth: 1600, minHeight: 180, maxHeight: 900)
-        .aspectRatio((16/9), contentMode: .fit)
+        .aspectRatio(16/9, contentMode: .fit)
     }
 }
 

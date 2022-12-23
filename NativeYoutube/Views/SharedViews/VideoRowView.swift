@@ -5,8 +5,8 @@
 //  Created by Erik Bautista on 2/5/22.
 //
 
-import SwiftUI
 import SDWebImageSwiftUI
+import SwiftUI
 
 struct VideoRowView: View {
     let video: VideoModel
@@ -19,22 +19,22 @@ struct VideoRowView: View {
                 WebImage(url: video.thumbnail)
                     .resizable()
                     .overlay {
-                        RoundedRectangle(cornerRadius: 5)
+                        Rectangle()
                             .fill(hovered ? .ultraThinMaterial : .ultraThickMaterial)
                     }
 
-                HStack() {
-                    WebImage(url: video.thumbnail)
-                        .resizable()
-                        .scaledToFill()
-                    // When hovered, reduce size of the thumbnail...
-                        .frame(width: hovered ? 64 : 128, height: hovered ? 36 : 72)
-                        .cornerRadius(5)
-                        .shadow(radius: 6, x: 2)
-                    // ...and move it a bit on the left to avoid looking weird.
-                        .padding(.leading, hovered ? 10 : 4)
-                        .padding(.vertical, 2)
-                        .transition(.offset(x: -128))
+                HStack {
+                    if !hovered {
+                        WebImage(url: video.thumbnail)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 128, height: 72)
+                            .cornerRadius(5)
+                            .shadow(radius: 6, x: 2)
+                            .padding(.leading, 4)
+                            .padding(.vertical, 2)
+                            .transition(.offset(x: -130))
+                    }
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(video.title)
@@ -59,10 +59,7 @@ struct VideoRowView: View {
             }
             .clipped()
             .frame(height: 80)
-            //added a Mask to avoid weird behaviours with the colored background of the row
-            .mask {
-                RoundedRectangle(cornerRadius: 5)
-            }
+            .containerShape(RoundedRectangle(cornerRadius: 5))
             .overlay(RoundedRectangle(cornerRadius: 5)
                 .stroke(hovered ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
                 .shadow(color: hovered ?.pink : .blue.opacity(0), radius: 10)

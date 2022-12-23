@@ -11,8 +11,8 @@ import Foundation
 
 // All behaviours available on double clicking a video element.
 enum VideoClickBehaviour: String, CaseIterable {
-    case nothing
-    case playVideo
-    case openOnYoutube
-    case playInIINA
+    case nothing = "Do Nothing"
+    case playVideo = "Play Video"
+    case openOnYoutube = "Open on Youtube"
+    case playInIINA = "Play Using IINA"
 }
