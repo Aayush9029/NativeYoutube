@@ -54,8 +54,6 @@
 		133DCE5127ADF16600AE6F1F /* GeneralPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferenceView.swift; sourceTree = "<group>"; };
 		133DCE5527ADF29C00AE6F1F /* YoutubePreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePreferenceView.swift; sourceTree = "<group>"; };
 		138F4D1327ACFCBC00DF099D /* NativeYoutubeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeYoutubeApp.swift; sourceTree = "<group>"; };
-		139EF52E27BAC7950031BF1D /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
-		13E02D0B27ABD2FE00B4A648 /* String+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Time.swift"; sourceTree = "<group>"; };
 		13FA3CF027AF820C005555C3 /* VideoRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRowView.swift; sourceTree = "<group>"; };
 		13FA3CF227AF82B2005555C3 /* VideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListView.swift; sourceTree = "<group>"; };
 		70A3843B2955B35E000941F5 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 		C27DD356272C853F00B4DC16 /* NativeYoutube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NativeYoutube.entitlements; sourceTree = "<group>"; };
 		C27DD36B272C899600B4DC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C27DD36F272C8A6200B4DC16 /* PlayListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListViewModel.swift; sourceTree = "<group>"; };
-		C27DD372272C8A8900B4DC16 /* Collections+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collections+Extension.swift"; sourceTree = "<group>"; };
 		C27DD376272C8AB900B4DC16 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		C27DD37B272C8CCF00B4DC16 /* PlayListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListView.swift; sourceTree = "<group>"; };
 		C27DD37D272C8CD600B4DC16 /* SearchVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVideosView.swift; sourceTree = "<group>"; };
@@ -225,11 +222,8 @@
 		C27DD371272C8A7600B4DC16 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C27DD372272C8A8900B4DC16 /* Collections+Extension.swift */,
 				C27DD3A9272CB9FD00B4DC16 /* View+Extension.swift */,
 				C27DD3AB272CBA5800B4DC16 /* NSViewRepresentable+Extension.swift */,
-				13E02D0B27ABD2FE00B4A648 /* String+Time.swift */,
-				139EF52E27BAC7950031BF1D /* URL+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
