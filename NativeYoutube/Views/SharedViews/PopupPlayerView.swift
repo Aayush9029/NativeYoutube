@@ -77,7 +77,7 @@ struct PopupPlayerView: View {
         }
         .background(VisualEffectView(material: .popover, blendingMode: .behindWindow))
         .cornerRadius(10)
-        .frame(minWidth: 480, minHeight: 270)
+        .frame(minWidth: 320, minHeight: 180)
     }
 }
 
