@@ -12,8 +12,7 @@ import YouTubeKit
 
 struct PopupPlayerView: View {
     //As view is displayed via a function, can't use EnvironnementObject -> Re-declaring useNativePlayer var in the view.
-    @AppStorage(AppStorageStrings.useNativePlayer.rawValue) var useNativePlayer: Bool = true
-    
+    @ObservedObject var appStateViewModel: AppStateViewModel
     @StateObject var youtubePlayer: YouTubePlayer
     
     let videoURL: URL
@@ -24,7 +23,7 @@ struct PopupPlayerView: View {
         ZStack(alignment: .topLeading) {
             
             VStack {
-                if useNativePlayer {
+                if appStateViewModel.useNativePlayer {
                     if player != nil {
                         ZStack {
                             VideoPlayer(player: player)
@@ -51,12 +50,13 @@ struct PopupPlayerView: View {
             if isHoveringOnPlayer {
                 PopUpPlayerCloseButton()
                     .onTapGesture {
+                        appStateViewModel.togglePlaying("")
                         NSApp.keyWindow?.close()
                     }
             }
         }
         .task {
-            if useNativePlayer {
+            if appStateViewModel.useNativePlayer {
                 //We need to get the video's stream in async, so we set a task who runs when view appears to set the value of the player to the video stream.
                 let video = YouTube(url: videoURL)
                 do {
@@ -99,6 +99,6 @@ struct PopUpPlayerCloseButton: View {
 
 struct PopupPlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        PopupPlayerView(youtubePlayer: YoutubePlayerViewModel.exampleVideo, videoURL: URL(string: "https://www.youtube.com/watch?v=EgBJmlPo8Xw")!)
+        PopupPlayerView(appStateViewModel: AppStateViewModel(), youtubePlayer: YoutubePlayerViewModel.exampleVideo, videoURL: URL(string: "https://www.youtube.com/watch?v=EgBJmlPo8Xw")!)
     }
 }

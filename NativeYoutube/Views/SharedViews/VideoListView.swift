@@ -40,7 +40,7 @@ struct VideoListView: View {
                                     return
                                 case .playVideo:
                                     appStateViewModel.togglePlaying(video.title)
-                                    youtubePlayerViewModel.playVideo(url: video.url)
+                                    youtubePlayerViewModel.playVideo(url: video.url, appState: appStateViewModel)
                                 case .openOnYoutube:
                                     NSWorkspace.shared.open(video.url)
                                 case .playInIINA:
