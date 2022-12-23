@@ -30,8 +30,8 @@ enum StatusStates: String {
 enum AppStorageStrings: String {
     case apiKey = "Api Key"
     case playListID = "Playlist ID for your goto playlist"
-    case videoClickBehaviour = "Behaviour when double click on a video"
-    case useNativePlayer = "Use Native player"
+    case videoClickBehaviour = "com.aayush.nativeyoutube.videoClickBehaviour"
+    case useNativePlayer = "com.aayush.nativeyoutube.useNativePlayer"
 
 //    iina plus works much better, this could potentially replace youtubeplayerkit
     case useIINA = "Use IINA Plus"
