@@ -28,7 +28,7 @@ struct VideoContextMenuView: View {
             VStack {
                 Button {
                     appStateViewModel.togglePlaying(video.title)
-                    youtubePlayerViewModel.playVideo(url: video.url.absoluteString)
+                    youtubePlayerViewModel.playVideo(url: video.url)
                 } label: {
                     Label("Play Video", systemImage: "play.circle")
                 }

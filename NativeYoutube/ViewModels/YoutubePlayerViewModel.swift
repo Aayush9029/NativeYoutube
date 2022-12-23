@@ -9,10 +9,11 @@ import SwiftUI
 import YouTubePlayerKit
 
 class YoutubePlayerViewModel: ObservableObject {
-    func playVideo(url: String) {
-        let videoPlayer = YouTubePlayer(source: YouTubePlayer.Source.url(url), configuration: YoutubePlayerViewModel.configuration)
-        PopupPlayerView(youtubePlayer: videoPlayer)
+    func playVideo(url: URL) {
+        let videoPlayer = YouTubePlayer(source: YouTubePlayer.Source.url(url.absoluteString), configuration: YoutubePlayerViewModel.configuration)
+        PopupPlayerView(youtubePlayer: videoPlayer, videoURL: url)
             .openNewWindow(isTransparent: true)
+        
     }
 
     static let configuration = YouTubePlayer.Configuration(

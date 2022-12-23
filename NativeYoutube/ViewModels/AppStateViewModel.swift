@@ -14,6 +14,8 @@ class AppStateViewModel: ObservableObject {
     @AppStorage(AppStorageStrings.apiKey.rawValue) var apiKey = Constants.defaultAPIKey
     @AppStorage(AppStorageStrings.playListID.rawValue) var playListID = Constants.defaultPlaylistID
     @AppStorage(AppStorageStrings.useIINA.rawValue) var useIINA: Bool = false
+    @AppStorage(AppStorageStrings.videoClickBehaviour.rawValue) var vidClickBehaviour: VideoClickBehaviour = .playVideo
+    @AppStorage(AppStorageStrings.useNativePlayer.rawValue) var useNativePlayer: Bool = true
 
     // MARK: States
 

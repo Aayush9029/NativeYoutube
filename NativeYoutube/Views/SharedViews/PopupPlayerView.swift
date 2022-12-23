@@ -7,24 +7,45 @@
 
 import SwiftUI
 import YouTubePlayerKit
+import AVKit
+import YouTubeKit
 
 struct PopupPlayerView: View {
+    //As view is displayed via a function, can't use EnvironnementObject -> Re-declaring useNativePlayer var in the view.
+    @AppStorage(AppStorageStrings.useNativePlayer.rawValue) var useNativePlayer: Bool = true
+    
     @StateObject var youtubePlayer: YouTubePlayer
+    
+    let videoURL: URL
+    @State var player: AVPlayer? = nil
     @State var isHoveringOnPlayer = false
 
     var body: some View {
         ZStack(alignment: .topLeading) {
+            
             VStack {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.clear)
-                    VideoPlayerView(youtubePlayer: youtubePlayer)
+                if useNativePlayer {
+                    if player != nil {
+                        ZStack {
+                            VideoPlayer(player: player)
+                        }
+                    } else {
+                        ProgressView().frame(width: 600, height: 400)
+                    }
+                } else {
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                        VideoPlayerView(youtubePlayer: youtubePlayer)
+                    }
+                    if isHoveringOnPlayer {
+                        VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
+                            .padding(.horizontal)
+                            .padding(.bottom, 5)
+                    }
                 }
-                if isHoveringOnPlayer {
-                    VideoPlayerControlsView(viewModel: .init(youtubePlayer: youtubePlayer))
-                        .padding(.horizontal)
-                        .padding(.bottom, 5)
-                }
+                
+                
             }
 
             if isHoveringOnPlayer {
@@ -32,6 +53,21 @@ struct PopupPlayerView: View {
                     .onTapGesture {
                         NSApp.keyWindow?.close()
                     }
+            }
+        }
+        .task {
+            if useNativePlayer {
+                //We need to get the video's stream in async, so we set a task who runs when view appears to set the value of the player to the video stream.
+                let video = YouTube(url: videoURL)
+                do {
+                    let streams = try await video.streams
+                    //Even though it should return the highest resolution stream for the video, as AVPlayer doesn't support DASH streams, it returns a not-that-great quality stream
+                    player = AVPlayer(url: streams
+                        .filter { $0.isProgressive }
+                        .highestResolutionStream()!.url)
+                    // we need to start playback as it doesn't play automatically
+                    player!.play()
+                } catch {}
             }
         }
         .onHover { hovering in
@@ -63,6 +99,6 @@ struct PopUpPlayerCloseButton: View {
 
 struct PopupPlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        PopupPlayerView(youtubePlayer: YoutubePlayerViewModel.exampleVideo)
+        PopupPlayerView(youtubePlayer: YoutubePlayerViewModel.exampleVideo, videoURL: URL(string: "https://www.youtube.com/watch?v=EgBJmlPo8Xw")!)
     }
 }

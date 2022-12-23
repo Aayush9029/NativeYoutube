@@ -21,13 +21,5 @@ struct NativeYoutubeApp: App {
                 .environmentObject(searchViewModel)
         }
         .menuBarExtraStyle(WindowMenuBarExtraStyle())
-
-        Settings {
-            PreferencesView()
-                .padding(-12)
-                .frame(minWidth: 320, minHeight: 512)
-                .environmentObject(appStateViewModel)
-        }
-        .windowStyle(.hiddenTitleBar)
     }
 }
