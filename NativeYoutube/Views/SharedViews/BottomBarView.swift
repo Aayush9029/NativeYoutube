@@ -64,15 +64,16 @@ struct BottomBarView: View {
                         page: .settings,
                         image: "gear",
                         binded: $currentPage
-                    ).keyboardShortcut(",", modifiers: .command)
-                        .contextMenu {
-                            Button {
-                                NSApplication.shared.terminate(self)
-                            } label: {
-                                Label("Quit app", systemImage: "power")
-                                    .labelStyle(.titleAndIcon)
-                            }
+                    )
+                    .keyboardShortcut(",", modifiers: .command)
+                    .contextMenu {
+                        Button {
+                            NSApplication.shared.terminate(self)
+                        } label: {
+                            Label("Quit app", systemImage: "power")
+                                .labelStyle(.titleAndIcon)
                         }
+                    }
                 }
             }
             .labelStyle(.iconOnly)
