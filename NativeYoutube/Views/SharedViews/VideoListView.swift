@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct VideoListView: View {
+    
     @EnvironmentObject var appStateViewModel: AppStateViewModel
-
     let videos: [VideoModel]
 
     var body: some View {

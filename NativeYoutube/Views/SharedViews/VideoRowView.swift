@@ -10,8 +10,7 @@ import SwiftUI
 
 struct VideoRowView: View {
     let video: VideoModel
-
-    @State var hovered: Bool = false
+    @State var focused: Bool = false
 
     var body: some View {
         Group {
@@ -20,11 +19,11 @@ struct VideoRowView: View {
                     .resizable()
                     .overlay {
                         Rectangle()
-                            .fill(hovered ? .ultraThinMaterial : .ultraThickMaterial)
+                            .fill(focused ? .ultraThinMaterial : .ultraThickMaterial)
                     }
 
                 HStack {
-                    if !hovered {
+                    if !focused {
                         WebImage(url: video.thumbnail)
                             .resizable()
                             .scaledToFill()
@@ -40,13 +39,13 @@ struct VideoRowView: View {
                         Text(video.title)
                             .foregroundStyle(.primary)
                             .bold()
-                            .lineLimit(hovered ? 3 : 1)
+                            .lineLimit(focused ? 3 : 1)
 
                         Text(video.channelTitle)
                             .foregroundStyle(.secondary)
-                            .font(hovered ? .caption : .footnote)
+                            .font(focused ? .caption : .footnote)
 
-                        if !hovered {
+                        if !focused {
                             Text(video.publishedAt)
                                 .font(.caption2)
                                 .foregroundStyle(.tertiary)
@@ -61,13 +60,13 @@ struct VideoRowView: View {
             .frame(height: 80)
             .containerShape(RoundedRectangle(cornerRadius: 5))
             .overlay(RoundedRectangle(cornerRadius: 5)
-                .stroke(hovered ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
-                .shadow(color: hovered ?.pink : .blue.opacity(0), radius: 10)
+                .stroke(focused ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
+                .shadow(color: focused ?.pink : .blue.opacity(0), radius: 10)
             )
-            .onHover { val in
-                self.hovered = val
-            }
-            .animation(.easeInOut, value: hovered)
+            .onTapGesture(perform: {
+                focused.toggle()
+            })
+            .animation(.easeInOut, value: focused)
         }
     }
 }
