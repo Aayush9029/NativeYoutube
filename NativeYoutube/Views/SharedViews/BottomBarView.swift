@@ -21,11 +21,12 @@ struct BottomBarView: View {
                         image: "music.note.list",
                         binded: $currentPage
                     )
+                    .keyboardShortcut("m", modifiers: .command)
                     CleanButton(
                         page: .search,
                         image: "magnifyingglass",
                         binded: $currentPage
-                    )
+                    ).keyboardShortcut("s", modifiers: .command)
                 }
 
                 if currentPage == .search {
@@ -63,15 +64,15 @@ struct BottomBarView: View {
                         page: .settings,
                         image: "gear",
                         binded: $currentPage
-                    )
-                    .contextMenu {
-                        Button {
-                            NSApplication.shared.terminate(self)
-                        } label: {
-                            Label("Quit app", systemImage: "power")
-                                .labelStyle(.titleAndIcon)
+                    ).keyboardShortcut(",", modifiers: .command)
+                        .contextMenu {
+                            Button {
+                                NSApplication.shared.terminate(self)
+                            } label: {
+                                Label("Quit app", systemImage: "power")
+                                    .labelStyle(.titleAndIcon)
+                            }
                         }
-                    }
                 }
             }
             .labelStyle(.iconOnly)
