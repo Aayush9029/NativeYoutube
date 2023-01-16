@@ -9,8 +9,10 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct VideoRowView: View {
+    @EnvironmentObject var appStateViewModel: AppStateViewModel
+    @State private var focused: Bool = false
+
     let video: VideoModel
-    @State var focused: Bool = false
 
     var body: some View {
         Group {
@@ -27,16 +29,17 @@ struct VideoRowView: View {
                         WebImage(url: video.thumbnail)
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 128, height: 72)
-                            .cornerRadius(5)
+                            .frame(width: 110)
+                            .cornerRadius(4)
                             .shadow(radius: 6, x: 2)
-                            .padding(.leading, 4)
-                            .padding(.vertical, 2)
+                            .padding(4)
+
                             .transition(.offset(x: -130))
                     }
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(video.title)
+                            .font(.subheadline)
                             .foregroundStyle(.primary)
                             .bold()
                             .lineLimit(focused ? 3 : 1)
@@ -52,7 +55,7 @@ struct VideoRowView: View {
                                 .lineLimit(1)
                         }
                     }
-                    .padding(.leading, 10)
+                    .padding(.leading, focused ? 6 : 0)
                     Spacer()
                 }
             }
@@ -63,10 +66,28 @@ struct VideoRowView: View {
                 .stroke(focused ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
                 .shadow(color: focused ?.pink : .blue.opacity(0), radius: 10)
             )
+            .onTapGesture(count: 2) {
+                switch appStateViewModel.vidClickBehaviour {
+                case .nothing:
+                    return
+                case .playVideo:
+                    appStateViewModel.togglePlaying(video.title)
+                    playVideo(url: video.url, appState: appStateViewModel)
+                case .openOnYoutube:
+                    NSWorkspace.shared.open(video.url)
+                case .playInIINA:
+                    appStateViewModel.playVideoIINA(url: video.url, title: video.title)
+                }
+            }
             .onTapGesture(perform: {
                 focused.toggle()
             })
-            .animation(.easeInOut, value: focused)
+            .animation(.easeIn, value: focused)
+        }
+        .onHover { hoverState in
+            if focused && !hoverState {
+                focused.toggle()
+            }
         }
     }
 }
@@ -74,5 +95,6 @@ struct VideoRowView: View {
 struct VideoRowView_Previews: PreviewProvider {
     static var previews: some View {
         VideoRowView(video: VideoModel.exampleData)
+            .environmentObject(AppStateViewModel())
     }
 }

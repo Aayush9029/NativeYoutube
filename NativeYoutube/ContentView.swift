@@ -22,7 +22,6 @@ struct ContentView: View {
             }
             BottomBarView(currentPage: $currentPage)
         }
-        .frame(width: 360.0)
     }
 }
 

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct VideoListView: View {
-    
     @EnvironmentObject var appStateViewModel: AppStateViewModel
     let videos: [VideoModel]
 
@@ -32,24 +31,12 @@ struct VideoListView: View {
                             .contextMenu(ContextMenu(menuItems: {
                                 VideoContextMenuView(video: video)
                             }))
-                            .onTapGesture(count: 2) {
-                                switch appStateViewModel.vidClickBehaviour {
-                                case .nothing:
-                                    return
-                                case .playVideo:
-                                    appStateViewModel.togglePlaying(video.title)
-                                    playVideo(url: video.url, appState: appStateViewModel)
-                                case .openOnYoutube:
-                                    NSWorkspace.shared.open(video.url)
-                                case .playInIINA:
-                                    appStateViewModel.playVideoIINA(url: video.url, title: video.title)
-                                }
-                            }
                     }
                     .padding(6)
                 }
             }
         }
+        .environmentObject(appStateViewModel)
     }
 }
 
