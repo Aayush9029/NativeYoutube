@@ -51,7 +51,7 @@
 [Icon By u/Rebirth](https://macosicons.com/#/u/Rebirth%20Ego)
 
 
-----
 
-## GitAds Sponsored
-[![Sponsored by GitAds](https://gitads.dev/v1/ad-serve?source=aayush9029/nativeyoutube@github)](https://gitads.dev/v1/ad-track?source=aayush9029/nativeyoutube@github)
+
+
+
