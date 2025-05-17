@@ -17,6 +17,12 @@ jobs:
       uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: '16.1'
+    - name: Configure Xcode defaults
+      run: |
+        set -e
+        defaults delete com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile
+        defaults delete com.apple.dt.Xcode IDEDisableAutomaticPackageResolution
+        defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
     - name: Build
       run: xcodebuild -scheme NativeYoutube -destination 'platform=macOS' build
     - name: Run tests
