@@ -34,7 +34,7 @@ extension FloatingWindowClient: DependencyKey {
                     backing: .buffered,
                     defer: false
                 )
-                
+                panel.titleVisibility = .hidden
                 panel.backgroundColor = .clear
                 panel.animationBehavior = .utilityWindow
                 panel.contentView = contentView

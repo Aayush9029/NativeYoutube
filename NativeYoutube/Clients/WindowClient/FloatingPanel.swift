@@ -18,7 +18,8 @@ class FloatingPanel: NSPanel {
             backing: backing,
             defer: flag
         )
-
+        self.titlebarAppearsTransparent = true
+        self.titleVisibility = .hidden
         self.isFloatingPanel = true
         self.level = .floating
         self.collectionBehavior.insert(.fullScreenAuxiliary)
@@ -29,7 +30,7 @@ class FloatingPanel: NSPanel {
         self.standardWindowButton(.closeButton)?.isHidden = true
         self.standardWindowButton(.miniaturizeButton)?.isHidden = true
         self.standardWindowButton(.zoomButton)?.isHidden = true
-        
+
         // Set minimum window size
         self.minSize = NSSize(width: 400, height: 300)
     }

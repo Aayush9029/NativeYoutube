@@ -22,6 +22,7 @@ struct YouTubePlayerView: View {
                 VideoPlayer(player: player)
                     .ignoresSafeArea()
                     .onAppear {
+                        player.volume = 0.25
                         player.play()
                         isPlaying = true
                     }
@@ -33,6 +34,7 @@ struct YouTubePlayerView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
         .background(VisualEffectView().ignoresSafeArea())
         .overlay(alignment: .topTrailing) {
             closeButton
@@ -80,16 +82,15 @@ struct YouTubePlayerView: View {
     }
     
     private func errorView(_ error: String) -> some View {
-        ErrorView(error: error, 
-            onRetry: {
-                Task {
-                    await extractAndPlayVideo()
-                }
-            },
-            onClose: {
-                windowClient.hidePanel()
-            }
-        )
+        ErrorView(error: error,
+                  onRetry: {
+                      Task {
+                          await extractAndPlayVideo()
+                      }
+                  },
+                  onClose: {
+                      windowClient.hidePanel()
+                  })
     }
     
     // MARK: - Helper methods
@@ -156,7 +157,7 @@ private struct ErrorView: View {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 32))
                 .foregroundStyle(.yellow)
-            VStack{
+            VStack {
                 Text("Video Playback Error")
                     .font(.headline)
                 Text(error)
@@ -164,7 +165,7 @@ private struct ErrorView: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)
             }
-            HStack{
+            HStack {
                 Button("Retry") {
                     onRetry()
                 }
@@ -176,7 +177,6 @@ private struct ErrorView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.capsule)
-                
             }
         }
         .padding()
@@ -204,18 +204,17 @@ struct YouTubePlayerView_Previews: PreviewProvider {
                 .previewDisplayName("Loading State")
             
             // Error state
-            ErrorView(error: "Cannot play YouTube videos in preview mode", 
-                onRetry: {
-                    print("Retry tapped")
-                },
-                onClose: {
-                    print("Close tapped")
-                }
-            )
-            .frame(width: 800, height: 420)
-            .background(VisualEffectView())
-            .preferredColorScheme(.dark)
-            .previewDisplayName("Error State")
+            ErrorView(error: "Cannot play YouTube videos in preview mode",
+                      onRetry: {
+                          print("Retry tapped")
+                      },
+                      onClose: {
+                          print("Close tapped")
+                      })
+                      .frame(width: 800, height: 420)
+                      .background(VisualEffectView())
+                      .preferredColorScheme(.dark)
+                      .previewDisplayName("Error State")
         }
     }
 }
