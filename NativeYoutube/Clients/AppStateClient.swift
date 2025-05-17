@@ -16,80 +16,77 @@ public struct AppStateClient {
 extension AppStateClient: DependencyKey {
     public static var liveValue: AppStateClient {
         @Dependency(\.windowClient) var windowClient
-        
+
         return AppStateClient(
             playVideo: { url, title, useIINA in
-            if useIINA {
-                // Use mpv to play YouTube videos
-                await MainActor.run {
-                    // Common locations for IINA's mpv binary
-                    let possibleMpvPaths = [
-                        "/Applications/IINA.app/Contents/Frameworks/MPVPlayer.framework/Versions/A/Resources/mpv",
-                        "/Applications/IINA.app/Contents/MacOS/mpv",
-                        "/usr/local/bin/mpv" // Fallback to system mpv if available
-                    ]
+                if useIINA {
+                    // Use mpv to play YouTube videos
+                    await MainActor.run {
+                        // Common locations for IINA's mpv binary
+                        let possibleMpvPaths = [
+                            "/Applications/IINA.app/Contents/Frameworks/MPVPlayer.framework/Versions/A/Resources/mpv",
+                            "/Applications/IINA.app/Contents/MacOS/mpv",
+                            "/usr/local/bin/mpv" // Fallback to system mpv if available
+                        ]
 
-                    // Find the first available mpv binary
-                    let mpvPath = possibleMpvPaths.first { path in
-                        FileManager.default.fileExists(atPath: path)
-                    }
+                        // Find the first available mpv binary
+                        let mpvPath = possibleMpvPaths.first { path in
+                            FileManager.default.fileExists(atPath: path)
+                        }
 
-                    if let mpvPath = mpvPath {
-                        let task = Process()
-                        task.executableURL = URL(fileURLWithPath: mpvPath)
-                        task.arguments = ["--force-window=yes", "--title=\(title)", url.absoluteString]
+                        if let mpvPath = mpvPath {
+                            let task = Process()
+                            task.executableURL = URL(fileURLWithPath: mpvPath)
+                            task.arguments = ["--force-window=yes", "--title=\(title)", url.absoluteString]
 
-                        do {
-                            try task.run()
-                        } catch {
-                            print("Failed to launch mpv: \(error)")
-                            // Fallback to IINA URL scheme
+                            do {
+                                try task.run()
+                            } catch {
+                                print("Failed to launch mpv: \(error)")
+                                // Fallback to IINA URL scheme
+                                let iinaURL = URL(string: "iina://weblink?url=\(url.absoluteString)")!
+                                NSWorkspace.shared.open(iinaURL)
+                            }
+                        } else {
+                            // Fallback to IINA URL scheme if mpv binary not found
                             let iinaURL = URL(string: "iina://weblink?url=\(url.absoluteString)")!
                             NSWorkspace.shared.open(iinaURL)
                         }
-                    } else {
-                        // Fallback to IINA URL scheme if mpv binary not found
-                        let iinaURL = URL(string: "iina://weblink?url=\(url.absoluteString)")!
-                        NSWorkspace.shared.open(iinaURL)
                     }
-                }
-            } else {
-                // Show in popup window
-                await MainActor.run {
-                    windowClient.createPopupPlayerWindow(url, title) {
-                        // Cleanup when window closes
-                    }
-                    
-                    // Set the content of the popup window
-                    let playerView = YouTubePlayerView(
-                        videoURL: url,
-                        title: title,
-                        onClose: {
-                            windowClient.closePopupPlayer()
+                } else {
+                    // Show in popup window
+                    await MainActor.run {
+                        windowClient.createPopupPlayerWindow(url, title) {
+                            // Cleanup when window closes
                         }
-                    )
-                    windowClient.setPopupPlayerContent(AnyView(playerView))
+
+                        // Set the content of the popup window
+                        let playerView = YouTubePlayerView(
+                            videoURL: url,
+                            title: title
+                        )
+                        windowClient.setPopupPlayerContent(AnyView(playerView))
+                    }
+                }
+            },
+            stopVideo: {
+                await MainActor.run {
+                    windowClient.closePopupPlayer()
+                }
+            },
+            openInYouTube: { url in
+                NSWorkspace.shared.open(url)
+            },
+            showVideoInApp: { _, _ in
+                // This method is used to show video in the main app window overlay
+                // The coordinator handles this directly now via playVideo
+            },
+            hideVideoPlayer: {
+                Task { @MainActor in
+                    windowClient.closePopupPlayer()
                 }
             }
-        },
-        stopVideo: {
-            await MainActor.run {
-                windowClient.closePopupPlayer()
-            }
-        },
-        openInYouTube: { url in
-            NSWorkspace.shared.open(url)
-        },
-        showVideoInApp: { url, title in
-            // This method is used to show video in the main app window overlay
-            // The coordinator handles this directly now via playVideo
-        },
-        hideVideoPlayer: {
-            Task { @MainActor in
-                windowClient.closePopupPlayer()
-            }
-        }
-    )
+        )
     }
 
     public static let previewValue = AppStateClient(
@@ -120,4 +117,3 @@ public extension DependencyValues {
         set { self[AppStateClient.self] = newValue }
     }
 }
-

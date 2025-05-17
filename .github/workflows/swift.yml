@@ -12,8 +12,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '16.0'
     - name: Build
-      run: swift package init --type executable
+      run: xcodebuild -scheme NativeYoutube -destination 'platform=macOS' build
     - name: Run tests
-      run: swift test -v
+      run: xcodebuild -scheme NativeYoutubeTests -destination 'platform=macOS' test

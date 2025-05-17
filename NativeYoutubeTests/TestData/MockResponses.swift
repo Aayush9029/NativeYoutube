@@ -1,73 +1,200 @@
-import Foundation
-import Models
-import APIClient
+//
+//  MockResponses.swift
+//  NativeYoutubeTests
+//
 
-struct MockResponses {
-    static let mockVideo1 = Video(
-        id: "dQw4w9WgXcQ",
-        title: "Rick Astley - Never Gonna Give You Up",
-        thumbnail: URL(string: "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg")!,
-        publishedAt: "2023-01-01T00:00:00Z",
-        url: URL(string: "https://www.youtube.com/watch?v=dQw4w9WgXcQ")!,
-        channelTitle: "Rick Astley"
-    )
+import Foundation
+
+enum MockResponses {
     
-    static let mockVideo2 = Video(
-        id: "M7lc1UVf-VE",
-        title: "YouTube Developers Live: Embedded Web Player Customization",
-        thumbnail: URL(string: "https://i.ytimg.com/vi/M7lc1UVf-VE/default.jpg")!,
-        publishedAt: "2023-02-01T00:00:00Z",
-        url: URL(string: "https://www.youtube.com/watch?v=M7lc1UVf-VE")!,
-        channelTitle: "Google Developers"
-    )
+    static let searchResponseJSON = """
+    {
+        "kind": "youtube#searchListResponse",
+        "etag": "test-etag",
+        "nextPageToken": "CAUQAA",
+        "regionCode": "US",
+        "pageInfo": {
+            "totalResults": 1000000,
+            "resultsPerPage": 5
+        },
+        "items": [
+            {
+                "kind": "youtube#searchResult",
+                "etag": "item-etag",
+                "id": {
+                    "kind": "youtube#video",
+                    "videoId": "dQw4w9WgXcQ"
+                },
+                "snippet": {
+                    "publishedAt": "2009-10-25T06:57:33Z",
+                    "channelId": "UCuAXFkgsw1L7xaCfnd5JJOw",
+                    "title": "Rick Astley - Never Gonna Give You Up",
+                    "description": "The official video for \\\"Never Gonna Give You Up\\\" by Rick Astley.",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "Rick Astley",
+                    "liveBroadcastContent": "none",
+                    "publishTime": "2009-10-25T06:57:33Z"
+                }
+            }
+        ]
+    }
+    """
     
-    static let mockVideo3 = Video(
-        id: "kJQP7kiw5Fk",
-        title: "Luis Fonsi - Despacito ft. Daddy Yankee",
-        thumbnail: URL(string: "https://i.ytimg.com/vi/kJQP7kiw5Fk/default.jpg")!,
-        publishedAt: "2023-03-01T00:00:00Z",
-        url: URL(string: "https://www.youtube.com/watch?v=kJQP7kiw5Fk")!,
-        channelTitle: "Luis Fonsi"
-    )
+    static let playlistResponseJSON = """
+    {
+        "kind": "youtube#playlistItemListResponse",
+        "etag": "playlist-etag",
+        "nextPageToken": "CBkQAA",
+        "pageInfo": {
+            "totalResults": 200,
+            "resultsPerPage": 25
+        },
+        "items": [
+            {
+                "kind": "youtube#playlistItem",
+                "etag": "playlist-item-etag",
+                "id": "UExyVnhsd0RVMVFZTG9nODA0dVJIQnlSUzFZSWN3ODJEMS4xMDk1MzUzOTI5MTk",
+                "snippet": {
+                    "publishedAt": "2023-06-15T17:00:08Z",
+                    "channelId": "UCHnyfMqiRRG1u-2MsSQLbXA",
+                    "title": "Building a Better Computer",
+                    "description": "Learn about the components and process of building a computer.",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/BL4DCEp7blc/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/BL4DCEp7blc/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/BL4DCEp7blc/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "Veritasium",
+                    "playlistId": "PLrVzlwTE1QZLog804uRHByRS-YIcw82D1",
+                    "position": 0,
+                    "resourceId": {
+                        "kind": "youtube#video",
+                        "videoId": "BL4DCEp7blc"
+                    },
+                    "videoOwnerChannelTitle": "Veritasium",
+                    "videoOwnerChannelId": "UCHnyfMqiRRG1u-2MsSQLbXA"
+                },
+                "contentDetails": {
+                    "videoId": "BL4DCEp7blc",
+                    "startAt": "PT0S",
+                    "endAt": "PT15M51S",
+                    "note": "",
+                    "videoPublishedAt": "2023-06-15T17:00:08Z"
+                }
+            }
+        ]
+    }
+    """
     
-    static let searchResults = [mockVideo1, mockVideo2, mockVideo3]
+    static let videoResponseJSON = """
+    {
+        "kind": "youtube#videoListResponse",
+        "etag": "video-etag",
+        "pageInfo": {
+            "totalResults": 1,
+            "resultsPerPage": 1
+        },
+        "items": [
+            {
+                "kind": "youtube#video",
+                "etag": "video-item-etag",
+                "id": "dQw4w9WgXcQ",
+                "snippet": {
+                    "publishedAt": "2009-10-25T06:57:33Z",
+                    "channelId": "UCuAXFkgsw1L7xaCfnd5JJOw",
+                    "title": "Rick Astley - Never Gonna Give You Up (Official Video)",
+                    "description": "The official video for \\\"Never Gonna Give You Up\\\" by Rick Astley.",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "Rick Astley",
+                    "tags": [
+                        "rick astley",
+                        "Never Gonna Give You Up",
+                        "rickroll",
+                        "rick roll"
+                    ],
+                    "categoryId": "10",
+                    "liveBroadcastContent": "none",
+                    "localized": {
+                        "title": "Rick Astley - Never Gonna Give You Up (Official Video)",
+                        "description": "The official video for \\\"Never Gonna Give You Up\\\" by Rick Astley."
+                    },
+                    "defaultAudioLanguage": "en"
+                },
+                "contentDetails": {
+                    "duration": "PT3M32S",
+                    "dimension": "2d",
+                    "definition": "hd",
+                    "caption": "false",
+                    "licensedContent": true,
+                    "contentRating": {},
+                    "projection": "rectangular"
+                },
+                "statistics": {
+                    "viewCount": "1234567890",
+                    "likeCount": "12345678",
+                    "dislikeCount": "123456",
+                    "favoriteCount": "0",
+                    "commentCount": "1234567"
+                }
+            }
+        ]
+    }
+    """
     
-    static let playlistVideos = [
-        Video(
-            id: "aP-SQXTtWhY",
-            title: "SwiftUI Tutorial - Building a Complete App",
-            thumbnail: URL(string: "https://i.ytimg.com/vi/aP-SQXTtWhY/default.jpg")!,
-            publishedAt: "2023-04-01T00:00:00Z",
-            url: URL(string: "https://www.youtube.com/watch?v=aP-SQXTtWhY")!,
-            channelTitle: "Google Developers"
-        ),
-        Video(
-            id: "video2",
-            title: "SwiftUI Tutorial #2",
-            thumbnail: URL(string: "https://i.ytimg.com/vi/video2/default.jpg")!,
-            publishedAt: "2023-04-02T00:00:00Z",
-            url: URL(string: "https://www.youtube.com/watch?v=video2")!,
-            channelTitle: "SwiftUI Academy"
-        ),
-        Video(
-            id: "video3",
-            title: "SwiftUI Tutorial #3",
-            thumbnail: URL(string: "https://i.ytimg.com/vi/video3/default.jpg")!,
-            publishedAt: "2023-04-03T00:00:00Z",
-            url: URL(string: "https://www.youtube.com/watch?v=video3")!,
-            channelTitle: "SwiftUI Academy"
-        )
-    ]
+    // Helper methods to get decoded responses
+    static var searchResponse: Data {
+        searchResponseJSON.data(using: .utf8)!
+    }
     
-    // Mock search request for API client testing
-    static let mockSearchRequest = SearchRequest(
-        query: "SwiftUI Tutorial",
-        apiKey: "mock-api-key"
-    )
+    static var playlistResponse: Data {
+        playlistResponseJSON.data(using: .utf8)!
+    }
     
-    // Mock playlist request for API client testing
-    static let mockPlaylistRequest = PlaylistRequest(
-        playlistId: "PLxxxxxxxx",
-        apiKey: "mock-api-key"
-    )
+    static var videoResponse: Data {
+        videoResponseJSON.data(using: .utf8)!
+    }
 }

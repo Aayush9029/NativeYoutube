@@ -1,0 +1,13 @@
+.DS_Store
+*.playground
+.SwiftPM
+.build/
+.claude/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcuserstate
+xcshareddata/
+DerivedData/
+*.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.swiftpm/
+.vendor/
