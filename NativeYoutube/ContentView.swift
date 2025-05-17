@@ -1,39 +1,47 @@
-//
-//  ContentView.swift
-//  NativeYoutube
-//
-//  Created by Aayush Pokharel on 2021-10-29.
-//
-
+import Models
+import Shared
 import SwiftUI
+import UI
 
 struct ContentView: View {
-    @State private var currentPage: Pages = .playlists
+    @EnvironmentObject var coordinator: AppCoordinator
+    @Shared(.isPlaying) private var isPlaying
+    @Shared(.currentlyPlaying) private var currentlyPlaying
 
     var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-            switch currentPage {
-            case .playlists:
-                PlayListView()
-            case .search:
-                SearchView()
-            case .settings:
-                PreferencesView()
+        ZStack {
+            VStack(alignment: .center, spacing: 0) {
+                switch coordinator.currentPage {
+                case .playlists:
+                    PlayListView()
+                case .search:
+                    SearchVideosView()
+                case .settings:
+                    PlayListView() // Keep showing the playlists when settings is selected
+                }
+                BottomBarView(
+                    currentPage: $coordinator.currentPage,
+                    searchQuery: $coordinator.searchQuery,
+                    isPlaying: isPlaying,
+                    currentlyPlaying: currentlyPlaying,
+                    onSearch: {
+                        coordinator.navigateTo(.search)
+                        Task {
+                            await coordinator.search(coordinator.searchQuery)
+                        }
+                    },
+                    onQuit: coordinator.quit
+                )
             }
-            BottomBarView(currentPage: $currentPage)
+            .frame(width: 360.0)
         }
-        .frame(width: 360.0)
+        .animation(.easeInOut(duration: 0.2), value: coordinator.showingVideoPlayer)
     }
 }
 
-enum Pages: String {
-    case playlists = "Playlists"
-    case search = "Search"
-    case settings = "Settings"
+#if DEBUG
+#Preview {
+    ContentView()
+        .environmentObject(AppCoordinator())
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+#endif

@@ -1,26 +1,21 @@
-//
-//  YoutubePreferenceView.swift
-//  NativeYoutube
-//
-//  Created by Erik Bautista on 2/4/22.
-//
-
+import Shared
 import SwiftUI
+import UI
 
 struct YoutubePreferenceView: View {
-    @EnvironmentObject var appStateViewModel: AppStateViewModel
+    @Shared(.apiKey) private var apiKey
 
     var body: some View {
         VStack(alignment: .leading) {
             Group {
                 DisclosureGroup {
                     VStack(alignment: .leading) {
-                        TextField("Your Google API Key", text: $appStateViewModel.apiKey)
+                        TextField("Your Google API Key", text: Binding($apiKey))
                             .textFieldStyle(.plain)
                             .thinRoundedBG()
 
                         Link(
-                            destination: URL(string: Constants.demoYoutubeVideo)!,
+                            destination: URL(string: "https://www.youtube.com/watch?v=WrFPERZb7uw")!,
                             label: {
                                 HStack {
                                     Spacer()
@@ -41,9 +36,8 @@ struct YoutubePreferenceView: View {
     }
 }
 
-struct PreferenceAPIView_Previews: PreviewProvider {
-    static var previews: some View {
-        YoutubePreferenceView()
-            .environmentObject(AppStateViewModel())
-    }
+#if DEBUG
+#Preview {
+    YoutubePreferenceView()
 }
+#endif

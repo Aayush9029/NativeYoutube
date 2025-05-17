@@ -1,0 +1,5 @@
+clean_build: true
+project: NativeYoutube.xcodeproj
+retain_assign_only_properties: true
+schemes:
+- NativeYoutube

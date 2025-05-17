@@ -25,9 +25,8 @@ struct PreferencesView: View {
     }
 }
 
-struct PreferencesView_Preview: PreviewProvider {
-    static var previews: some View {
-        PreferencesView()
-            .environmentObject(AppStateViewModel())
-    }
+#if DEBUG
+#Preview {
+    PreferencesView()
 }
+#endif

@@ -1,43 +1,80 @@
-//
-//  PlayListView.swift
-//  NativeYoutube
-//
-//  Created by Aayush Pokharel on 2021-10-29.
-//
-
+import Clients
+import Shared
 import SwiftUI
+import UI
+import Dependencies
 
 struct PlayListView: View {
-    @EnvironmentObject var appStateViewModel: AppStateViewModel
-
-    @StateObject var playlistViewModel = PlayListViewModel()
-
+    @EnvironmentObject var coordinator: AppCoordinator
+    @Shared(.videoClickBehaviour) private var videoClickBehaviour
+    
     var body: some View {
         Group {
-            switch playlistViewModel.currentStatus {
-            case .startedFetching:
+            switch coordinator.playlistStatus {
+            case .loading:
                 ProgressView()
-            case .none,
-                 .doneFetching:
-                VideoListView(videos: playlistViewModel.videos)
-            default:
+            case .error, .idle:
                 WelcomeView()
+            case .completed:
+                if coordinator.playlistVideos.isEmpty {
+                    WelcomeView()
+                } else {
+                    VideoListView(
+                        videos: coordinator.playlistVideos,
+                        videoClickBehaviour: videoClickBehaviour,
+                        onVideoTap: { video in
+                            Task {
+                                await coordinator.handleVideoTap(video)
+                            }
+                        },
+                        useIINA: true,
+                        onPlayVideo: { video in
+                            Task {
+                                await coordinator.playVideo(video)
+                            }
+                        },
+                        onPlayInIINA: { video in
+                            Task {
+                                await coordinator.playInIINA(video)
+                            }
+                        },
+                        onOpenInYouTube: { video in
+                            coordinator.openInYouTube(video)
+                        },
+                        onCopyLink: { video in
+                            coordinator.copyVideoLink(video)
+                        },
+                        onShareLink: { url in
+                            coordinator.shareVideo(url)
+                        }
+                    )
+                }
             }
         }
         .onAppear {
-            playlistViewModel.startFetch(apiKey: appStateViewModel.apiKey, playListID: appStateViewModel.playListID)
+            Task {
+                await coordinator.loadPlaylist()
+            }
         }
-        .onChange(of: playlistViewModel.currentStatus) { newValue in
-            appStateViewModel.addToLogs(for: Pages.playlists, message: newValue.rawValue)
+        .onChange(of: Shared(.playlistID).wrappedValue) { _, _ in
+            Task {
+                await coordinator.loadPlaylist()
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
-struct PlayListView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayListView()
-            .environmentObject(AppStateViewModel())
-            .frame(width: 350)
-    }
+#if DEBUG
+#Preview {
+    PlayListView()
+        .environmentObject(
+            withDependencies({
+                $0.playlistClient = .previewValue
+                $0.appStateClient = .previewValue
+            }, operation: {
+                AppCoordinator()
+            })
+        )
 }
+#endif

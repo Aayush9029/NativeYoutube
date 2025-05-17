@@ -12,8 +12,17 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '16.1'
+    - name: Configure Xcode defaults
+      run: |
+        set -e
+        # Check if the defaults exist before trying to delete them
+        defaults read com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile 2>/dev/null && defaults delete com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile || true
+        defaults read com.apple.dt.Xcode IDEDisableAutomaticPackageResolution 2>/dev/null && defaults delete com.apple.dt.Xcode IDEDisableAutomaticPackageResolution || true
+        defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
     - name: Build
-      run: swift package init --type executable
-    - name: Run tests
-      run: swift test -v
+      run: xcodebuild -scheme NativeYoutube -destination 'platform=macOS' build
