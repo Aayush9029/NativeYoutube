@@ -1,0 +1,26 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Native Youtube</title>
+        <item>
+            <title>Version 1.0.0</title>
+            <description><![CDATA[
+                <h2>Initial Release</h2>
+                <ul>
+                    <li>YouTube player integration</li>
+                    <li>Playlist support</li>
+                    <li>Search functionality</li>
+                    <li>Automatic updates via Sparkle</li>
+                </ul>
+            ]]></description>
+            <pubDate>Fri, 17 May 2025 00:00:00 +0000</pubDate>
+            <sparkle:version>1.0.0</sparkle:version>
+            <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/aayushpokharel/NativeYoutube/releases/download/v1.0.0/NativeYoutube-1.0.0.zip"
+                      sparkle:edSignature="SIGNATURE_HERE"
+                      length="0"
+                      type="application/octet-stream" />
+        </item>
+    </channel>
+</rss>

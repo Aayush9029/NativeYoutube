@@ -23,6 +23,10 @@ extension SharedReaderKey where Self == AppStorageKey<Bool>.Default {
     static var useIINA: Self {
         Self[.appStorage("useIINA"), default: false]
     }
+    
+    static var autoCheckUpdates: Self {
+        Self[.appStorage("autoCheckUpdates"), default: true]
+    }
 }
 
 extension SharedReaderKey where Self == AppStorageKey<VideoClickBehaviour>.Default {

@@ -3,6 +3,7 @@ import Dependencies
 import Models
 import Shared
 import SwiftUI
+import Sparkle
 
 @MainActor
 final class AppCoordinator: ObservableObject {
@@ -21,6 +22,8 @@ final class AppCoordinator: ObservableObject {
     @Dependency(\.floatingWindowClient) private var floatingWindowClient
     private var settingsWindowController: NSWindowController?
     
+    private let updaterController: SPUStandardUpdaterController
+    
     enum SearchStatus: Equatable {
         case idle
         case searching
@@ -29,6 +32,11 @@ final class AppCoordinator: ObservableObject {
     }
     
     init() {
+        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+        
+        // Configure automatic update checking
+        @Shared(.autoCheckUpdates) var autoCheckUpdates
+        updaterController.updater.automaticallyChecksForUpdates = autoCheckUpdates
     }
     
     
@@ -150,6 +158,16 @@ final class AppCoordinator: ObservableObject {
     
     func quit() {
         NSApplication.shared.terminate(nil)
+    }
+    
+    // MARK: - Update Actions
+    
+    func checkForUpdates() {
+        updaterController.checkForUpdates(nil)
+    }
+    
+    func checkForUpdatesInBackground() {
+        updaterController.updater.checkForUpdatesInBackground()
     }
     
     // MARK: - Settings Window

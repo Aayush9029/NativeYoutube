@@ -7,6 +7,8 @@ struct GeneralPreferenceView: View {
     @Shared(.playlistID) private var playlistID
     @Shared(.useIINA) private var useIINA
     @Shared(.videoClickBehaviour) private var videoClickBehaviour
+    @Shared(.autoCheckUpdates) private var autoCheckUpdates
+    @EnvironmentObject var coordinator: AppCoordinator
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -38,6 +40,26 @@ struct GeneralPreferenceView: View {
                 .thinRoundedBG()
             } label: {
                 Label("Player Settings", systemImage: "play.rectangle.on.rectangle.fill")
+                    .bold()
+            }
+            .thinRoundedBG()
+            
+            Divider()
+                .opacity(0.5)
+            
+            DisclosureGroup {
+                VStack {
+                    SpacedToggle("Check for updates automatically", isOn: Binding($autoCheckUpdates))
+                    
+                    Button("Check for Updates Now") {
+                        coordinator.checkForUpdates()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.small)
+                }
+                .thinRoundedBG()
+            } label: {
+                Label("Updates", systemImage: "arrow.triangle.2.circlepath")
                     .bold()
             }
             .thinRoundedBG()

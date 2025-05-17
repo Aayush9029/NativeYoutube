@@ -13,6 +13,7 @@
 		513960D62DD8D7F5003E13D9 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D52DD8D7F5003E13D9 /* Models */; };
 		513960D82DD8D7F5003E13D9 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D72DD8D7F5003E13D9 /* Shared */; };
 		513960DA2DD8D7F5003E13D9 /* UI in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D92DD8D7F5003E13D9 /* UI */; };
+		51FD06162DD92455004BAAAF /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 51FD06152DD92455004BAAAF /* Sparkle */; };
 		70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A3845D295644A1000941F5 /* AVKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				512B281A2DD8F8D000D72AB7 /* Clients in Frameworks */,
+				51FD06162DD92455004BAAAF /* Sparkle in Frameworks */,
 				70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */,
 				513960D42DD8D7F5003E13D9 /* Assets in Frameworks */,
 				513960D22DD8D7F5003E13D9 /* APIClient in Frameworks */,
@@ -106,6 +108,7 @@
 				513960D72DD8D7F5003E13D9 /* Shared */,
 				513960D92DD8D7F5003E13D9 /* UI */,
 				5170B1662DD8F11100734BCF /* Clients */,
+				51FD06152DD92455004BAAAF /* Sparkle */,
 			);
 			productName = NativeYoutube;
 			productReference = C27DD34A272C853E00B4DC16 /* NativeYoutube.app */;
@@ -136,6 +139,7 @@
 			);
 			mainGroup = C27DD341272C853E00B4DC16;
 			packageReferences = (
+				51FD06142DD92455004BAAAF /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = C27DD34B272C853E00B4DC16 /* Products */;
 			projectDirPath = "";
@@ -300,7 +304,7 @@
 				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9RPB76Y973;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -335,7 +339,7 @@
 				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"NativeYoutube/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9RPB76Y973;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -380,6 +384,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		51FD06142DD92455004BAAAF /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		513960D12DD8D7F5003E13D9 /* APIClient */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -404,6 +419,11 @@
 		5170B1662DD8F11100734BCF /* Clients */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Clients;
+		};
+		51FD06152DD92455004BAAAF /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51FD06142DD92455004BAAAF /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

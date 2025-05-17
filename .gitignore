@@ -11,3 +11,18 @@ DerivedData/
 *.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .swiftpm/
 .vendor/
+
+# Environment files - NEVER commit these!
+.env
+
+# Sparkle keys - NEVER commit these!
+sparkle/dsa_priv.pem
+sparkle-keys/
+
+# Build artifacts
+build/
+dist/
+
+# Certificates
+*.p12
+*.cer
