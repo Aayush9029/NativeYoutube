@@ -6,6 +6,7 @@ import UI
 public struct WindowClient {
     public var createMainWindow: @MainActor () -> Void
     public var createPopupPlayerWindow: @MainActor (URL, String, @escaping () -> Void) -> Void
+    public var setPopupPlayerContent: @MainActor (any View) -> Void
     public var closePopupPlayer: @MainActor () -> Void
     public var isPopupPlayerVisible: @MainActor () -> Bool
 }
@@ -17,6 +18,9 @@ extension WindowClient: DependencyKey {
         },
         createPopupPlayerWindow: { url, title, _ in
             print("Preview: Creating popup player for '\(title)' at \(url)")
+        },
+        setPopupPlayerContent: { _ in
+            print("Preview: Setting popup player content")
         },
         closePopupPlayer: {
             print("Preview: Closing popup player")
@@ -75,6 +79,12 @@ extension WindowClient: DependencyKey {
                 
                 WindowState.shared.popupPlayerWindow = window
                 window.makeKeyAndOrderFront(nil)
+            },
+            
+            setPopupPlayerContent: { view in
+                if let popupWindow = WindowState.shared.popupPlayerWindow {
+                    popupWindow.contentView = NSHostingView(rootView: AnyView(view))
+                }
             },
             
             closePopupPlayer: {

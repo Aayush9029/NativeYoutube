@@ -26,68 +26,22 @@ final class AppCoordinator: ObservableObject {
     }
     
     init() {
-        setupNotifications()
     }
     
-    private func setupNotifications() {
-        // Listen for video player notifications
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showVideoInApp(_:)),
-            name: .showVideoInApp,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(hideVideoPlayer),
-            name: .hideVideoPlayer,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(showVideoInPopup(_:)),
-            name: .showVideoInPopup,
-            object: nil
-        )
-    }
     
-    @objc private func showVideoInApp(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let url = userInfo["url"] as? URL,
-              let title = userInfo["title"] as? String else { return }
-        
+    func showVideoInApp(_ url: URL, _ title: String) {
         // Only show overlay if not popup mode
         currentVideoURL = url
         currentVideoTitle = title
         showingVideoPlayer = true
     }
     
-    @objc func hideVideoPlayer() {
+    func hideVideoPlayer() {
         showingVideoPlayer = false
         currentVideoURL = nil
         currentVideoTitle = ""
     }
     
-    @objc private func showVideoInPopup(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let url = userInfo["url"] as? URL,
-              let title = userInfo["title"] as? String else { return }
-        
-        // Create the YouTubePlayerView in the popup window
-        if let popupWindow = NSApp.windows.first(where: { $0 is KeyWindow }) {
-            let playerView = YouTubePlayerView(
-                videoURL: url,
-                title: title,
-                onClose: {
-                    @Dependency(\.appStateClient) var appStateClient
-                    appStateClient.hideVideoPlayer()
-                }
-            )
-            popupWindow.contentView = NSHostingView(rootView: playerView)
-        }
-    }
     
     // MARK: - Navigation
     
@@ -195,7 +149,4 @@ final class AppCoordinator: ObservableObject {
         NSApplication.shared.terminate(nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 }

@@ -2,6 +2,7 @@ import AppKit
 import Dependencies
 import Foundation
 import Shared
+import SwiftUI
 
 @DependencyClient
 public struct AppStateClient {
@@ -58,13 +59,20 @@ extension AppStateClient: DependencyKey {
                     windowClient.createPopupPlayerWindow(url, title) {
                         // Cleanup when window closes
                     }
-
-                    // Now we need to set the content of the window
-                    NotificationCenter.default.post(
-                        name: .showVideoInPopup,
-                        object: nil,
-                        userInfo: ["url": url, "title": title]
+                    
+                    // Set the content with YouTubePlayerView
+                    let playerView = YouTubePlayerView(
+                        videoURL: url,
+                        title: title,
+                        onClose: {
+                            // Use the appStateClient directly in the closure
+                            Task { @MainActor in
+                                @Dependency(\.appStateClient) var appStateClient
+                                appStateClient.hideVideoPlayer()
+                            }
+                        }
                     )
+                    windowClient.setPopupPlayerContent(playerView)
                 }
             }
         },
@@ -77,11 +85,8 @@ extension AppStateClient: DependencyKey {
             NSWorkspace.shared.open(url)
         },
         showVideoInApp: { url, title in
-            Task { @MainActor in
-                windowClient.createPopupPlayerWindow(url, title) {
-                    // Cleanup when window closes
-                }
-            }
+            // This method is used to show video in the main app window overlay
+            // The coordinator handles this directly now via playVideo
         },
         hideVideoPlayer: {
             Task { @MainActor in
@@ -120,9 +125,3 @@ public extension DependencyValues {
     }
 }
 
-// Define notification names
-extension Notification.Name {
-    static let showVideoInApp = Notification.Name("showVideoInApp")
-    static let hideVideoPlayer = Notification.Name("hideVideoPlayer")
-    static let showVideoInPopup = Notification.Name("showVideoInPopup")
-}

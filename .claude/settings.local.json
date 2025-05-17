@@ -16,7 +16,8 @@
       "Bash(touch:*)",
       "Bash(cp:*)",
       "Bash(xcodebuild:*)",
-      "Bash(swift package:*)"
+      "Bash(swift package:*)",
+      "Bash(swift test)"
     ],
     "deny": []
   }
