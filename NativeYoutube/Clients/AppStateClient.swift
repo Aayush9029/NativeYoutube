@@ -60,19 +60,15 @@ extension AppStateClient: DependencyKey {
                         // Cleanup when window closes
                     }
                     
-                    // Set the content with YouTubePlayerView
+                    // Set the content of the popup window
                     let playerView = YouTubePlayerView(
                         videoURL: url,
                         title: title,
                         onClose: {
-                            // Use the appStateClient directly in the closure
-                            Task { @MainActor in
-                                @Dependency(\.appStateClient) var appStateClient
-                                appStateClient.hideVideoPlayer()
-                            }
+                            windowClient.closePopupPlayer()
                         }
                     )
-                    windowClient.setPopupPlayerContent(playerView)
+                    windowClient.setPopupPlayerContent(AnyView(playerView))
                 }
             }
         },

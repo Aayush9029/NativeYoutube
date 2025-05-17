@@ -5,9 +5,9 @@ import SwiftUI
 public struct WindowClient {
     public var createMainWindow: @MainActor () -> Void
     public var createPopupPlayerWindow: @MainActor (URL, String, @escaping () -> Void) -> Void
-    public var setPopupPlayerContent: @MainActor (any View) -> Void
     public var closePopupPlayer: @MainActor () -> Void
     public var isPopupPlayerVisible: @MainActor () -> Bool
+    public var setPopupPlayerContent: @MainActor (AnyView) -> Void
 }
 
 extension WindowClient: DependencyKey {
@@ -18,15 +18,15 @@ extension WindowClient: DependencyKey {
         createPopupPlayerWindow: { url, title, _ in
             print("Preview: Creating popup player for '\(title)' at \(url)")
         },
-        setPopupPlayerContent: { _ in
-            print("Preview: Setting popup player content")
-        },
         closePopupPlayer: {
             print("Preview: Closing popup player")
         },
         isPopupPlayerVisible: {
             print("Preview: Checking if popup player is visible")
             return false
+        },
+        setPopupPlayerContent: { _ in
+            print("Preview: Setting popup player content")
         }
     )
     
@@ -57,7 +57,7 @@ extension WindowClient: DependencyKey {
                 WindowState.shared.mainWindow = window
             },
             
-            createPopupPlayerWindow: { _, title, onClose in
+            createPopupPlayerWindow: { url, title, onClose in
                 if WindowState.shared.popupPlayerWindow != nil {
                     WindowState.shared.popupPlayerWindow?.makeKeyAndOrderFront(nil)
                     return
@@ -76,14 +76,12 @@ extension WindowClient: DependencyKey {
                     WindowState.shared.popupPlayerWindow = nil
                 }
                 
+                // Store the URL and title for later use
+                window.videoURL = url
+                window.videoTitle = title
+                
                 WindowState.shared.popupPlayerWindow = window
                 window.makeKeyAndOrderFront(nil)
-            },
-            
-            setPopupPlayerContent: { view in
-                if let popupWindow = WindowState.shared.popupPlayerWindow {
-                    popupWindow.contentView = NSHostingView(rootView: AnyView(view))
-                }
             },
             
             closePopupPlayer: {
@@ -93,6 +91,12 @@ extension WindowClient: DependencyKey {
             
             isPopupPlayerVisible: {
                 WindowState.shared.popupPlayerWindow?.isVisible ?? false
+            },
+            
+            setPopupPlayerContent: { view in
+                if let window = WindowState.shared.popupPlayerWindow {
+                    window.contentView = NSHostingView(rootView: view)
+                }
             }
         )
     }()

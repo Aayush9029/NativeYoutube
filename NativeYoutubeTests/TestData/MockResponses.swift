@@ -6,7 +6,7 @@ struct MockResponses {
     static let mockVideo1 = Video(
         id: "dQw4w9WgXcQ",
         title: "Rick Astley - Never Gonna Give You Up",
-        thumbnail: URL(string: "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg")!,
+        thumbnail: URL(string: "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg")!,
         publishedAt: "2023-01-01T00:00:00Z",
         url: URL(string: "https://www.youtube.com/watch?v=dQw4w9WgXcQ")!,
         channelTitle: "Rick Astley"
@@ -34,12 +34,12 @@ struct MockResponses {
     
     static let playlistVideos = [
         Video(
-            id: "video1",
-            title: "SwiftUI Tutorial #1",
-            thumbnail: URL(string: "https://i.ytimg.com/vi/video1/default.jpg")!,
+            id: "aP-SQXTtWhY",
+            title: "SwiftUI Tutorial - Building a Complete App",
+            thumbnail: URL(string: "https://i.ytimg.com/vi/aP-SQXTtWhY/default.jpg")!,
             publishedAt: "2023-04-01T00:00:00Z",
-            url: URL(string: "https://www.youtube.com/watch?v=video1")!,
-            channelTitle: "SwiftUI Academy"
+            url: URL(string: "https://www.youtube.com/watch?v=aP-SQXTtWhY")!,
+            channelTitle: "Google Developers"
         ),
         Video(
             id: "video2",

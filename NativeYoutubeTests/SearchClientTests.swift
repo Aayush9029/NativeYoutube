@@ -17,7 +17,7 @@ struct SearchClientTests {
             @Dependency(\.searchClient) var searchClient
             let videos = try await searchClient.searchVideos("rick astley", "valid-api-key")
             
-            #expect(videos.count == 1)
+            #expect(videos.count == 3)
             #expect(videos[0].title == "Rick Astley - Never Gonna Give You Up")
             #expect(videos[0].channelTitle == "Rick Astley")
             #expect(videos[0].id == "dQw4w9WgXcQ")
@@ -31,8 +31,11 @@ struct SearchClientTests {
         } operation: {
             @Dependency(\.searchClient) var searchClient
             
-            await #expect(throws: URLError.self) {
+            do {
                 _ = try await searchClient.searchVideos("test", "invalid-api-key")
+                #expect(false, "Should have thrown an error")
+            } catch {
+                #expect(error is URLError)
             }
         }
     }
@@ -44,8 +47,11 @@ struct SearchClientTests {
         } operation: {
             @Dependency(\.searchClient) var searchClient
             
-            await #expect(throws: URLError.self) {
+            do {
                 _ = try await searchClient.searchVideos("error", "valid-api-key")
+                #expect(false, "Should have thrown an error")
+            } catch {
+                #expect(error is URLError)
             }
         }
     }
@@ -85,7 +91,7 @@ struct SearchClientTests {
             let videos = try await searchClient.searchVideos("rick astley", "valid-api-key")
             
             #expect(videos[0].url.absoluteString == "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-            #expect(videos[0].thumbnail.absoluteString == "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg")
+            #expect(videos[0].thumbnail.absoluteString == "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg")
         }
     }
 }

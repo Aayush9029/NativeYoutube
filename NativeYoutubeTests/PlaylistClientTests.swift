@@ -18,8 +18,8 @@ struct PlaylistClientTests {
             let videos = try await playlistClient.fetchVideos("valid-api-key", "PLGhj5ta_lcE7EFJ0D4tPyPFtHAWT9h9iR")
             
             #expect(videos.count == 3)
-            #expect(videos[0].title == "SwiftUI Tutorial #1")
-            #expect(videos[0].channelTitle == "SwiftUI Academy")
+            #expect(videos[0].title == "SwiftUI Tutorial - Building a Complete App")
+            #expect(videos[0].channelTitle == "Google Developers")
         }
     }
     
@@ -30,8 +30,11 @@ struct PlaylistClientTests {
         } operation: {
             @Dependency(\.playlistClient) var playlistClient
             
-            await #expect(throws: URLError.self) {
+            do {
                 _ = try await playlistClient.fetchVideos("invalid-api-key", "PLGhj5ta_lcE7EFJ0D4tPyPFtHAWT9h9iR")
+                #expect(false, "Should have thrown an error")
+            } catch {
+                #expect(error is URLError)
             }
         }
     }
@@ -43,8 +46,11 @@ struct PlaylistClientTests {
         } operation: {
             @Dependency(\.playlistClient) var playlistClient
             
-            await #expect(throws: URLError.self) {
+            do {
                 _ = try await playlistClient.fetchVideos("valid-api-key", "error")
+                #expect(false, "Should have thrown an error")
+            } catch {
+                #expect(error is URLError)
             }
         }
     }
@@ -84,8 +90,8 @@ struct PlaylistClientTests {
             let videos = try await playlistClient.fetchVideos("valid-api-key", "PLGhj5ta_lcE7EFJ0D4tPyPFtHAWT9h9iR")
             
             // Check first video
-            #expect(videos[0].url.absoluteString == "https://www.youtube.com/watch?v=video1")
-            #expect(videos[0].thumbnail.absoluteString == "https://i.ytimg.com/vi/video1/default.jpg")
+            #expect(videos[0].url.absoluteString == "https://www.youtube.com/watch?v=aP-SQXTtWhY")
+            #expect(videos[0].thumbnail.absoluteString == "https://i.ytimg.com/vi/aP-SQXTtWhY/default.jpg")
             
             // Check second video has different owner
             #expect(videos[1].title == "SwiftUI Tutorial #2")

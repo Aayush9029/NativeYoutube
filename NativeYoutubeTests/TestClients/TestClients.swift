@@ -14,7 +14,7 @@ extension APIClient {
 
             switch request.query.lowercased() {
             case "rick astley":
-                return [MockResponses.mockVideo1]
+                return [MockResponses.mockVideo1, MockResponses.mockVideo2, MockResponses.mockVideo3]
             case "error":
                 throw URLError(.badServerResponse)
             case "empty":

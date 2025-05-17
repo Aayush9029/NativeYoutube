@@ -24,8 +24,11 @@ struct APIClientTests {
         let apiClient = APIClient.test
         let request = SearchRequest(query: "error", apiKey: "valid-api-key")
         
-        await #expect(throws: URLError.self) {
+        do {
             _ = try await apiClient.searchVideos(request)
+            #expect(false, "Should have thrown an error")
+        } catch {
+            #expect(error is URLError)
         }
     }
     
@@ -34,8 +37,11 @@ struct APIClientTests {
         let apiClient = APIClient.test
         let request = SearchRequest(query: "test", apiKey: "invalid-key")
         
-        await #expect(throws: URLError.self) {
+        do {
             _ = try await apiClient.searchVideos(request)
+            #expect(false, "Should have thrown an error")
+        } catch {
+            #expect(error is URLError)
         }
     }
     
@@ -56,8 +62,11 @@ struct APIClientTests {
         let apiClient = APIClient.test
         let request = PlaylistRequest(playlistId: "error", apiKey: "valid-api-key")
         
-        await #expect(throws: URLError.self) {
+        do {
             _ = try await apiClient.fetchPlaylistVideos(request)
+            #expect(false, "Should have thrown an error")
+        } catch {
+            #expect(error is URLError)
         }
     }
     
@@ -66,8 +75,11 @@ struct APIClientTests {
         let apiClient = APIClient.test
         let request = PlaylistRequest(playlistId: "test", apiKey: "invalid-key")
         
-        await #expect(throws: URLError.self) {
+        do {
             _ = try await apiClient.fetchPlaylistVideos(request)
+            #expect(false, "Should have thrown an error")
+        } catch {
+            #expect(error is URLError)
         }
     }
     

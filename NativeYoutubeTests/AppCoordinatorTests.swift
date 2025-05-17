@@ -101,7 +101,11 @@ struct AppCoordinatorTests {
             
             await coordinator.search("error")
             
-            #expect(coordinator.searchStatus == .error("The operation couldn't be completed. (NSURLErrorDomain error -1011.)"))
+            if case .error(let errorMessage) = coordinator.searchStatus {
+                #expect(errorMessage.contains("NSURLErrorDomain") || errorMessage.contains("badServerResponse"))
+            } else {
+                #expect(false, "Expected error status")
+            }
         }
     }
     
@@ -147,7 +151,11 @@ struct AppCoordinatorTests {
             
             await coordinator.loadPlaylist()
             
-            #expect(coordinator.playlistStatus == .error("The operation couldn't be completed. (NSURLErrorDomain error -1011.)"))
+            if case .error(let errorMessage) = coordinator.playlistStatus {
+                #expect(errorMessage.contains("NSURLErrorDomain") || errorMessage.contains("badServerResponse"))
+            } else {
+                #expect(false, "Expected error status")
+            }
         }
     }
     

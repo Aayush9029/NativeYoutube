@@ -120,6 +120,27 @@ final class AppCoordinator: ObservableObject {
     
     func playVideo(_ video: Video) async {
         await appStateClient.playVideo(video.url, video.title, false)
+        
+        // After creating the window, set up the content
+        await MainActor.run {
+            @Dependency(\.windowClient) var windowClient
+            
+            // Check if popup window exists and set content
+            if let popupWindow = NSApp.windows.first(where: { $0 is KeyWindow }) as? KeyWindow,
+               let url = popupWindow.videoURL,
+               let title = popupWindow.videoTitle {
+                let playerView = YouTubePlayerView(
+                    videoURL: url,
+                    title: title,
+                    onClose: { [weak self] in
+                        Task { @MainActor in
+                            self?.appStateClient.hideVideoPlayer()
+                        }
+                    }
+                )
+                popupWindow.contentView = NSHostingView(rootView: playerView)
+            }
+        }
     }
     
     func playInIINA(_ video: Video) async {
