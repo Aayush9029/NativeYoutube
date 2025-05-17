@@ -22,5 +22,24 @@
                       length="0"
                       type="application/octet-stream" />
         </item>
+        <item>
+            <title>Version 3.1</title>
+            <description><![CDATA[
+                <h2>New Features & Improvements</h2>
+                <ul>
+                    <li>Enhanced performance optimizations</li>
+                    <li>Bug fixes and stability improvements</li>
+                    <li>Updated UI components</li>
+                </ul>
+            ]]></description>
+            <pubDate>Fri, 17 May 2025 00:00:00 +0000</pubDate>
+            <sparkle:version>3.1</sparkle:version>
+            <sparkle:shortVersionString>3.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/Aayush9029/NativeYoutube/releases/download/v3.1/NativeYoutube.app.zip"
+                      sparkle:edSignature="SIGNATURE_HERE"
+                      length="0"
+                      type="application/octet-stream" />
+        </item>
     </channel>
 </rss>
