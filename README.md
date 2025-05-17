@@ -14,26 +14,9 @@
 
 ---
 
-## FAQ
-
-**How do I Get a YouTube API Key?**
-
-> [Full Guide on v1 Branch](https://github.com/Aayush9029/NativeYoutube/tree/Mubbii)
->
->[Tutorial link](https://www.youtube.com/watch?v=WrFPERZb7uw) *Note: Made for old version of app.*
-
 
 **How do I add custom playlist?**
 
 > 1. Find a playlist you like, eg: https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PL634F2B56B8C346A2
 > 2. Copy the word after "list=" it's `PL634F2B56B8C346A2` in this case
 > 3. Paste it in the prefrence window (NativeYoutube > Settings (Command + , ) > Custom Playlist ID)
-
-
-[Icon By u/Rebirth](https://macosicons.com/#/u/Rebirth%20Ego)
-
-
-
-
-
-
