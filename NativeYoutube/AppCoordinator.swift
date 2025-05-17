@@ -1,3 +1,4 @@
+import Clients
 import Models
 import Shared
 import SwiftUI
@@ -17,7 +18,7 @@ final class AppCoordinator: ObservableObject {
     @Dependency(\.searchClient) private var searchClient
     @Dependency(\.appStateClient) private var appStateClient
     
-    enum SearchStatus {
+    enum SearchStatus: Equatable {
         case idle
         case searching
         case completed
@@ -43,6 +44,13 @@ final class AppCoordinator: ObservableObject {
             name: .hideVideoPlayer,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showVideoInPopup(_:)),
+            name: .showVideoInPopup,
+            object: nil
+        )
     }
     
     @objc private func showVideoInApp(_ notification: Notification) {
@@ -50,6 +58,7 @@ final class AppCoordinator: ObservableObject {
               let url = userInfo["url"] as? URL,
               let title = userInfo["title"] as? String else { return }
         
+        // Only show overlay if not popup mode
         currentVideoURL = url
         currentVideoTitle = title
         showingVideoPlayer = true
@@ -59,6 +68,25 @@ final class AppCoordinator: ObservableObject {
         showingVideoPlayer = false
         currentVideoURL = nil
         currentVideoTitle = ""
+    }
+    
+    @objc private func showVideoInPopup(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let url = userInfo["url"] as? URL,
+              let title = userInfo["title"] as? String else { return }
+        
+        // Create the YouTubePlayerView in the popup window
+        if let popupWindow = NSApp.windows.first(where: { $0 is KeyWindow }) {
+            let playerView = YouTubePlayerView(
+                videoURL: url,
+                title: title,
+                onClose: {
+                    @Dependency(\.appStateClient) var appStateClient
+                    appStateClient.hideVideoPlayer()
+                }
+            )
+            popupWindow.contentView = NSHostingView(rootView: playerView)
+        }
     }
     
     // MARK: - Navigation
@@ -93,7 +121,7 @@ final class AppCoordinator: ObservableObject {
     @Dependency(\.playlistClient) private var playlistClient
     @Published var playlistStatus: PlaylistStatus = .idle
     
-    enum PlaylistStatus {
+    enum PlaylistStatus: Equatable {
         case idle
         case loading
         case completed
@@ -133,6 +161,31 @@ final class AppCoordinator: ObservableObject {
             appStateClient.openInYouTube(video.url)
         case .playInIINA:
             await appStateClient.playVideo(video.url, video.title, true)
+        }
+    }
+    
+    func playVideo(_ video: Video) async {
+        await appStateClient.playVideo(video.url, video.title, false)
+    }
+    
+    func playInIINA(_ video: Video) async {
+        await appStateClient.playVideo(video.url, video.title, true)
+    }
+    
+    func openInYouTube(_ video: Video) {
+        appStateClient.openInYouTube(video.url)
+    }
+    
+    func copyVideoLink(_ video: Video) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(video.url.absoluteString, forType: .string)
+    }
+    
+    func shareVideo(_ url: URL) {
+        let sharingPicker = NSSharingServicePicker(items: [url])
+        if let window = NSApp.keyWindow {
+            sharingPicker.show(relativeTo: .zero, of: window.contentView!, preferredEdge: .minY)
         }
     }
     

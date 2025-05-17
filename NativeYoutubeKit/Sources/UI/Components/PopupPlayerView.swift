@@ -26,7 +26,7 @@ public struct PopupPlayerView<Content: View>: View {
                 Button(action: onClose) {
                     Image(systemName: "xmark.circle.fill")
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .background(Circle().fill(Color.black.opacity(0.7)))
                         .padding()
                 }
@@ -73,7 +73,7 @@ public extension PopupPlayerView where Content == AnyView {
                         VStack(spacing: 20) {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .font(.system(size: 48))
-                                .foregroundColor(.yellow)
+                                .foregroundStyle(.yellow)
                             Text("Video Playback Error")
                                 .font(.headline)
                             Text(error)

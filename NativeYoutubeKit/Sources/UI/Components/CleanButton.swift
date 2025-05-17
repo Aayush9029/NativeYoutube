@@ -14,26 +14,27 @@ struct CleanButton: View {
     
     public var body: some View {
         Button {
-            withAnimation {
-                binded = page
-            }
+            binded = page
         } label: {
             Group {
                 Label(page.rawValue, systemImage: image)
                     .labelStyle(.iconOnly)
                     .font(.callout)
-                    .foregroundColor(binded == page ? .red : .gray)
+                    .foregroundStyle(binded == page ? .red : .gray)
+                    .fontWeight(.medium)
             }
             .thinRoundedBG(padding: 6, radius: 8)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(
-                        binded == page ? .red : .gray,
-                        lineWidth: binded == page ? 2 : 0.5
+                        binded == page ? .red : .gray.opacity(0.5),
+                        lineWidth: 2
                     )
             )
+            .padding(1)
         }
         .buttonStyle(.plain)
+        .animation(.spring, value: binded)
     }
 }
 

@@ -9,7 +9,6 @@ public struct PlaylistClient {
     public var fetchVideos: (_ apiKey: String, _ playlistId: String) async throws -> [Video] = { _, _ in [] }
 }
 
-// Changed from TestDependencyKey to DependencyKey
 extension PlaylistClient: DependencyKey {
     public static let liveValue = PlaylistClient(
         fetchVideos: { apiKey, playlistId in
@@ -21,7 +20,6 @@ extension PlaylistClient: DependencyKey {
     
     public static let previewValue = PlaylistClient(
         fetchVideos: { _, _ in
-            // Return mock data for previews
             [
                 Video(
                     id: "1",

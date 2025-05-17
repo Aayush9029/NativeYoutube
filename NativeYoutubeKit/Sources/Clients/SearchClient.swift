@@ -9,7 +9,6 @@ public struct SearchClient {
     public var searchVideos: (_ query: String, _ apiKey: String) async throws -> [Video] = { _, _ in [] }
 }
 
-// Changed from TestDependencyKey to DependencyKey
 extension SearchClient: DependencyKey {
     public static let liveValue = SearchClient(
         searchVideos: { query, apiKey in
@@ -21,7 +20,6 @@ extension SearchClient: DependencyKey {
     
     public static let previewValue = SearchClient(
         searchVideos: { query, _ in
-            // Return mock search results based on query for previews
             [
                 Video(
                     id: "search1",

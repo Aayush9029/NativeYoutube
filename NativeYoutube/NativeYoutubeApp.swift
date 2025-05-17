@@ -1,7 +1,8 @@
 import APIClient
+import Clients
+import Dependencies
 import Shared
 import SwiftUI
-import Dependencies
 
 @main
 struct NativeYoutubeApp: App {
@@ -10,6 +11,7 @@ struct NativeYoutubeApp: App {
         $0.searchClient = .liveValue
         $0.playlistClient = .liveValue
         $0.appStateClient = .liveValue
+        $0.windowClient = .liveValue
     } operation: {
         AppCoordinator()
     }

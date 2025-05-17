@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		512B281A2DD8F8D000D72AB7 /* Clients in Frameworks */ = {isa = PBXBuildFile; productRef = 5170B1662DD8F11100734BCF /* Clients */; };
-		512B281B2DD8F8D000D72AB7 /* Clients in Frameworks */ = {isa = PBXBuildFile; productRef = 5170B1682DD8F11200734BCF /* Clients */; };
 		513960D22DD8D7F5003E13D9 /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D12DD8D7F5003E13D9 /* APIClient */; };
 		513960D42DD8D7F5003E13D9 /* Assets in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D32DD8D7F5003E13D9 /* Assets */; };
 		513960D62DD8D7F5003E13D9 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D52DD8D7F5003E13D9 /* Models */; };
@@ -57,7 +55,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				512B281B2DD8F8D000D72AB7 /* Clients in Frameworks */,
 				5170B1632DD8F11000734BCF /* Models in Frameworks */,
 				5170B1612DD8F11000734BCF /* APIClient in Frameworks */,
 				5170B1652DD8F11000734BCF /* Shared in Frameworks */,
@@ -68,7 +65,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				512B281A2DD8F8D000D72AB7 /* Clients in Frameworks */,
 				70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */,
 				513960D42DD8D7F5003E13D9 /* Assets in Frameworks */,
 				513960D22DD8D7F5003E13D9 /* APIClient in Frameworks */,
@@ -133,7 +129,6 @@
 				5170B1602DD8F11000734BCF /* APIClient */,
 				5170B1622DD8F11000734BCF /* Models */,
 				5170B1642DD8F11000734BCF /* Shared */,
-				5170B1682DD8F11200734BCF /* Clients */,
 			);
 			productName = NativeYoutubeTests;
 			productReference = 5170B1432DD8EDCE00734BCF /* NativeYoutubeTests.xctest */;
@@ -161,7 +156,6 @@
 				513960D52DD8D7F5003E13D9 /* Models */,
 				513960D72DD8D7F5003E13D9 /* Shared */,
 				513960D92DD8D7F5003E13D9 /* UI */,
-				5170B1662DD8F11100734BCF /* Clients */,
 			);
 			productName = NativeYoutube;
 			productReference = C27DD34A272C853E00B4DC16 /* NativeYoutube.app */;
@@ -547,14 +541,6 @@
 		5170B1642DD8F11000734BCF /* Shared */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Shared;
-		};
-		5170B1662DD8F11100734BCF /* Clients */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Clients;
-		};
-		5170B1682DD8F11200734BCF /* Clients */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Clients;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -8,6 +8,7 @@ extension Target.Dependency {
     static let models: Self = "Models"
     static let apiClient: Self = "APIClient"
     static let shared: Self = "Shared"
+    static let clients: Self = "Clients"
 
     // External Dependencies
     static let swiftDependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
@@ -25,7 +26,8 @@ let package = Package(
         .library(name: "Assets", targets: ["Assets"]),
         .library(name: "Models", targets: ["Models"]),
         .library(name: "APIClient", targets: ["APIClient"]),
-        .library(name: "Shared", targets: ["Shared"])
+        .library(name: "Shared", targets: ["Shared"]),
+        .library(name: "Clients", targets: ["Clients"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.7.0"),
@@ -67,6 +69,16 @@ let package = Package(
                 .identifiedCollections,
                 .swiftSharing,
                 .youTubeKit,
+                .swiftDependencies,
+                .swiftDependenciesMacros
+            ]
+        ),
+        .target(
+            name: "Clients",
+            dependencies: [
+                .apiClient,
+                .models,
+                .shared,
                 .swiftDependencies,
                 .swiftDependenciesMacros
             ]

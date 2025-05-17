@@ -5,17 +5,17 @@ import UI
 
 public struct WindowClient {
     public var createMainWindow: @MainActor () -> Void
-    public var createPopupPlayerWindow: @MainActor (URL, String) -> Void
+    public var createPopupPlayerWindow: @MainActor (URL, String, @escaping () -> Void) -> Void
     public var closePopupPlayer: @MainActor () -> Void
     public var isPopupPlayerVisible: @MainActor () -> Bool
 }
 
-extension WindowClient: TestDependencyKey {
-    public static let previewValue: Self = Self(
+extension WindowClient: DependencyKey {
+    public static let previewValue: Self = .init(
         createMainWindow: {
             print("Preview: Creating main window")
         },
-        createPopupPlayerWindow: { url, title in
+        createPopupPlayerWindow: { url, title, _ in
             print("Preview: Creating popup player for '\(title)' at \(url)")
         },
         closePopupPlayer: {
@@ -29,7 +29,7 @@ extension WindowClient: TestDependencyKey {
     
     public static let testValue = previewValue
     
-    static let liveValue: Self = {
+    public static let liveValue: Self = {
         @MainActor
         final class WindowState {
             var mainWindow: NSWindow?
@@ -54,39 +54,27 @@ extension WindowClient: TestDependencyKey {
                 WindowState.shared.mainWindow = window
             },
             
-            createPopupPlayerWindow: { url, title in
-                let window = NSWindow(
-                    contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
-                    styleMask: [.titled, .closable, .resizable],
-                    backing: .buffered,
-                    defer: false
-                )
+            createPopupPlayerWindow: { _, title, onClose in
+                if WindowState.shared.popupPlayerWindow != nil {
+                    WindowState.shared.popupPlayerWindow?.makeKeyAndOrderFront(nil)
+                    return
+                }
                 
+                let window = KeyWindow()
+                window.setFrame(NSRect(x: 0, y: 0, width: 600, height: 400), display: false)
                 window.title = title
                 window.center()
+                window.styleMask = [.titled, .closable, .resizable]
+                window.level = .floating
                 
-                let keyWindow = KeyWindow()
-                keyWindow.onStop = {
+                window.onStop = {
+                    onClose()
                     WindowState.shared.popupPlayerWindow?.close()
                     WindowState.shared.popupPlayerWindow = nil
                 }
                 
-                let popupView = PopupPlayerView(
-                    title: title,
-                    onClose: {
-                        WindowState.shared.popupPlayerWindow?.close()
-                        WindowState.shared.popupPlayerWindow = nil
-                    }
-                ) {
-                    Text("Loading video...")
-                        .frame(width: 600, height: 400)
-                }
-                
-                keyWindow.contentView = NSHostingView(rootView: popupView)
-                keyWindow.contentViewController = NSHostingController(rootView: popupView)
-                keyWindow.makeKeyAndOrderFront(nil)
-                
-                WindowState.shared.popupPlayerWindow = keyWindow
+                WindowState.shared.popupPlayerWindow = window
+                window.makeKeyAndOrderFront(nil)
             },
             
             closePopupPlayer: {

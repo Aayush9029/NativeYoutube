@@ -88,7 +88,7 @@ private struct LogText: View {
         HStack {
             Text(text)
                 .font(.system(size: 10, design: .monospaced))
-                .foregroundColor(color)
+                .foregroundStyle(color)
                 .textSelection(.enabled)
             Spacer()
         }

@@ -4,9 +4,29 @@ import Models
 struct VideoRowView: View {
     let video: Video
     @State private var focused: Bool = false
+    let useIINA: Bool
+    let onPlayVideo: () -> Void
+    let onPlayInIINA: () -> Void
+    let onOpenInYouTube: () -> Void
+    let onCopyLink: () -> Void
+    let onShareLink: (URL) -> Void
     
-    init(video: Video) {
+    init(
+        video: Video,
+        useIINA: Bool = false,
+        onPlayVideo: @escaping () -> Void = {},
+        onPlayInIINA: @escaping () -> Void = {},
+        onOpenInYouTube: @escaping () -> Void = {},
+        onCopyLink: @escaping () -> Void = {},
+        onShareLink: @escaping (URL) -> Void = { _ in }
+    ) {
         self.video = video
+        self.useIINA = useIINA
+        self.onPlayVideo = onPlayVideo
+        self.onPlayInIINA = onPlayInIINA
+        self.onOpenInYouTube = onOpenInYouTube
+        self.onCopyLink = onCopyLink
+        self.onShareLink = onShareLink
     }
     
     public var body: some View {
@@ -75,6 +95,17 @@ struct VideoRowView: View {
                 focused.toggle()
             })
             .animation(.easeInOut, value: focused)
+            .contextMenu {
+                VideoContextMenuView(
+                    video: video,
+                    useIINA: useIINA,
+                    onPlayVideo: onPlayVideo,
+                    onPlayInIINA: onPlayInIINA,
+                    onOpenInYouTube: onOpenInYouTube,
+                    onCopyLink: onCopyLink,
+                    onShareLink: onShareLink
+                )
+            }
         }
     }
 }

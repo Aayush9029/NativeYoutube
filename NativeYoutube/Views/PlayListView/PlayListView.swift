@@ -1,3 +1,4 @@
+import Clients
 import Shared
 import SwiftUI
 import UI
@@ -25,6 +26,26 @@ struct PlayListView: View {
                             Task {
                                 await coordinator.handleVideoTap(video)
                             }
+                        },
+                        useIINA: true,
+                        onPlayVideo: { video in
+                            Task {
+                                await coordinator.playVideo(video)
+                            }
+                        },
+                        onPlayInIINA: { video in
+                            Task {
+                                await coordinator.playInIINA(video)
+                            }
+                        },
+                        onOpenInYouTube: { video in
+                            coordinator.openInYouTube(video)
+                        },
+                        onCopyLink: { video in
+                            coordinator.copyVideoLink(video)
+                        },
+                        onShareLink: { url in
+                            coordinator.shareVideo(url)
                         }
                     )
                 }
