@@ -1,0 +1,248 @@
+name: Build and Release
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+        
+    - name: Install dependencies
+      run: |
+        brew install coreutils
+        
+    - name: Import Code Signing Certificate
+      env:
+        SIGNING_CERTIFICATE_BASE64: ${{ secrets.SIGNING_CERTIFICATE_BASE64 }}
+        SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+      run: |
+        # Create variables
+        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+        KEYCHAIN_PASSWORD=temp_password_$(date +%s)
+        
+        # Import certificate from secrets
+        echo "$SIGNING_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
+        
+        # Create temporary keychain
+        security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+        security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+        
+        # Import certificate to keychain
+        security import "$CERTIFICATE_PATH" -P "$SIGNING_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+        security list-keychain -d user -s "$KEYCHAIN_PATH"
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+        
+    - name: Build and Archive
+      env:
+        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+      run: |
+        xcodebuild -project NativeYoutube.xcodeproj \
+          -scheme NativeYoutube \
+          -configuration Release \
+          -archivePath $RUNNER_TEMP/NativeYoutube.xcarchive \
+          -allowProvisioningUpdates \
+          DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
+          CODE_SIGN_STYLE=Automatic \
+          archive
+          
+    - name: Export Archive
+      env:
+        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+      run: |
+        # Create export options plist
+        cat > $RUNNER_TEMP/ExportOptions.plist <<EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>method</key>
+            <string>developer-id</string>
+            <key>teamID</key>
+            <string>$DEVELOPMENT_TEAM</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+        </dict>
+        </plist>
+        EOF
+        
+        xcodebuild -exportArchive \
+          -archivePath $RUNNER_TEMP/NativeYoutube.xcarchive \
+          -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist \
+          -exportPath $RUNNER_TEMP/export \
+          -allowProvisioningUpdates
+          
+    - name: Notarize Application
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
+      run: |
+        # Create ZIP for notarization
+        if [[ "${{ github.event_name }}" == "release" ]]; then
+          VERSION=${{ github.event.release.tag_name }}
+          VERSION=${VERSION#v}
+        else
+          VERSION=${GITHUB_REF_NAME#v}
+        fi
+        APP_PATH="$RUNNER_TEMP/export/NativeYoutube.app"
+        ZIP_PATH="$RUNNER_TEMP/NativeYoutube-$VERSION-notarize.zip"
+        
+        ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
+        
+        # Submit for notarization
+        xcrun notarytool submit "$ZIP_PATH" \
+          --apple-id "$APPLE_ID" \
+          --password "$APPLE_ID_PASSWORD" \
+          --team-id "$DEVELOPMENT_TEAM" \
+          --wait
+          
+        # Staple the notarization ticket
+        xcrun stapler staple "$APP_PATH"
+          
+    - name: Create Release Assets
+      run: |
+        if [[ "${{ github.event_name }}" == "release" ]]; then
+          VERSION=${{ github.event.release.tag_name }}
+          VERSION=${VERSION#v}
+        else
+          VERSION=${GITHUB_REF_NAME#v}
+        fi
+        APP_PATH="$RUNNER_TEMP/export/NativeYoutube.app"
+        
+        # Create ZIP for distribution
+        ditto -c -k --keepParent "$APP_PATH" "NativeYoutube-$VERSION.zip"
+        
+        # Create DMG
+        brew install create-dmg
+        create-dmg \
+          --volname "Native Youtube" \
+          --window-pos 200 120 \
+          --window-size 600 400 \
+          --icon-size 100 \
+          --icon "NativeYoutube.app" 200 200 \
+          --hide-extension "NativeYoutube.app" \
+          --app-drop-link 400 200 \
+          "NativeYoutube-$VERSION.dmg" \
+          "$APP_PATH"
+        
+    - name: Sign Sparkle Update
+      env:
+        SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+      run: |
+        if [[ "${{ github.event_name }}" == "release" ]]; then
+          VERSION=${{ github.event.release.tag_name }}
+          VERSION=${VERSION#v}
+        else
+          VERSION=${GITHUB_REF_NAME#v}
+        fi
+        
+        # Download Sparkle tools
+        curl -L https://github.com/sparkle-project/Sparkle/releases/latest/download/Sparkle-2.x.tar.xz -o sparkle.tar.xz
+        tar -xf sparkle.tar.xz
+        
+        # Create private key file from secret
+        echo "$SPARKLE_PRIVATE_KEY" | base64 --decode > sparkle_private_key.pem
+        
+        # Sign the update
+        ./bin/sign_update "NativeYoutube-$VERSION.zip" -f sparkle_private_key.pem
+        
+        # Get signature for appcast
+        SIGNATURE=$(./bin/sign_update "NativeYoutube-$VERSION.zip" -f sparkle_private_key.pem | awk '/sparkle:edSignature=/ {print $2}' | tr -d '"')
+        echo "SPARKLE_SIGNATURE=$SIGNATURE" >> $GITHUB_ENV
+        
+        # Clean up
+        rm sparkle_private_key.pem
+        
+    - name: Generate Appcast Entry
+      run: |
+        if [[ "${{ github.event_name }}" == "release" ]]; then
+          VERSION=${{ github.event.release.tag_name }}
+          VERSION=${VERSION#v}
+        else
+          VERSION=${GITHUB_REF_NAME#v}
+        fi
+        FILE_SIZE=$(stat -f%z "NativeYoutube-$VERSION.zip")
+        PUB_DATE=$(date -u +"%a, %d %b %Y %H:%M:%S +0000")
+        BUILD_NUMBER=$(defaults read "$RUNNER_TEMP/export/NativeYoutube.app/Contents/Info.plist" CFBundleVersion)
+        
+        cat > appcast-item.xml << EOF
+        <item>
+            <title>Version $VERSION</title>
+            <description><![CDATA[
+                <h2>Version $VERSION</h2>
+                <p>See the <a href="https://github.com/${{ github.repository }}/releases/tag/v$VERSION">release notes</a> for details.</p>
+            ]]></description>
+            <pubDate>$PUB_DATE</pubDate>
+            <sparkle:version>$BUILD_NUMBER</sparkle:version>
+            <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/${{ github.repository }}/releases/download/v$VERSION/NativeYoutube-$VERSION.zip"
+                      sparkle:edSignature="$SPARKLE_SIGNATURE"
+                      length="$FILE_SIZE"
+                      type="application/octet-stream" />
+        </item>
+        EOF
+        
+    - name: Upload Release Assets
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          NativeYoutube-*.dmg
+          NativeYoutube-*.zip
+          appcast-item.xml
+        tag_name: ${{ github.event.release.tag_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        
+    - name: Update Appcast
+      run: |
+        # Clone the repository
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        
+        # Checkout main branch
+        git fetch origin main
+        git checkout main
+        
+        # Update appcast.xml
+        if [ ! -f sparkle/appcast.xml ]; then
+          echo '<?xml version="1.0" standalone="yes"?>' > sparkle/appcast.xml
+          echo '<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">' >> sparkle/appcast.xml
+          echo '    <channel>' >> sparkle/appcast.xml
+          echo '        <title>Native Youtube</title>' >> sparkle/appcast.xml
+          echo '    </channel>' >> sparkle/appcast.xml
+          echo '</rss>' >> sparkle/appcast.xml
+        fi
+        
+        # Insert new item into appcast
+        sed -i '' '/<\/channel>/i\
+        '"$(cat appcast-item.xml | sed 's/$/\\/')" sparkle/appcast.xml
+        
+        # Commit and push
+        git add sparkle/appcast.xml
+        
+        if [[ "${{ github.event_name }}" == "release" ]]; then
+          VERSION=${{ github.event.release.tag_name }}
+          VERSION=${VERSION#v}
+        else
+          VERSION=${GITHUB_REF_NAME#v}
+        fi
+        
+        git commit -m "Update appcast for version ${VERSION}"
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

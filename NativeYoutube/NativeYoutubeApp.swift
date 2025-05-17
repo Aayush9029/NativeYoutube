@@ -22,5 +22,16 @@ struct NativeYoutubeApp: App {
                 .frame(width: 360, height: 512)
         }
         .menuBarExtraStyle(WindowMenuBarExtraStyle())
+        .commands {
+            CommandGroup(replacing: .appInfo) {
+                Button("About Native Youtube") {
+                    NSApplication.shared.orderFrontStandardAboutPanel(nil)
+                }
+                Divider()
+                Button("Check for Updates...") {
+                    coordinator.checkForUpdates()
+                }
+            }
+        }
     }
 }

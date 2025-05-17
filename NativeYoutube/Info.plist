@@ -21,5 +21,9 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/Aayush9029/NativeYoutube/main/sparkle/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsjiUWapXJYIYAj/U1/WNHTWnyHH3tx5gqF+jYIR9eoUkK82bju6U6rNDRAQY4yLUFdB86aP4Fq9Lx3qOBX6JwI3mhxakYCF1GoMis8YOyhnZkGrXOQ+RgmGSzOaT5MadpJaJ1nOrrgfuEQ16PYLlTk9VUpAX+7KWK4CVlWB3c2JqRXGL+E+HU6PwcjAGmCLNo2ltwTzuibnnyd4vHfy00an0Cwj3gU+TbVrIhGla0ScDxdzpl3tcPNFZmPqNLv/2gRExhOMHnRRuOYMxERxwdcB8FTTdcGllGlnpM2hJwMufOiklQddANpbgDaWAHV4BLC/wbwVZPUIoJAvOrR4gO25I14HhwFdGTWtNQyOkvYBYs8UdSFKMuBiM7rLWgzrUbEwvcsVBP4XFCThTFPCXf+G7fITrD6Fd/rjqjXnPg+kIgog/bW1STKAc75WJHwtfkouPbOpE8TIMf8NmDKsS/7FLoW9/fW2SPuSS7xnNPxlrIwrTz9KhICBRWQt0nPsJFLqfmY3WefngU5W3loRYJnjGSuh4TiCTQvPspF7+vvxulS0+LRzy3yoqN2theWHB3/5fG6igTeYzOU4nAhHVwXq1nQ8bgc9RcYG1KeHnL5F0G4YwQ3KCY+N7r5I/B7191Ada2GWMxX0l8IJg5bk8OxjSlCznofjg/Vn4dsx1ylECAwEAAQ==</string>
 </dict>
 </plist>
