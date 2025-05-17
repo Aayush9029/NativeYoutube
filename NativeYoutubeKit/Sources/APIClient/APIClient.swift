@@ -1,7 +1,5 @@
 import Foundation
 import Dependencies
-import HTTPTypes
-import HTTPTypesFoundation
 import Models
 import Shared
 
@@ -11,7 +9,13 @@ public struct APIClient {
     public var fetchPlaylistVideos: (PlaylistRequest) async throws -> [Video] = { _ in [] }
 }
 
-public struct SearchRequest: Equatable {
+// Base protocol for all API requests
+public protocol YouTubeAPIRequest {
+    var apiKey: String? { get }
+    var maxResults: Int { get }
+}
+
+public struct SearchRequest: YouTubeAPIRequest, Equatable {
     public let query: String
     public let maxResults: Int
     public let apiKey: String?
@@ -23,7 +27,7 @@ public struct SearchRequest: Equatable {
     }
 }
 
-public struct PlaylistRequest: Equatable {
+public struct PlaylistRequest: YouTubeAPIRequest, Equatable {
     public let playlistId: String
     public let maxResults: Int
     public let apiKey: String?
@@ -53,24 +57,40 @@ extension APIClient {
     public static func live() -> Self {
         APIClient(
             searchVideos: { request in
-                try await searchVideosImplementation(request: request)
+                guard let apiKey = request.apiKey else {
+                    throw APIError.missingAPIKey
+                }
+                
+                let endpoint = YouTubeEndpoint.search(
+                    query: request.query,
+                    maxResults: request.maxResults,
+                    apiKey: apiKey
+                )
+                
+                let response: YouTubeSearchResponse = try await performRequest(for: endpoint)
+                return response.items.compactMap { $0.toVideo() }
             },
             fetchPlaylistVideos: { request in
-                try await fetchPlaylistVideosImplementation(request: request)
+                guard let apiKey = request.apiKey else {
+                    throw APIError.missingAPIKey
+                }
+                
+                let endpoint = YouTubeEndpoint.playlistItems(
+                    playlistId: request.playlistId,
+                    maxResults: request.maxResults,
+                    apiKey: apiKey
+                )
+                
+                let response: YouTubePlaylistResponse = try await performRequest(for: endpoint)
+                return response.items.map { $0.toVideo() }
             }
         )
     }
     
-    private static func searchVideosImplementation(request: SearchRequest) async throws -> [Video] {
-        let apiKey = request.apiKey ?? Constants.defaultAPIKey
-        let urlString = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=\(request.query)&key=\(apiKey)&type=video&maxResults=\(request.maxResults)"
-        
-        guard let url = URL(string: urlString) else {
-            throw APIError.invalidURL
-        }
-        
+    private static func performRequest<T: Decodable>(for endpoint: YouTubeEndpoint) async throws -> T {
+        let url = try endpoint.url()
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = HTTPRequest.Method.get.rawValue
+        urlRequest.httpMethod = "GET"
         
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         
@@ -79,35 +99,76 @@ extension APIClient {
             throw APIError.invalidResponse
         }
         
-        let searchResponse = try JSONDecoder().decode(YouTubeSearchResponse.self, from: data)
-        return searchResponse.items.compactMap { $0.toVideo() }
-    }
-    
-    private static func fetchPlaylistVideosImplementation(request: PlaylistRequest) async throws -> [Video] {
-        let apiKey = request.apiKey ?? Constants.defaultAPIKey
-        let urlString = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails%2Cstatus&playlistId=\(request.playlistId)&key=\(apiKey)&maxResults=\(request.maxResults)"
-        
-        guard let url = URL(string: urlString) else {
-            throw APIError.invalidURL
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = HTTPRequest.Method.get.rawValue
-        
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw APIError.invalidResponse
-        }
-        
-        let playlistResponse = try JSONDecoder().decode(YouTubePlaylistResponse.self, from: data)
-        return playlistResponse.items.map { $0.toVideo() }
+        return try JSONDecoder().decode(T.self, from: data)
     }
 }
 
-public enum APIError: Error {
+public enum APIError: Error, LocalizedError {
     case invalidURL
     case invalidResponse
     case decodingError
+    case missingAPIKey
+    
+    public var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "Invalid URL"
+        case .invalidResponse:
+            return "Invalid response from server"
+        case .decodingError:
+            return "Failed to decode response"
+        case .missingAPIKey:
+            return "API key is missing"
+        }
+    }
+}
+
+// YouTube API Endpoints
+private enum YouTubeEndpoint {
+    case search(query: String, maxResults: Int, apiKey: String)
+    case playlistItems(playlistId: String, maxResults: Int, apiKey: String)
+    
+    private var baseURL: String {
+        "https://youtube.googleapis.com/youtube/v3"
+    }
+    
+    private var path: String {
+        switch self {
+        case .search:
+            return "/search"
+        case .playlistItems:
+            return "/playlistItems"
+        }
+    }
+    
+    private var queryItems: [URLQueryItem] {
+        switch self {
+        case .search(let query, let maxResults, let apiKey):
+            return [
+                URLQueryItem(name: "part", value: "snippet"),
+                URLQueryItem(name: "q", value: query),
+                URLQueryItem(name: "key", value: apiKey),
+                URLQueryItem(name: "type", value: "video"),
+                URLQueryItem(name: "maxResults", value: String(maxResults))
+            ]
+        case .playlistItems(let playlistId, let maxResults, let apiKey):
+            return [
+                URLQueryItem(name: "part", value: "snippet,contentDetails,status"),
+                URLQueryItem(name: "playlistId", value: playlistId),
+                URLQueryItem(name: "key", value: apiKey),
+                URLQueryItem(name: "maxResults", value: String(maxResults))
+            ]
+        }
+    }
+    
+    func url() throws -> URL {
+        var components = URLComponents(string: baseURL + path)
+        components?.queryItems = queryItems
+        
+        guard let url = components?.url else {
+            throw APIError.invalidURL
+        }
+        
+        return url
+    }
 }

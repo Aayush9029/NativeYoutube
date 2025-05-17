@@ -6,34 +6,45 @@
 //
 
 import SwiftUI
+import Models
+import UI
+import Shared
+import Dependencies
 
 struct ContentView: View {
-    @State private var currentPage: Pages = .playlists
-
+    @EnvironmentObject var coordinator: AppCoordinator
+    @Shared(.isPlaying) private var isPlaying
+    @Shared(.currentlyPlaying) private var currentlyPlaying
+    
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            switch currentPage {
+            switch coordinator.currentPage {
             case .playlists:
                 PlayListView()
             case .search:
-                SearchView()
+                SearchVideosView()
             case .settings:
                 PreferencesView()
             }
-            BottomBarView(currentPage: $currentPage)
+            BottomBarView(
+                currentPage: $coordinator.currentPage,
+                searchQuery: $coordinator.searchQuery,
+                isPlaying: isPlaying,
+                currentlyPlaying: currentlyPlaying,
+                onSearch: {
+                    coordinator.navigateTo(.search)
+                    Task {
+                        await coordinator.search(coordinator.searchQuery)
+                    }
+                },
+                onQuit: coordinator.quit
+            )
         }
         .frame(width: 360.0)
     }
 }
 
-enum Pages: String {
-    case playlists = "Playlists"
-    case search = "Search"
-    case settings = "Settings"
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
+        .environmentObject(AppCoordinator())
 }

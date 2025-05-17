@@ -87,3 +87,37 @@ public struct BottomBarView: View {
         }
     }
 }
+
+#Preview {
+    struct PreviewWrapper: View {
+        @State private var currentPage: Pages = .playlists
+        @State private var searchQuery: String = ""
+        
+        var body: some View {
+            VStack {
+                BottomBarView(
+                    currentPage: $currentPage,
+                    searchQuery: $searchQuery,
+                    isPlaying: true,
+                    currentlyPlaying: "Example Video Title Playing Right Now",
+                    onSearch: { print("Search triggered") },
+                    onQuit: { print("Quit triggered") }
+                )
+                .padding()
+                
+                BottomBarView(
+                    currentPage: $currentPage,
+                    searchQuery: $searchQuery,
+                    isPlaying: false,
+                    currentlyPlaying: "",
+                    onSearch: { print("Search triggered") },
+                    onQuit: { print("Quit triggered") }
+                )
+                .padding()
+            }
+            .frame(width: 400)
+        }
+    }
+    
+    return PreviewWrapper()
+}

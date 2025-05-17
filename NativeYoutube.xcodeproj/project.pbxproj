@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		513960D22DD8D7F5003E13D9 /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D12DD8D7F5003E13D9 /* APIClient */; };
+		513960D42DD8D7F5003E13D9 /* Assets in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D32DD8D7F5003E13D9 /* Assets */; };
+		513960D62DD8D7F5003E13D9 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D52DD8D7F5003E13D9 /* Models */; };
+		513960D82DD8D7F5003E13D9 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D72DD8D7F5003E13D9 /* Shared */; };
+		513960DA2DD8D7F5003E13D9 /* UI in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D92DD8D7F5003E13D9 /* UI */; };
 		70A3843F2955D1A1000941F5 /* YouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3843E2955D1A1000941F5 /* YouTubeKit */; };
 		70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3844429561851000941F5 /* SDWebImageSwiftUI */; };
 		70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A3845D295644A1000941F5 /* AVKit.framework */; };
@@ -14,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		513960A42DD8788C003E13D9 /* NativeYoutubeKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NativeYoutubeKit; sourceTree = "<group>"; };
 		70A3845D295644A1000941F5 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		C27DD34A272C853E00B4DC16 /* NativeYoutube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeYoutube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -38,8 +44,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */,
+				513960D42DD8D7F5003E13D9 /* Assets in Frameworks */,
 				70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */,
+				513960D22DD8D7F5003E13D9 /* APIClient in Frameworks */,
+				513960DA2DD8D7F5003E13D9 /* UI in Frameworks */,
 				C27DD38E272C93AD00B4DC16 /* SwiftyJSON in Frameworks */,
+				513960D82DD8D7F5003E13D9 /* Shared in Frameworks */,
+				513960D62DD8D7F5003E13D9 /* Models in Frameworks */,
 				70A3843F2955D1A1000941F5 /* YouTubeKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,6 +69,7 @@
 		C27DD341272C853E00B4DC16 = {
 			isa = PBXGroup;
 			children = (
+				513960A42DD8788C003E13D9 /* NativeYoutubeKit */,
 				512D78A12DD871B7004C3009 /* NativeYoutube */,
 				C27DD34B272C853E00B4DC16 /* Products */,
 				70A3845C295644A1000941F5 /* Frameworks */,
@@ -95,6 +107,11 @@
 				C27DD38D272C93AD00B4DC16 /* SwiftyJSON */,
 				70A3843E2955D1A1000941F5 /* YouTubeKit */,
 				70A3844429561851000941F5 /* SDWebImageSwiftUI */,
+				513960D12DD8D7F5003E13D9 /* APIClient */,
+				513960D32DD8D7F5003E13D9 /* Assets */,
+				513960D52DD8D7F5003E13D9 /* Models */,
+				513960D72DD8D7F5003E13D9 /* Shared */,
+				513960D92DD8D7F5003E13D9 /* UI */,
 			);
 			productName = NativeYoutube;
 			productReference = C27DD34A272C853E00B4DC16 /* NativeYoutube.app */;
@@ -304,7 +321,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aayushpokharel.opensource.NativeYoutube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -338,7 +355,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aayushpokharel.opensource.NativeYoutube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -398,6 +415,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		513960D12DD8D7F5003E13D9 /* APIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = APIClient;
+		};
+		513960D32DD8D7F5003E13D9 /* Assets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Assets;
+		};
+		513960D52DD8D7F5003E13D9 /* Models */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Models;
+		};
+		513960D72DD8D7F5003E13D9 /* Shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shared;
+		};
+		513960D92DD8D7F5003E13D9 /* UI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UI;
+		};
 		70A3843E2955D1A1000941F5 /* YouTubeKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 70A3843D2955D1A1000941F5 /* XCRemoteSwiftPackageReference "YouTubeKit" */;

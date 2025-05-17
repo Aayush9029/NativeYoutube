@@ -1,16 +1,12 @@
-//
-//  WelcomeView.swift
-//  NativeYoutube
-//
-//  Created by Aayush Pokharel on 2021-10-29.
-//
-
 import SwiftUI
+import Assets
 
-struct WelcomeView: View {
+public struct WelcomeView: View {
     @State private var jump: Bool = false
-
-    var body: some View {
+    
+    public init() {}
+    
+    public var body: some View {
         VStack {
             Spacer()
             VStack {
@@ -18,7 +14,6 @@ struct WelcomeView: View {
                     .foregroundStyle(.secondary)
                 Text("Native Youtube")
                     .font(.system(size: 64, design: .serif)).bold()
-
                     .foregroundStyle(.primary)
                 Text("Enter your API credentials...")
                     .foregroundStyle(.tertiary)
@@ -42,7 +37,7 @@ struct WelcomeView: View {
         }
         .padding(.horizontal)
         .background(
-            Image("AppIconImage")
+            Assets.appIcon
                 .resizable()
                 .scaledToFit()
                 .blur(radius: 96)
@@ -50,8 +45,7 @@ struct WelcomeView: View {
     }
 }
 
-struct WelcomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        WelcomeView()
-    }
+#Preview("Welcome View") {
+    WelcomeView()
+        .frame(width: 600, height: 400)
 }

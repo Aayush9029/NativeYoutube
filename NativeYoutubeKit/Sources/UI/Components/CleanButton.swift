@@ -36,3 +36,34 @@ public struct CleanButton: View {
         .buttonStyle(.plain)
     }
 }
+
+#Preview {
+    struct PreviewWrapper: View {
+        @State private var currentPage: Pages = .playlists
+        
+        var body: some View {
+            HStack(spacing: 20) {
+                CleanButton(
+                    page: .playlists,
+                    image: "music.note.list",
+                    binded: $currentPage
+                )
+                
+                CleanButton(
+                    page: .search,
+                    image: "magnifyingglass",
+                    binded: $currentPage
+                )
+                
+                CleanButton(
+                    page: .settings,
+                    image: "gear",
+                    binded: $currentPage
+                )
+            }
+            .padding()
+        }
+    }
+    
+    return PreviewWrapper()
+}

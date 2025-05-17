@@ -1,20 +1,17 @@
-//
-//  GeneralPreferenceView.swift
-//  NativeYoutube
-//
-//  Created by Erik Bautista on 2/4/22.
-//
-
+import Models
+import Shared
 import SwiftUI
-import YouTubeKit
+import UI
 
 struct GeneralPreferenceView: View {
-    @EnvironmentObject var appStateViewModel: AppStateViewModel
+    @Shared(.playlistID) private var playlistID
+    @Shared(.useIINA) private var useIINA
+    @Shared(.videoClickBehaviour) private var videoClickBehaviour
 
     var body: some View {
         VStack(alignment: .leading) {
             DisclosureGroup {
-                TextField("Playlist ID", text: $appStateViewModel.playListID)
+                TextField("Playlist ID", text: Binding($playlistID))
                     .textFieldStyle(.plain)
                     .thinRoundedBG()
             } label: {
@@ -28,11 +25,11 @@ struct GeneralPreferenceView: View {
 
             DisclosureGroup {
                 VStack {
-                    SpacedToggle("Use IINA", $appStateViewModel.useIINA)
+                    SpacedToggle("Use IINA", isOn: Binding($useIINA))
 
-                    Picker("Double Click to", selection: $appStateViewModel.vidClickBehaviour) {
+                    Picker("Double Click to", selection: Binding($videoClickBehaviour)) {
                         ForEach(VideoClickBehaviour.allCases, id: \.self) { behaviour in
-                            if behaviour != .playInIINA || appStateViewModel.useIINA {
+                            if behaviour != .playInIINA || useIINA {
                                 Text(behaviour.rawValue).tag(behaviour)
                             }
                         }
@@ -48,28 +45,22 @@ struct GeneralPreferenceView: View {
     }
 }
 
-struct GeneralView_Previews: PreviewProvider {
-    static var previews: some View {
-        GeneralPreferenceView()
-    }
-}
-
 struct SpacedToggle: View {
     let title: String
-    @Binding var binded: Bool
+    @Binding var isOn: Bool
 
-    init(_ title: String = "", _ isOn: Binding<Bool>) {
+    init(_ title: String, isOn: Binding<Bool>) {
         self.title = title
-        self._binded = isOn
+        self._isOn = isOn
     }
 
     var body: some View {
         HStack {
             Text(title)
             Spacer()
-            Toggle("", isOn: $binded)
+            Toggle("", isOn: $isOn)
                 .toggleStyle(.switch)
-                .bold()
+                .labelsHidden()
         }
     }
 }

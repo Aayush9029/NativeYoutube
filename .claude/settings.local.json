@@ -14,7 +14,8 @@
       "Bash(test:*)",
       "Bash(mkdir:*)",
       "Bash(touch:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(xcodebuild:*)"
     ],
     "deny": []
   }

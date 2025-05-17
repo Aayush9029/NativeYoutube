@@ -1,20 +1,10 @@
-import Dependencies
+@_exported import Dependencies
+@_exported import DependenciesMacros
 import Foundation
+@_exported import IdentifiedCollections
+@_exported import Sharing
 
 // Shared module for common utilities and types
-
-@inlinable 
-public func withDependencies<R>(
-  _ updateValuesForOperation: (inout DependencyValues) -> Void,
-  operation: () throws -> R
-) rethrows -> R {
-  try DependencyValues.$current.withValue {
-    updateValuesForOperation(&$0)
-    return $0
-  } operation: {
-    try operation()
-  }
-}
 
 public enum SharedConstants {
     public static let appName = "NativeYoutube"

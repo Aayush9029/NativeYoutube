@@ -1,0 +1,99 @@
+import SwiftUI
+import Models
+import Shared
+import Dependencies
+import APIClient
+
+@MainActor
+final class AppCoordinator: ObservableObject {
+    @Published var currentPage: Pages = .playlists
+    @Published var searchQuery: String = ""
+    @Published var searchResults: [Video] = []
+    @Published var searchStatus: SearchStatus = .idle
+    @Published var playlistVideos: [Video] = []
+    @Published var selectedPlaylist: String = ""
+    
+    @Dependency(\.searchClient) private var searchClient
+    @Dependency(\.playlistClient) private var playlistClient
+    @Dependency(\.appStateClient) private var appStateClient
+    
+    enum SearchStatus {
+        case idle
+        case searching
+        case completed
+        case error(String)
+    }
+    
+    // MARK: - Navigation
+    
+    func navigateTo(_ page: Pages) {
+        currentPage = page
+    }
+    
+    // MARK: - Search
+    
+    func search(_ query: String) async {
+        guard !query.isEmpty else { return }
+        
+        searchQuery = query
+        searchStatus = .searching
+        
+        @Shared(.apiKey) var apiKey
+        @Shared(.logs) var logs
+        
+        do {
+            searchResults = try await searchClient.searchVideos(query, apiKey)
+            searchStatus = .completed
+            $logs.withLock { $0.append("Search completed: \(searchResults.count) results") }
+        } catch {
+            searchStatus = .error(error.localizedDescription)
+            $logs.withLock { $0.append("Search error: \(error.localizedDescription)") }
+        }
+    }
+    
+    func clearSearch() {
+        searchQuery = ""
+        searchResults = []
+        searchStatus = .idle
+    }
+    
+    // MARK: - Playlists
+    
+    func loadPlaylist(_ playlistId: String) async {
+        selectedPlaylist = playlistId
+        
+        @Shared(.apiKey) var apiKey
+        @Shared(.logs) var logs
+        
+        do {
+            let videos = try await playlistClient.fetchVideos(apiKey, playlistId)
+            playlistVideos = videos
+            $logs.withLock { $0.append("Loaded playlist: \(videos.count) videos") }
+        } catch {
+            $logs.withLock { $0.append("Playlist error: \(error.localizedDescription)") }
+        }
+    }
+    
+    // MARK: - Video Actions
+    
+    func handleVideoTap(_ video: Video) async {
+        @Shared(.videoClickBehaviour) var videoClickBehaviour
+        
+        switch videoClickBehaviour {
+        case .nothing:
+            return
+        case .playVideo:
+            await appStateClient.playVideo(video.url, video.title, false)
+        case .openOnYoutube:
+            appStateClient.openInYouTube(video.url)
+        case .playInIINA:
+            await appStateClient.playVideo(video.url, video.title, true)
+        }
+    }
+    
+    // MARK: - App Actions
+    
+    func quit() {
+        NSApplication.shared.terminate(nil)
+    }
+}

@@ -1,23 +1,24 @@
 //
-//  LogTextView.swift
+//  LogPrefrenceView.swift
 //  NativeYoutube
 //
 //  Created by Aayush Pokharel on 2021-10-29.
 //
 
 import SwiftUI
+import Shared
+import UI
 
 struct LogPrefrenceView: View {
-    @EnvironmentObject var appStateViewModel: AppStateViewModel
-    @StateObject var youtubePreferenceViewModel: YoutubePreferenceViewModel = .init()
-
+    @Shared(.logs) private var logs
+    
     var body: some View {
         Group {
             DisclosureGroup {
                 VStack(alignment: .leading) {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(alignment: .leading) {
-                            ForEach(appStateViewModel.logs, id: \.self) { log in
+                            ForEach(logs, id: \.self) { log in
                                 LogText(text: log, color: .gray)
                             }
                         }
@@ -37,18 +38,24 @@ struct LogPrefrenceView: View {
                         .thinRoundedBG(padding: 8, material: .thinMaterial)
                         .clipShape(Circle())
                         .onTapGesture {
-                            youtubePreferenceViewModel.copyLogsToClipboard(redacted: true, appState: appStateViewModel)
+                            copyLogsToClipboard(redacted: true)
                         }
                         .contextMenu {
                             VStack {
                                 Button {
-                                    youtubePreferenceViewModel.copyLogsToClipboard(redacted: false, appState: appStateViewModel)
+                                    copyLogsToClipboard(redacted: false)
                                 } label: {
                                     Label("Copy Raw", systemImage: "key.radiowaves.forward.fill")
                                 }
 
                                 Button {
-                                    appStateViewModel.logs = []
+                                    copyLogsToClipboard(redacted: true)
+                                } label: {
+                                    Label("Copy Redacted", systemImage: "eyes.inverse")
+                                }
+
+                                Button {
+                                    $logs.withLock { $0.removeAll() }
                                 } label: {
                                     Label("Clear Logs", systemImage: "trash.fill")
                                 }
@@ -59,21 +66,36 @@ struct LogPrefrenceView: View {
         }
         .thinRoundedBG()
     }
-}
-
-struct LogText: View {
-    let text: String
-    var color: Color = .gray
-
-    var body: some View {
-        Text(text)
-            .font(.caption2)
-            .foregroundColor(.gray)
+    
+    private func copyLogsToClipboard(redacted: Bool) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        
+        var logsString = logs.joined(separator: "\n")
+        
+        if redacted {
+            logsString = logsString.replacingOccurrences(of: "AIzaSy[A-Za-z0-9_-]{33}", with: "[[PRIVATE API KEY]]", options: .regularExpression)
+        }
+        
+        pasteboard.setString(logsString, forType: .string)
     }
 }
 
-struct BoldTextView_Previews: PreviewProvider {
-    static var previews: some View {
-        LogText(text: "All streams are offline :(", color: .gray)
+#Preview {
+    LogPrefrenceView()
+}
+
+fileprivate struct LogText: View {
+    let text: String
+    let color: Color
+    
+    var body: some View {
+        HStack {
+            Text(text)
+                .font(.system(size: 10, design: .monospaced))
+                .foregroundColor(color)
+                .textSelection(.enabled)
+            Spacer()
+        }
     }
 }
