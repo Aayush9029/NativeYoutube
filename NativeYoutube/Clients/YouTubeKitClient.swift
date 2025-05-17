@@ -27,14 +27,14 @@ extension YouTubeKitClient: TestDependencyKey {
     )
     
     static let previewValue = YouTubeKitClient(
-        extractVideoURL: { _ in 
-            URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")! 
+        extractVideoURL: { _ in
+            URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
         },
-        extractHighestQualityVideoURL: { _ in 
-            URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")! 
+        extractHighestQualityVideoURL: { _ in
+            URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
         },
-        extractAudioOnlyURL: { _ in 
-            URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")! 
+        extractAudioOnlyURL: { _ in
+            URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")!
         },
         extractStreamInfo: { _ in
             StreamInfo(
@@ -137,7 +137,7 @@ extension YouTubeKitClient: DependencyKey {
             return StreamInfo(
                 url: stream.url,
                 quality: stream.videoResolution?.description ?? "Unknown",
-                fileExtension: stream.fileExtension?.rawValue ?? "Unknown",
+                fileExtension: stream.fileExtension.rawValue,
                 hasAudio: stream.includesAudioTrack,
                 hasVideo: stream.includesVideoTrack
             )
