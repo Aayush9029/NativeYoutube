@@ -44,6 +44,7 @@ public struct VideoListView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let sampleVideos = [
         Video(
@@ -93,3 +94,4 @@ public struct VideoListView: View {
     }
     .padding()
 }
+#endif

@@ -37,6 +37,8 @@ struct YoutubePreferenceView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     YoutubePreferenceView()
 }
+#endif

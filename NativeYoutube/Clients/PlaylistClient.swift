@@ -9,7 +9,38 @@ public struct PlaylistClient {
 }
 
 extension PlaylistClient: TestDependencyKey {
-    public static let previewValue = PlaylistClient()
+    public static let previewValue = PlaylistClient(
+        fetchVideos: { _, _ in
+            // Return mock data for previews
+            [
+                Video(
+                    id: "1",
+                    title: "SwiftUI Tutorial - Building Your First App",
+                    thumbnail: URL(string: "https://i.ytimg.com/vi/abc123/hqdefault.jpg")!,
+                    publishedAt: "2023-12-01T10:00:00Z",
+                    url: URL(string: "https://www.youtube.com/watch?v=abc123")!,
+                    channelTitle: "SwiftUI Academy"
+                ),
+                Video(
+                    id: "2",
+                    title: "Advanced Swift Concurrency with async/await",
+                    thumbnail: URL(string: "https://i.ytimg.com/vi/def456/hqdefault.jpg")!,
+                    publishedAt: "2023-11-30T12:00:00Z",
+                    url: URL(string: "https://www.youtube.com/watch?v=def456")!,
+                    channelTitle: "iOS Developer"
+                ),
+                Video(
+                    id: "3",
+                    title: "Building a macOS Menu Bar App",
+                    thumbnail: URL(string: "https://i.ytimg.com/vi/ghi789/hqdefault.jpg")!,
+                    publishedAt: "2023-11-29T14:00:00Z",
+                    url: URL(string: "https://www.youtube.com/watch?v=ghi789")!,
+                    channelTitle: "Mac Development"
+                )
+            ]
+        }
+    )
+    
     public static let testValue = PlaylistClient()
 }
 

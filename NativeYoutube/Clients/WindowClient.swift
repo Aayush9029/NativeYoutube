@@ -10,7 +10,25 @@ public struct WindowClient {
     public var isPopupPlayerVisible: @MainActor () -> Bool
 }
 
-extension WindowClient: DependencyKey {
+extension WindowClient: TestDependencyKey {
+    public static let previewValue: Self = Self(
+        createMainWindow: {
+            print("Preview: Creating main window")
+        },
+        createPopupPlayerWindow: { url, title in
+            print("Preview: Creating popup player for '\(title)' at \(url)")
+        },
+        closePopupPlayer: {
+            print("Preview: Closing popup player")
+        },
+        isPopupPlayerVisible: {
+            print("Preview: Checking if popup player is visible")
+            return false
+        }
+    )
+    
+    public static let testValue = previewValue
+    
     public static let liveValue: Self = {
         @MainActor
         final class WindowState {
@@ -54,13 +72,15 @@ extension WindowClient: DependencyKey {
                 }
                 
                 let popupView = PopupPlayerView(
-                    videoURL: url,
                     title: title,
                     onClose: {
                         WindowState.shared.popupPlayerWindow?.close()
                         WindowState.shared.popupPlayerWindow = nil
                     }
-                )
+                ) {
+                    Text("Loading video...")
+                        .frame(width: 600, height: 400)
+                }
                 
                 keyWindow.contentView = NSHostingView(rootView: popupView)
                 keyWindow.contentViewController = NSHostingController(rootView: popupView)

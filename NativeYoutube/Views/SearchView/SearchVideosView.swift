@@ -5,16 +5,16 @@
 //  Created by Aayush Pokharel on 2021-10-29.
 //
 
-import SwiftUI
-import Shared
-import Models
-import UI
 import Dependencies
+import Models
+import Shared
+import SwiftUI
+import UI
 
 struct SearchVideosView: View {
     @EnvironmentObject var coordinator: AppCoordinator
     @Shared(.videoClickBehaviour) private var videoClickBehaviour
-    
+
     var body: some View {
         VStack {
             switch coordinator.searchStatus {
@@ -57,7 +57,7 @@ struct EmptyStateView: View {
 
 struct ErrorView: View {
     let message: String
-    
+
     var body: some View {
         VStack {
             Image(systemName: "exclamationmark.triangle")
@@ -76,7 +76,16 @@ struct ErrorView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     SearchVideosView()
-        .environmentObject(AppCoordinator())
+        .environmentObject(
+            withDependencies({
+                $0.searchClient = .previewValue
+                $0.appStateClient = .previewValue
+            }, operation: {
+                AppCoordinator()
+            })
+        )
 }
+#endif

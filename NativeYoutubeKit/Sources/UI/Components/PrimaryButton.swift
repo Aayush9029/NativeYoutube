@@ -77,6 +77,7 @@ public struct PrimaryButton: View {
     }
 }
 
+#if DEBUG
 #Preview {
     VStack(spacing: 20) {
         PrimaryButton(
@@ -108,3 +109,4 @@ public struct PrimaryButton: View {
     }
     .padding()
 }
+#endif

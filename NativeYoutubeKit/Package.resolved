@@ -1,5 +1,5 @@
 {
-  "originHash" : "7e0e64ebf6a786c5e193b6402b98636917ffcccd95034a9a70df02b51bea65dc",
+  "originHash" : "87466d1a68715b913fdca4b0c39484649635d00117bd3101aa81b2fff3cc2096",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -103,7 +103,7 @@
     {
       "identity" : "youtubekit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/alexeichhorn/YouTubeKit",
+      "location" : "https://github.com/alexeichhorn/YouTubeKit.git",
       "state" : {
         "revision" : "e1895c72f0edff9acd6b41977d2ad9c6245e8306",
         "version" : "0.2.7"

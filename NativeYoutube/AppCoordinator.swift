@@ -3,6 +3,7 @@ import Models
 import Shared
 import Dependencies
 import APIClient
+import UI
 
 @MainActor
 final class AppCoordinator: ObservableObject {
@@ -12,6 +13,9 @@ final class AppCoordinator: ObservableObject {
     @Published var searchStatus: SearchStatus = .idle
     @Published var playlistVideos: [Video] = []
     @Published var selectedPlaylist: String = ""
+    @Published var showingVideoPlayer = false
+    @Published var currentVideoURL: URL?
+    @Published var currentVideoTitle: String = ""
     
     @Dependency(\.searchClient) private var searchClient
     @Dependency(\.playlistClient) private var playlistClient
@@ -22,6 +26,43 @@ final class AppCoordinator: ObservableObject {
         case searching
         case completed
         case error(String)
+    }
+    
+    init() {
+        setupNotifications()
+    }
+    
+    private func setupNotifications() {
+        // Listen for video player notifications
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showVideoInApp(_:)),
+            name: .showVideoInApp,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(hideVideoPlayer),
+            name: .hideVideoPlayer,
+            object: nil
+        )
+    }
+    
+    @objc private func showVideoInApp(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let url = userInfo["url"] as? URL,
+              let title = userInfo["title"] as? String else { return }
+        
+        currentVideoURL = url
+        currentVideoTitle = title
+        showingVideoPlayer = true
+    }
+    
+    @objc func hideVideoPlayer() {
+        showingVideoPlayer = false
+        currentVideoURL = nil
+        currentVideoTitle = ""
     }
     
     // MARK: - Navigation
@@ -95,5 +136,9 @@ final class AppCoordinator: ObservableObject {
     
     func quit() {
         NSApplication.shared.terminate(nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

@@ -70,7 +70,16 @@ struct PlayListView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     PlayListView()
-        .environmentObject(AppCoordinator())
+        .environmentObject(
+            withDependencies({
+                $0.playlistClient = .previewValue
+                $0.appStateClient = .previewValue
+            }, operation: {
+                AppCoordinator()
+            })
+        )
 }
+#endif

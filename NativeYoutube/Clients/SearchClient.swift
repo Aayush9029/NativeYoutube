@@ -9,7 +9,38 @@ public struct SearchClient {
 }
 
 extension SearchClient: TestDependencyKey {
-    public static let previewValue = SearchClient()
+    public static let previewValue = SearchClient(
+        searchVideos: { query, _ in
+            // Return mock search results based on query for previews
+            [
+                Video(
+                    id: "search1",
+                    title: "Search Result: \(query)",
+                    thumbnail: URL(string: "https://i.ytimg.com/vi/search1/hqdefault.jpg")!,
+                    publishedAt: "2023-12-01T10:00:00Z",
+                    url: URL(string: "https://www.youtube.com/watch?v=search1")!,
+                    channelTitle: "Search Channel 1"
+                ),
+                Video(
+                    id: "search2",
+                    title: "Another Result for: \(query)",
+                    thumbnail: URL(string: "https://i.ytimg.com/vi/search2/hqdefault.jpg")!,
+                    publishedAt: "2023-12-01T09:00:00Z",
+                    url: URL(string: "https://www.youtube.com/watch?v=search2")!,
+                    channelTitle: "Search Channel 2"
+                ),
+                Video(
+                    id: "search3",
+                    title: "Popular video about \(query)",
+                    thumbnail: URL(string: "https://i.ytimg.com/vi/search3/hqdefault.jpg")!,
+                    publishedAt: "2023-12-01T08:00:00Z",
+                    url: URL(string: "https://www.youtube.com/watch?v=search3")!,
+                    channelTitle: "Popular Creator"
+                )
+            ]
+        }
+    )
+    
     public static let testValue = SearchClient()
 }
 

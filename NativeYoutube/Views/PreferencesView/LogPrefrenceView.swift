@@ -81,9 +81,11 @@ struct LogPrefrenceView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     LogPrefrenceView()
 }
+#endif
 
 fileprivate struct LogText: View {
     let text: String

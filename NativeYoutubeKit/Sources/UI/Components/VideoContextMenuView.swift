@@ -62,6 +62,7 @@ public struct VideoContextMenuView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let sampleVideo = Video(
         id: "123",
@@ -99,3 +100,4 @@ public struct VideoContextMenuView: View {
     }
     .padding()
 }
+#endif

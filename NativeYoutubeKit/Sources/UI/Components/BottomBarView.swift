@@ -88,6 +88,7 @@ public struct BottomBarView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     struct PreviewWrapper: View {
         @State private var currentPage: Pages = .playlists
@@ -121,3 +122,4 @@ public struct BottomBarView: View {
     
     return PreviewWrapper()
 }
+#endif

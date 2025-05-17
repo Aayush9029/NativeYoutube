@@ -79,6 +79,7 @@ public struct VideoRowView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     VideoRowView(
         video: Video(
@@ -91,3 +92,4 @@ public struct VideoRowView: View {
         )
     )
 }
+#endif

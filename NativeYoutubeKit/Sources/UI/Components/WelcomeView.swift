@@ -45,7 +45,9 @@ public struct WelcomeView: View {
     }
 }
 
+#if DEBUG
 #Preview("Welcome View") {
     WelcomeView()
         .frame(width: 600, height: 400)
 }
+#endif

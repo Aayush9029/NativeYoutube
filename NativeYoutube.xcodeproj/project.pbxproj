@@ -12,10 +12,7 @@
 		513960D62DD8D7F5003E13D9 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D52DD8D7F5003E13D9 /* Models */; };
 		513960D82DD8D7F5003E13D9 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D72DD8D7F5003E13D9 /* Shared */; };
 		513960DA2DD8D7F5003E13D9 /* UI in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D92DD8D7F5003E13D9 /* UI */; };
-		70A3843F2955D1A1000941F5 /* YouTubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3843E2955D1A1000941F5 /* YouTubeKit */; };
-		70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 70A3844429561851000941F5 /* SDWebImageSwiftUI */; };
 		70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A3845D295644A1000941F5 /* AVKit.framework */; };
-		C27DD38E272C93AD00B4DC16 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C27DD38D272C93AD00B4DC16 /* SwiftyJSON */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,13 +42,10 @@
 			files = (
 				70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */,
 				513960D42DD8D7F5003E13D9 /* Assets in Frameworks */,
-				70A3844529561851000941F5 /* SDWebImageSwiftUI in Frameworks */,
 				513960D22DD8D7F5003E13D9 /* APIClient in Frameworks */,
 				513960DA2DD8D7F5003E13D9 /* UI in Frameworks */,
-				C27DD38E272C93AD00B4DC16 /* SwiftyJSON in Frameworks */,
 				513960D82DD8D7F5003E13D9 /* Shared in Frameworks */,
 				513960D62DD8D7F5003E13D9 /* Models in Frameworks */,
-				70A3843F2955D1A1000941F5 /* YouTubeKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,9 +98,6 @@
 			);
 			name = NativeYoutube;
 			packageProductDependencies = (
-				C27DD38D272C93AD00B4DC16 /* SwiftyJSON */,
-				70A3843E2955D1A1000941F5 /* YouTubeKit */,
-				70A3844429561851000941F5 /* SDWebImageSwiftUI */,
 				513960D12DD8D7F5003E13D9 /* APIClient */,
 				513960D32DD8D7F5003E13D9 /* Assets */,
 				513960D52DD8D7F5003E13D9 /* Models */,
@@ -142,9 +133,6 @@
 			);
 			mainGroup = C27DD341272C853E00B4DC16;
 			packageReferences = (
-				C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				70A3843D2955D1A1000941F5 /* XCRemoteSwiftPackageReference "YouTubeKit" */,
-				70A3844329561850000941F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = C27DD34B272C853E00B4DC16 /* Products */;
 			projectDirPath = "";
@@ -387,33 +375,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		70A3843D2955D1A1000941F5 /* XCRemoteSwiftPackageReference "YouTubeKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/alexeichhorn/YouTubeKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.6;
-			};
-		};
-		70A3844329561850000941F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-		C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		513960D12DD8D7F5003E13D9 /* APIClient */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -434,21 +395,6 @@
 		513960D92DD8D7F5003E13D9 /* UI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UI;
-		};
-		70A3843E2955D1A1000941F5 /* YouTubeKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 70A3843D2955D1A1000941F5 /* XCRemoteSwiftPackageReference "YouTubeKit" */;
-			productName = YouTubeKit;
-		};
-		70A3844429561851000941F5 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 70A3844329561850000941F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
-		C27DD38D272C93AD00B4DC16 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C27DD38C272C93AD00B4DC16 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

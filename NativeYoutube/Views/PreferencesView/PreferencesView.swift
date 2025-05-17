@@ -25,6 +25,8 @@ struct PreferencesView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     PreferencesView()
 }
+#endif

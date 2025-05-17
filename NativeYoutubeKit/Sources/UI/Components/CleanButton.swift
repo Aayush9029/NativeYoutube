@@ -37,6 +37,7 @@ public struct CleanButton: View {
     }
 }
 
+#if DEBUG
 #Preview {
     struct PreviewWrapper: View {
         @State private var currentPage: Pages = .playlists
@@ -67,3 +68,4 @@ public struct CleanButton: View {
     
     return PreviewWrapper()
 }
+#endif

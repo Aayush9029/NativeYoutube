@@ -14,7 +14,7 @@ extension Target.Dependency {
     static let swiftDependenciesMacros: Self = .product(name: "DependenciesMacros", package: "swift-dependencies")
     static let identifiedCollections: Self = .product(name: "IdentifiedCollections", package: "swift-identified-collections")
     static let swiftSharing: Self = .product(name: "Sharing", package: "swift-sharing")
-    static let pow: Self = .product(name: "Pow", package: "Pow")
+    static let youTubeKit: Self = .product(name: "YouTubeKit", package: "YouTubeKit")
 }
 
 let package = Package(
@@ -31,7 +31,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.7.0"),
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.0"),
         .package(url: "https://github.com/pointfreeco/swift-sharing.git", from: "2.4.0"),
-        .package(url: "https://github.com/EmergeTools/Pow", from: "1.0.5")
+        .package(url: "https://github.com/alexeichhorn/YouTubeKit.git", from: "0.2.7")
     ],
     targets: [
         .target(
@@ -39,8 +39,7 @@ let package = Package(
             dependencies: [
                 .assets,
                 .models,
-                .shared,
-                .pow
+                .shared
             ]
         ),
         .target(
@@ -67,6 +66,7 @@ let package = Package(
             dependencies: [
                 .identifiedCollections,
                 .swiftSharing,
+                .youTubeKit,
                 .swiftDependencies,
                 .swiftDependenciesMacros
             ]
