@@ -13,23 +13,11 @@
 		513960D62DD8D7F5003E13D9 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D52DD8D7F5003E13D9 /* Models */; };
 		513960D82DD8D7F5003E13D9 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D72DD8D7F5003E13D9 /* Shared */; };
 		513960DA2DD8D7F5003E13D9 /* UI in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D92DD8D7F5003E13D9 /* UI */; };
-		51C8F1422DD90E430079AD42 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 51C8F1412DD90E430079AD42 /* Models */; };
 		70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A3845D295644A1000941F5 /* AVKit.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		5170B1472DD8EDCE00734BCF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C27DD342272C853E00B4DC16 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C27DD349272C853E00B4DC16;
-			remoteInfo = NativeYoutube;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		513960A42DD8788C003E13D9 /* NativeYoutubeKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NativeYoutubeKit; sourceTree = "<group>"; };
-		5170B1432DD8EDCE00734BCF /* NativeYoutubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativeYoutubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70A3845D295644A1000941F5 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		C27DD34A272C853E00B4DC16 /* NativeYoutube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeYoutube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -46,18 +34,9 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		512D78A12DD871B7004C3009 /* NativeYoutube */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (512D78C22DD871B8004C3009 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = NativeYoutube; sourceTree = "<group>"; };
-		5170B1442DD8EDCE00734BCF /* NativeYoutubeTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NativeYoutubeTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5170B1402DD8EDCE00734BCF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				51C8F1422DD90E430079AD42 /* Models in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C27DD347272C853E00B4DC16 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -88,7 +67,6 @@
 			children = (
 				513960A42DD8788C003E13D9 /* NativeYoutubeKit */,
 				512D78A12DD871B7004C3009 /* NativeYoutube */,
-				5170B1442DD8EDCE00734BCF /* NativeYoutubeTests */,
 				C27DD34B272C853E00B4DC16 /* Products */,
 				70A3845C295644A1000941F5 /* Frameworks */,
 			);
@@ -98,7 +76,6 @@
 			isa = PBXGroup;
 			children = (
 				C27DD34A272C853E00B4DC16 /* NativeYoutube.app */,
-				5170B1432DD8EDCE00734BCF /* NativeYoutubeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,30 +83,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5170B1422DD8EDCE00734BCF /* NativeYoutubeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5170B1492DD8EDCE00734BCF /* Build configuration list for PBXNativeTarget "NativeYoutubeTests" */;
-			buildPhases = (
-				5170B13F2DD8EDCE00734BCF /* Sources */,
-				5170B1402DD8EDCE00734BCF /* Frameworks */,
-				5170B1412DD8EDCE00734BCF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5170B1482DD8EDCE00734BCF /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				5170B1442DD8EDCE00734BCF /* NativeYoutubeTests */,
-			);
-			name = NativeYoutubeTests;
-			packageProductDependencies = (
-				51C8F1412DD90E430079AD42 /* Models */,
-			);
-			productName = NativeYoutubeTests;
-			productReference = 5170B1432DD8EDCE00734BCF /* NativeYoutubeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		C27DD349272C853E00B4DC16 /* NativeYoutube */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C27DD359272C853F00B4DC16 /* Build configuration list for PBXNativeTarget "NativeYoutube" */;
@@ -168,10 +121,6 @@
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
-					5170B1422DD8EDCE00734BCF = {
-						CreatedOnToolsVersion = 16.3;
-						TestTargetID = C27DD349272C853E00B4DC16;
-					};
 					C27DD349272C853E00B4DC16 = {
 						CreatedOnToolsVersion = 13.1;
 					};
@@ -193,19 +142,11 @@
 			projectRoot = "";
 			targets = (
 				C27DD349272C853E00B4DC16 /* NativeYoutube */,
-				5170B1422DD8EDCE00734BCF /* NativeYoutubeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5170B1412DD8EDCE00734BCF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C27DD348272C853E00B4DC16 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -216,13 +157,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5170B13F2DD8EDCE00734BCF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C27DD346272C853E00B4DC16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,58 +166,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		5170B1482DD8EDCE00734BCF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C27DD349272C853E00B4DC16 /* NativeYoutube */;
-			targetProxy = 5170B1472DD8EDCE00734BCF /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		5170B14A2DD8EDCE00734BCF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9RPB76Y973;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pokharel.aayush.NativeYoutubeTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativeYoutube.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NativeYoutube";
-			};
-			name = Debug;
-		};
-		5170B14B2DD8EDCE00734BCF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9RPB76Y973;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pokharel.aayush.NativeYoutubeTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativeYoutube.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NativeYoutube";
-			};
-			name = Release;
-		};
 		C27DD357272C853F00B4DC16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -477,15 +360,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5170B1492DD8EDCE00734BCF /* Build configuration list for PBXNativeTarget "NativeYoutubeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5170B14A2DD8EDCE00734BCF /* Debug */,
-				5170B14B2DD8EDCE00734BCF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C27DD345272C853E00B4DC16 /* Build configuration list for PBXProject "NativeYoutube" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -530,10 +404,6 @@
 		5170B1662DD8F11100734BCF /* Clients */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Clients;
-		};
-		51C8F1412DD90E430079AD42 /* Models */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Models;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
