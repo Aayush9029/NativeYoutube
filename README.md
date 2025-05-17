@@ -1,7 +1,9 @@
 ![GoIYUndXoAAVHuX](https://github.com/user-attachments/assets/0530149b-6dda-4a20-ac04-18c525e0729a)
 
 
-</div>
+[![Swift](https://github.com/Aayush9029/NativeYoutube/actions/workflows/swift.yml/badge.svg?branch=main)](https://github.com/Aayush9029/NativeYoutube/actions/workflows/swift.yml) [![Build and Release](https://github.com/Aayush9029/NativeYoutube/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/Aayush9029/NativeYoutube/actions/workflows/build-and-release.yml)
+
+
 
 ## Requirements:
 - MacOS 14.0 or above
