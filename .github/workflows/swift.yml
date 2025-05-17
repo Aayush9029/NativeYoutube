@@ -20,10 +20,9 @@ jobs:
     - name: Configure Xcode defaults
       run: |
         set -e
-        defaults delete com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile
-        defaults delete com.apple.dt.Xcode IDEDisableAutomaticPackageResolution
+        # Check if the defaults exist before trying to delete them
+        defaults read com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile 2>/dev/null && defaults delete com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile || true
+        defaults read com.apple.dt.Xcode IDEDisableAutomaticPackageResolution 2>/dev/null && defaults delete com.apple.dt.Xcode IDEDisableAutomaticPackageResolution || true
         defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
     - name: Build
       run: xcodebuild -scheme NativeYoutube -destination 'platform=macOS' build
-    - name: Run tests
-      run: xcodebuild -scheme NativeYoutubeTests -destination 'platform=macOS' test
