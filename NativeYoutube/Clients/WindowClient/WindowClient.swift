@@ -1,7 +1,6 @@
 import AppKit
 import Dependencies
 import SwiftUI
-import UI
 
 public struct WindowClient {
     public var createMainWindow: @MainActor () -> Void
