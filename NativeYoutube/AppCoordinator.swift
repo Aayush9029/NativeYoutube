@@ -1,9 +1,6 @@
-import SwiftUI
 import Models
 import Shared
-import Dependencies
-import APIClient
-import UI
+import SwiftUI
 
 @MainActor
 final class AppCoordinator: ObservableObject {
@@ -18,7 +15,6 @@ final class AppCoordinator: ObservableObject {
     @Published var currentVideoTitle: String = ""
     
     @Dependency(\.searchClient) private var searchClient
-    @Dependency(\.playlistClient) private var playlistClient
     @Dependency(\.appStateClient) private var appStateClient
     
     enum SearchStatus {
@@ -92,28 +88,7 @@ final class AppCoordinator: ObservableObject {
         }
     }
     
-    func clearSearch() {
-        searchQuery = ""
-        searchResults = []
-        searchStatus = .idle
-    }
-    
     // MARK: - Playlists
-    
-    func loadPlaylist(_ playlistId: String) async {
-        selectedPlaylist = playlistId
-        
-        @Shared(.apiKey) var apiKey
-        @Shared(.logs) var logs
-        
-        do {
-            let videos = try await playlistClient.fetchVideos(apiKey, playlistId)
-            playlistVideos = videos
-            $logs.withLock { $0.append("Loaded playlist: \(videos.count) videos") }
-        } catch {
-            $logs.withLock { $0.append("Playlist error: \(error.localizedDescription)") }
-        }
-    }
     
     // MARK: - Video Actions
     

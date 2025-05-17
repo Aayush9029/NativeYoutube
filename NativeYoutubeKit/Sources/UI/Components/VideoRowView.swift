@@ -1,11 +1,11 @@
 import SwiftUI
 import Models
 
-public struct VideoRowView: View {
+struct VideoRowView: View {
     let video: Video
     @State private var focused: Bool = false
     
-    public init(video: Video) {
+    init(video: Video) {
         self.video = video
     }
     

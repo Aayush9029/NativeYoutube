@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import Shared
 import UI
+import Shared
 
 struct LogPrefrenceView: View {
     @Shared(.logs) private var logs

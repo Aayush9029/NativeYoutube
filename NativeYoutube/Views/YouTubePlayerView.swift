@@ -1,7 +1,7 @@
 import SwiftUI
 import AVKit
 import UI
-import Shared
+import Dependencies
 
 struct YouTubePlayerView: View {
     let videoURL: URL

@@ -1,7 +1,7 @@
-import Foundation
-import Shared
-import Models
 import APIClient
+import Foundation
+import Models
+import Shared
 
 @DependencyClient
 public struct PlaylistClient {
@@ -40,30 +40,13 @@ extension PlaylistClient: TestDependencyKey {
             ]
         }
     )
-    
+
     public static let testValue = PlaylistClient()
 }
 
-extension DependencyValues {
-    public var playlistClient: PlaylistClient {
+public extension DependencyValues {
+    var playlistClient: PlaylistClient {
         get { self[PlaylistClient.self] }
         set { self[PlaylistClient.self] = newValue }
-    }
-}
-
-extension PlaylistClient {
-    public static func live() -> Self {
-        @Dependency(\.apiClient) var apiClient
-        
-        return PlaylistClient(
-            fetchVideos: { apiKey, playlistId in
-                let request = PlaylistRequest(
-                    playlistId: playlistId,
-                    maxResults: 25,
-                    apiKey: apiKey
-                )
-                return try await apiClient.fetchPlaylistVideos(request)
-            }
-        )
     }
 }

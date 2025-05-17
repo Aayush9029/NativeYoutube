@@ -9,7 +9,6 @@ import SwiftUI
 import Models
 import UI
 import Shared
-import Dependencies
 
 struct ContentView: View {
     @EnvironmentObject var coordinator: AppCoordinator

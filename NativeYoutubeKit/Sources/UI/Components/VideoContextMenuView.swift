@@ -1,7 +1,7 @@
 import SwiftUI
 import Models
 
-public struct VideoContextMenuView: View {
+struct VideoContextMenuView: View {
     let video: Video
     let useIINA: Bool
     let onPlayVideo: () -> Void
@@ -10,7 +10,7 @@ public struct VideoContextMenuView: View {
     let onCopyLink: () -> Void
     let onShareLink: (URL) -> Void
     
-    public init(
+    init(
         video: Video,
         useIINA: Bool,
         onPlayVideo: @escaping () -> Void,

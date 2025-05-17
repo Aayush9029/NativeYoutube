@@ -1,12 +1,12 @@
 import SwiftUI
 import Models
 
-public struct CleanButton: View {
+struct CleanButton: View {
     let page: Pages
     let image: String
     @Binding var binded: Pages
     
-    public init(page: Pages, image: String, binded: Binding<Pages>) {
+    init(page: Pages, image: String, binded: Binding<Pages>) {
         self.page = page
         self.image = image
         self._binded = binded

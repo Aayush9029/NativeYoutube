@@ -1,8 +1,7 @@
-import Models
-import Shared
 import SwiftUI
 import UI
 import Dependencies
+import Shared
 
 struct PlayListView: View {
     @EnvironmentObject var coordinator: AppCoordinator

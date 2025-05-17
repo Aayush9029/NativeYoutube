@@ -6,10 +6,9 @@
 //
 
 import Dependencies
-import Models
-import Shared
 import SwiftUI
 import UI
+import Shared
 
 struct SearchVideosView: View {
     @EnvironmentObject var coordinator: AppCoordinator

@@ -1,11 +1,11 @@
 import SwiftUI
 
-public struct PrimaryButtonStyle: ButtonStyle {
+struct PrimaryButtonStyle: ButtonStyle {
     @State private var isHovering = false
     let backgroundColor: Color
     let foregroundColor: Color
 
-    public init(backgroundColor: Color = .black, foregroundColor: Color = .white) {
+    init(backgroundColor: Color = .black, foregroundColor: Color = .white) {
         self.backgroundColor = backgroundColor
         self.foregroundColor = foregroundColor
     }
@@ -39,14 +39,14 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
-public struct PrimaryButton: View {
+struct PrimaryButton: View {
     let text: String
     let systemImage: String?
     let action: () -> Void
     let backgroundColor: Color
     let foregroundColor: Color
 
-    public init(
+    init(
         _ text: String,
         systemImage: String? = nil,
         backgroundColor: Color = .black,

@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import Shared
 @_exported import YouTubeKit
@@ -169,16 +168,3 @@ enum YouTubeKitError: LocalizedError {
     }
 }
 
-// Helper extension to extract video ID from URL
-extension String {
-    var youtubeVideoID: String? {
-        if let url = URL(string: self) {
-            if let videoID = url.pathComponents.last, url.pathComponents.contains("watch") {
-                return videoID
-            } else if let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems {
-                return queryItems.first(where: { $0.name == "v" })?.value
-            }
-        }
-        return nil
-    }
-}

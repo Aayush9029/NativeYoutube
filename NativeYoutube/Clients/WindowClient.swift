@@ -29,7 +29,7 @@ extension WindowClient: TestDependencyKey {
     
     public static let testValue = previewValue
     
-    public static let liveValue: Self = {
+    static let liveValue: Self = {
         @MainActor
         final class WindowState {
             var mainWindow: NSWindow?
@@ -102,7 +102,7 @@ extension WindowClient: TestDependencyKey {
 }
 
 extension DependencyValues {
-    public var windowClient: WindowClient {
+    var windowClient: WindowClient {
         get { self[WindowClient.self] }
         set { self[WindowClient.self] = newValue }
     }

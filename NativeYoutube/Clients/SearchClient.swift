@@ -1,7 +1,7 @@
-import Foundation
-import Shared
-import Models
 import APIClient
+import Foundation
+import Models
+import Shared
 
 @DependencyClient
 public struct SearchClient {
@@ -40,30 +40,13 @@ extension SearchClient: TestDependencyKey {
             ]
         }
     )
-    
+
     public static let testValue = SearchClient()
 }
 
-extension DependencyValues {
-    public var searchClient: SearchClient {
+public extension DependencyValues {
+    var searchClient: SearchClient {
         get { self[SearchClient.self] }
         set { self[SearchClient.self] = newValue }
-    }
-}
-
-extension SearchClient {
-    public static func live() -> Self {
-        @Dependency(\.apiClient) var apiClient
-        
-        return SearchClient(
-            searchVideos: { query, apiKey in
-                let request = SearchRequest(
-                    query: query,
-                    maxResults: 20,
-                    apiKey: apiKey
-                )
-                return try await apiClient.searchVideos(request)
-            }
-        )
     }
 }
