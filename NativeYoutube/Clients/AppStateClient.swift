@@ -1,4 +1,5 @@
 import AppKit
+import Dependencies
 import Foundation
 import Shared
 
@@ -11,7 +12,47 @@ public struct AppStateClient {
     public var hideVideoPlayer: @Sendable () -> Void = {}
 }
 
-extension AppStateClient: TestDependencyKey {
+// Changed from TestDependencyKey to DependencyKey
+extension AppStateClient: DependencyKey {
+    public static let liveValue = AppStateClient(
+        playVideo: { url, title, useIINA in
+            if useIINA {
+                // Open in IINA
+                let iinaURL = URL(string: "iina://weblink?url=\(url.absoluteString)")!
+                _ = await MainActor.run {
+                    NSWorkspace.shared.open(iinaURL)
+                }
+            } else {
+                // Show in-app player
+                await MainActor.run {
+                    NotificationCenter.default.post(
+                        name: .showVideoInApp,
+                        object: nil,
+                        userInfo: ["url": url, "title": title]
+                    )
+                }
+            }
+        },
+        stopVideo: {
+            await MainActor.run {
+                NotificationCenter.default.post(name: .hideVideoPlayer, object: nil)
+            }
+        },
+        openInYouTube: { url in
+            NSWorkspace.shared.open(url)
+        },
+        showVideoInApp: { url, title in
+            NotificationCenter.default.post(
+                name: .showVideoInApp,
+                object: nil,
+                userInfo: ["url": url, "title": title]
+            )
+        },
+        hideVideoPlayer: {
+            NotificationCenter.default.post(name: .hideVideoPlayer, object: nil)
+        }
+    )
+
     public static let previewValue = AppStateClient(
         playVideo: { url, title, useIINA in
             // Mock implementation for previews

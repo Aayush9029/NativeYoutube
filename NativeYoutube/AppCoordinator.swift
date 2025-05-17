@@ -90,6 +90,35 @@ final class AppCoordinator: ObservableObject {
     
     // MARK: - Playlists
     
+    @Dependency(\.playlistClient) private var playlistClient
+    @Published var playlistStatus: PlaylistStatus = .idle
+    
+    enum PlaylistStatus {
+        case idle
+        case loading
+        case completed
+        case error(String)
+    }
+    
+    func loadPlaylist() async {
+        @Shared(.apiKey) var apiKey
+        @Shared(.playlistID) var playlistID
+        @Shared(.logs) var logs
+        
+        playlistStatus = .loading
+        
+        do {
+            let videos = try await playlistClient.fetchVideos(apiKey, playlistID)
+            playlistVideos = videos
+            selectedPlaylist = playlistID
+            playlistStatus = .completed
+            $logs.withLock { $0.append("PlayList: Loaded \(videos.count) videos") }
+        } catch {
+            playlistStatus = .error(error.localizedDescription)
+            $logs.withLock { $0.append("PlayList Error: \(error.localizedDescription)") }
+        }
+    }
+    
     // MARK: - Video Actions
     
     func handleVideoTap(_ video: Video) async {

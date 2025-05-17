@@ -1,20 +1,13 @@
-//
-//  ContentView.swift
-//  NativeYoutube
-//
-//  Created by Aayush Pokharel on 2021-10-29.
-//
-
-import SwiftUI
 import Models
-import UI
 import Shared
+import SwiftUI
+import UI
 
 struct ContentView: View {
     @EnvironmentObject var coordinator: AppCoordinator
     @Shared(.isPlaying) private var isPlaying
     @Shared(.currentlyPlaying) private var currentlyPlaying
-    
+
     var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 0) {
@@ -41,7 +34,7 @@ struct ContentView: View {
                 )
             }
             .frame(width: 360.0)
-            
+
             // Overlay video player when showing
             if coordinator.showingVideoPlayer, let videoURL = coordinator.currentVideoURL {
                 Color.black.opacity(0.7)
@@ -49,7 +42,7 @@ struct ContentView: View {
                     .onTapGesture {
                         coordinator.hideVideoPlayer()
                     }
-                
+
                 YouTubePlayerView(
                     videoURL: videoURL,
                     title: coordinator.currentVideoTitle,

@@ -2,13 +2,23 @@ import APIClient
 import Foundation
 import Models
 import Shared
+import Dependencies
 
 @DependencyClient
 public struct PlaylistClient {
     public var fetchVideos: (_ apiKey: String, _ playlistId: String) async throws -> [Video] = { _, _ in [] }
 }
 
-extension PlaylistClient: TestDependencyKey {
+// Changed from TestDependencyKey to DependencyKey
+extension PlaylistClient: DependencyKey {
+    public static let liveValue = PlaylistClient(
+        fetchVideos: { apiKey, playlistId in
+            @Dependency(\.apiClient) var apiClient
+            let request = PlaylistRequest(playlistId: playlistId, apiKey: apiKey)
+            return try await apiClient.fetchPlaylistVideos(request)
+        }
+    )
+    
     public static let previewValue = PlaylistClient(
         fetchVideos: { _, _ in
             // Return mock data for previews

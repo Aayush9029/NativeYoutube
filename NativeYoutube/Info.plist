@@ -17,8 +17,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>LSUIElement</key>
-	<true/>
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>

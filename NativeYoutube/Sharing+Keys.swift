@@ -11,23 +11,23 @@ private enum DefaultValues {
 // Persistent storage using FileStorage
 extension SharedReaderKey where Self == AppStorageKey<String>.Default {
     static var apiKey: Self {
-        Self[.appStorage("youtube.apiKey"), default: DefaultValues.apiKey]
+        Self[.appStorage("apiKey"), default: DefaultValues.apiKey]
     }
     
     static var playlistID: Self {
-        Self[.appStorage("youtube.playlistID"), default: DefaultValues.playlistID]
+        Self[.appStorage("playlistID"), default: DefaultValues.playlistID]
     }
 }
 
 extension SharedReaderKey where Self == AppStorageKey<Bool>.Default {
     static var useIINA: Self {
-        Self[.appStorage("youtube.useIINA"), default: false]
+        Self[.appStorage("useIINA"), default: false]
     }
 }
 
 extension SharedReaderKey where Self == AppStorageKey<VideoClickBehaviour>.Default {
     static var videoClickBehaviour: Self {
-        Self[.appStorage("youtube.videoClickBehaviour"), default: .playVideo]
+        Self[.appStorage("videoClickBehaviour"), default: .playVideo]
     }
 }
 

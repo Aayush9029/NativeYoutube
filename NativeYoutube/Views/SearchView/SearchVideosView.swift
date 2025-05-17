@@ -1,14 +1,6 @@
-//
-//  SearchVideosView.swift
-//  NativeYoutube
-//
-//  Created by Aayush Pokharel on 2021-10-29.
-//
-
-import Dependencies
+import Shared
 import SwiftUI
 import UI
-import Shared
 
 struct SearchVideosView: View {
     @EnvironmentObject var coordinator: AppCoordinator

@@ -1,4 +1,5 @@
 import APIClient
+import Dependencies
 import Foundation
 import Models
 import Shared
@@ -8,7 +9,16 @@ public struct SearchClient {
     public var searchVideos: (_ query: String, _ apiKey: String) async throws -> [Video] = { _, _ in [] }
 }
 
-extension SearchClient: TestDependencyKey {
+// Changed from TestDependencyKey to DependencyKey
+extension SearchClient: DependencyKey {
+    public static let liveValue = SearchClient(
+        searchVideos: { query, apiKey in
+            @Dependency(\.apiClient) var apiClient
+            let request = SearchRequest(query: query, apiKey: apiKey)
+            return try await apiClient.searchVideos(request)
+        }
+    )
+    
     public static let previewValue = SearchClient(
         searchVideos: { query, _ in
             // Return mock search results based on query for previews

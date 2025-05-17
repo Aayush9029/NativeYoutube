@@ -1,7 +1,7 @@
+import Models
+import Shared
 import SwiftUI
 import UI
-import Shared
-import Models
 
 struct GeneralPreferenceView: View {
     @Shared(.playlistID) private var playlistID

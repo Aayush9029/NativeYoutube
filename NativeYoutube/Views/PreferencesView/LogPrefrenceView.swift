@@ -1,17 +1,10 @@
-//
-//  LogPrefrenceView.swift
-//  NativeYoutube
-//
-//  Created by Aayush Pokharel on 2021-10-29.
-//
-
+import Shared
 import SwiftUI
 import UI
-import Shared
 
 struct LogPrefrenceView: View {
     @Shared(.logs) private var logs
-    
+
     var body: some View {
         Group {
             DisclosureGroup {
@@ -25,7 +18,7 @@ struct LogPrefrenceView: View {
                     }
                 }
             }
-        label: {
+            label: {
                 HStack {
                     Label("Logs", systemImage: "newspaper.fill")
                         .bold()
@@ -66,17 +59,17 @@ struct LogPrefrenceView: View {
         }
         .thinRoundedBG()
     }
-    
+
     private func copyLogsToClipboard(redacted: Bool) {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
-        
+
         var logsString = logs.joined(separator: "\n")
-        
+
         if redacted {
             logsString = logsString.replacingOccurrences(of: "AIzaSy[A-Za-z0-9_-]{33}", with: "[[PRIVATE API KEY]]", options: .regularExpression)
         }
-        
+
         pasteboard.setString(logsString, forType: .string)
     }
 }
@@ -87,10 +80,10 @@ struct LogPrefrenceView: View {
 }
 #endif
 
-fileprivate struct LogText: View {
+private struct LogText: View {
     let text: String
     let color: Color
-    
+
     var body: some View {
         HStack {
             Text(text)

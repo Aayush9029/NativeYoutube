@@ -1,6 +1,6 @@
+import Shared
 import SwiftUI
 import UI
-import Shared
 
 struct YoutubePreferenceView: View {
     @Shared(.apiKey) private var apiKey
