@@ -17,7 +17,10 @@
       "Bash(cp:*)",
       "Bash(xcodebuild:*)",
       "Bash(swift package:*)",
-      "Bash(swift test)"
+      "Bash(swift test)",
+      "Bash(chmod:*)",
+      "Bash(swift:*)",
+      "Bash(rg:*)"
     ],
     "deny": []
   }

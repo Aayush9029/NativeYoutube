@@ -13,7 +13,7 @@
 		513960D62DD8D7F5003E13D9 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D52DD8D7F5003E13D9 /* Models */; };
 		513960D82DD8D7F5003E13D9 /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D72DD8D7F5003E13D9 /* Shared */; };
 		513960DA2DD8D7F5003E13D9 /* UI in Frameworks */ = {isa = PBXBuildFile; productRef = 513960D92DD8D7F5003E13D9 /* UI */; };
-		5170B1652DD8F11000734BCF /* Shared in Frameworks */ = {isa = PBXBuildFile; productRef = 5170B1642DD8F11000734BCF /* Shared */; };
+		51C8F1422DD90E430079AD42 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 51C8F1412DD90E430079AD42 /* Models */; };
 		70A3845E295644A2000941F5 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A3845D295644A1000941F5 /* AVKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5170B1652DD8F11000734BCF /* Shared in Frameworks */,
+				51C8F1422DD90E430079AD42 /* Models in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +124,7 @@
 			);
 			name = NativeYoutubeTests;
 			packageProductDependencies = (
-				5170B1642DD8F11000734BCF /* Shared */,
+				51C8F1412DD90E430079AD42 /* Models */,
 			);
 			productName = NativeYoutubeTests;
 			productReference = 5170B1432DD8EDCE00734BCF /* NativeYoutubeTests.xctest */;
@@ -527,13 +527,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = UI;
 		};
-		5170B1642DD8F11000734BCF /* Shared */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Shared;
-		};
 		5170B1662DD8F11100734BCF /* Clients */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Clients;
+		};
+		51C8F1412DD90E430079AD42 /* Models */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Models;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

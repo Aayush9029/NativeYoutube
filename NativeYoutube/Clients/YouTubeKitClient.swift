@@ -1,6 +1,6 @@
 import Foundation
 import Shared
-@_exported import YouTubeKit
+import YouTubeKit
 
 struct YouTubeKitClient {
     var extractVideoURL: @Sendable (String) async throws -> URL

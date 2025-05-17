@@ -68,7 +68,7 @@ struct EmptyStateView: View {
     }
 }
 
-struct ErrorView: View {
+private struct ErrorView: View {
     let message: String
 
     var body: some View {

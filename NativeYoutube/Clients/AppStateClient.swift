@@ -15,7 +15,7 @@ public struct AppStateClient {
 
 extension AppStateClient: DependencyKey {
     public static var liveValue: AppStateClient {
-        @Dependency(\.windowClient) var windowClient
+        @Dependency(\.floatingWindowClient) var windowClient
 
         return AppStateClient(
             playVideo: { url, title, useIINA in
@@ -54,24 +54,31 @@ extension AppStateClient: DependencyKey {
                         }
                     }
                 } else {
-                    // Show in popup window
+                    // Show in YouTube player window
                     await MainActor.run {
-                        windowClient.createPopupPlayerWindow(url, title) {
-                            // Cleanup when window closes
-                        }
-
-                        // Set the content of the popup window
+                        // Create player view content
                         let playerView = YouTubePlayerView(
                             videoURL: url,
                             title: title
                         )
-                        windowClient.setPopupPlayerContent(AnyView(playerView))
+                        
+                        let hostingView = NSHostingView(rootView: playerView)
+                        
+                        // Create floating panel if it doesn't exist
+                        if !windowClient.isVisible() {
+                            windowClient.createFloatingPanel(hostingView)
+                        } else {
+                            windowClient.updateContent(hostingView)
+                        }
+                        
+                        // Show the panel
+                        windowClient.showPanel()
                     }
                 }
             },
             stopVideo: {
                 await MainActor.run {
-                    windowClient.closePopupPlayer()
+                    windowClient.hidePanel()
                 }
             },
             openInYouTube: { url in
@@ -83,7 +90,7 @@ extension AppStateClient: DependencyKey {
             },
             hideVideoPlayer: {
                 Task { @MainActor in
-                    windowClient.closePopupPlayer()
+                    windowClient.hidePanel()
                 }
             }
         )

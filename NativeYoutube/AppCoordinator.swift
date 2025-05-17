@@ -1,4 +1,5 @@
 import Clients
+import Dependencies
 import Models
 import Shared
 import SwiftUI
@@ -17,6 +18,8 @@ final class AppCoordinator: ObservableObject {
     
     @Dependency(\.searchClient) private var searchClient
     @Dependency(\.appStateClient) private var appStateClient
+    @Dependency(\.floatingWindowClient) private var floatingWindowClient
+    private var settingsWindowController: NSWindowController?
     
     enum SearchStatus: Equatable {
         case idle
@@ -120,27 +123,6 @@ final class AppCoordinator: ObservableObject {
     
     func playVideo(_ video: Video) async {
         await appStateClient.playVideo(video.url, video.title, false)
-        
-        // After creating the window, set up the content
-        await MainActor.run {
-            @Dependency(\.windowClient) var windowClient
-            
-            // Check if popup window exists and set content
-            if let popupWindow = NSApp.windows.first(where: { $0 is KeyWindow }) as? KeyWindow,
-               let url = popupWindow.videoURL,
-               let title = popupWindow.videoTitle {
-                let playerView = YouTubePlayerView(
-                    videoURL: url,
-                    title: title,
-                    onClose: { [weak self] in
-                        Task { @MainActor in
-                            self?.appStateClient.hideVideoPlayer()
-                        }
-                    }
-                )
-                popupWindow.contentView = NSHostingView(rootView: playerView)
-            }
-        }
     }
     
     func playInIINA(_ video: Video) async {
@@ -168,6 +150,50 @@ final class AppCoordinator: ObservableObject {
     
     func quit() {
         NSApplication.shared.terminate(nil)
+    }
+    
+    // MARK: - Settings Window
+    
+    func showSettings() {
+        // If the settings window already exists, just bring it to the front.
+        if let existingWindow = settingsWindowController?.window {
+            existingWindow.makeKeyAndOrderFront(nil)
+            return
+        }
+
+        // Use a standard titled/closable window so it can become the key window
+        let styleMask: NSWindow.StyleMask = [.titled, .closable, .fullSizeContentView]
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 600),
+            styleMask: styleMask,
+            backing: .buffered,
+            defer: false
+        )
+        window.titlebarAppearsTransparent = true
+        window.titleVisibility = .hidden
+        window.isOpaque = false
+        window.backgroundColor = .clear
+        window.hasShadow = true
+        window.level = .floating
+        window.isMovableByWindowBackground = true
+
+        let rootView = PreferencesView()
+
+        window.contentView = NSHostingView(rootView: rootView)
+
+        // Position the window and show it.
+        window.center()
+        settingsWindowController = NSWindowController(window: window)
+        settingsWindowController?.showWindow(nil)
+
+        // Clean up when the window closes.
+        NotificationCenter.default.addObserver(
+            forName: NSWindow.willCloseNotification,
+            object: window,
+            queue: .main
+        ) { [weak self] _ in
+            self?.settingsWindowController = nil
+        }
     }
     
 }
