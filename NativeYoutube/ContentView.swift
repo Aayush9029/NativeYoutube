@@ -17,7 +17,7 @@ struct ContentView: View {
                 case .search:
                     SearchVideosView()
                 case .settings:
-                    PlayListView() // Keep showing the playlists when settings is selected
+                    PreferencesView() // Keep showing the playlists when settings is selected
                 }
                 BottomBarView(
                     currentPage: $coordinator.currentPage,

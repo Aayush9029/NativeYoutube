@@ -4,8 +4,9 @@ import Sharing
 
 // Default values
 private enum DefaultValues {
+    // Note this might expire at any time so generate yours
     static let apiKey = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
-    static let playlistID = "PLFgquLnL59alKyN8i_z5Ofm_h0KthT072"
+    static let playlistID = "PLVz-LYNW1HKcil_zzy51Z6ruyNLSJbH7m"
 }
 
 // Persistent storage using FileStorage
@@ -13,7 +14,7 @@ extension SharedReaderKey where Self == AppStorageKey<String>.Default {
     static var apiKey: Self {
         Self[.appStorage("apiKey"), default: DefaultValues.apiKey]
     }
-    
+
     static var playlistID: Self {
         Self[.appStorage("playlistID"), default: DefaultValues.playlistID]
     }
@@ -23,7 +24,7 @@ extension SharedReaderKey where Self == AppStorageKey<Bool>.Default {
     static var useIINA: Self {
         Self[.appStorage("useIINA"), default: false]
     }
-    
+
     static var autoCheckUpdates: Self {
         Self[.appStorage("autoCheckUpdates"), default: true]
     }

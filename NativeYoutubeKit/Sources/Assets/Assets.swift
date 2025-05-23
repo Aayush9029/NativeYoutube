@@ -3,5 +3,5 @@ import SwiftUI
 
 public enum Assets {
     // App Icon
-    public static let appIcon = Image("AppIconImage")
+    public static let appIcon = Image("AppIconImage", bundle: .module)
 }

@@ -1,17 +1,15 @@
-import SwiftUI
 import Assets
+import SwiftUI
 
 public struct WelcomeView: View {
     @State private var jump: Bool = false
-    
+
     public init() {}
-    
+
     public var body: some View {
         VStack {
             Spacer()
             VStack {
-                Text("Welcome to")
-                    .foregroundStyle(.secondary)
                 Text("Native Youtube")
                     .font(.system(size: 64, design: .serif)).bold()
                     .foregroundStyle(.primary)
@@ -24,13 +22,16 @@ public struct WelcomeView: View {
                 Spacer()
                 HStack {
                     Text("Click Gear Icon")
+                        .foregroundStyle(.secondary)
                     Image(systemName: "arrow.down")
                 }
+                .padding(.horizontal, 12)
+                .padding(4)
                 .thinRoundedBG(padding: 4)
                 .shadow(radius: 4)
             }
-            .offset(y: jump ? -30 : -10)
-            .animation(.spring(response: 0.25).repeatForever(), value: jump)
+            .offset(y: jump ? -20 : -10)
+            .animation(.spring(response: 0.5).repeatForever(), value: jump)
             .onAppear {
                 jump.toggle()
             }
