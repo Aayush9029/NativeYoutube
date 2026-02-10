@@ -16,6 +16,14 @@ extension SharedReaderKey where Self == AppStorageKey<String>.Default {
     static var playlistID: Self {
         Self[.appStorage("playlistID"), default: DefaultValues.playlistID]
     }
+
+    static var licenseKey: Self {
+        Self[.appStorage("licenseKey"), default: ""]
+    }
+
+    static var deviceID: Self {
+        Self[.appStorage("deviceID"), default: ""]
+    }
 }
 
 extension SharedReaderKey where Self == AppStorageKey<Bool>.Default {
@@ -25,6 +33,16 @@ extension SharedReaderKey where Self == AppStorageKey<Bool>.Default {
 
     static var autoCheckUpdates: Self {
         Self[.appStorage("autoCheckUpdates"), default: true]
+    }
+
+    static var isLicenseActivated: Self {
+        Self[.appStorage("isLicenseActivated"), default: false]
+    }
+}
+
+extension SharedReaderKey where Self == AppStorageKey<Int>.Default {
+    static var launchCount: Self {
+        Self[.appStorage("launchCount"), default: 0]
     }
 }
 

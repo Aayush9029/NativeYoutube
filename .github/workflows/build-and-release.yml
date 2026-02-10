@@ -210,11 +210,11 @@ jobs:
 
           export VERSION="${{ steps.version.outputs.version }}"
           export BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
-          export DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${DMG_NAME}"
+          export DOWNLOAD_URL="https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/native-youtube/releases/${DMG_NAME}"
           export ED_SIGNATURE
           export FILE_SIZE
 
-          python3 - "sparkle/appcast.xml" <<'PYEOF'
+          python3 - "$RUNNER_TEMP/appcast.xml" <<'PYEOF'
           import sys, os
           from datetime import datetime, timezone
 
@@ -246,19 +246,47 @@ jobs:
               f.write(xml)
           PYEOF
 
-      - name: Commit appcast
+      - name: Install B2 CLI
+        run: pip3 install --break-system-packages 'docutils<0.22' 'b2[full]==4.2.0'
+
+      - name: Upload to Backblaze B2
+        env:
+          B2_APPLICATION_KEY_ID: ${{ secrets.B2_APPLICATION_KEY_ID }}
+          B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
+          B2_BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
         run: |
+          b2 account authorize "$B2_APPLICATION_KEY_ID" "$B2_APPLICATION_KEY"
+          b2 file upload "$B2_BUCKET_NAME" "$DMG_PATH" "native-youtube/releases/$DMG_NAME"
+          b2 file upload --content-type "application/xml" "$B2_BUCKET_NAME" "$RUNNER_TEMP/appcast.xml" "native-youtube/native-youtube-appcast.xml"
+
+      - name: Verify deployment
+        run: |
+          # Verify appcast XML is valid
+          python3 -c "
+          import xml.etree.ElementTree as ET
+          ET.parse('$RUNNER_TEMP/appcast.xml')
+          print('Appcast XML is valid')
+          "
+
+          # Verify DMG is accessible on B2
+          HTTP_STATUS=$(curl -s -o /dev/null -w '%{http_code}' \
+            "https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/native-youtube/releases/$DMG_NAME")
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "WARNING: DMG returned HTTP $HTTP_STATUS (may need time to propagate)"
+          else
+            echo "DMG accessible on B2 (HTTP 200)"
+          fi
+
+      # Transitional: also commit appcast to repo so existing users on old SUFeedURL
+      # discover this version. Remove this step after the transitional release ships.
+      - name: Commit appcast (transitional)
+        run: |
+          cp "$RUNNER_TEMP/appcast.xml" sparkle/appcast.xml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add sparkle/appcast.xml
           git commit -m "Update appcast for v${{ steps.version.outputs.version }}"
           git push origin HEAD:main
-
-      - name: Upload DMG to GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: ${{ runner.temp }}/${{ env.DMG_NAME }}
-          tag_name: ${{ github.event.release.tag_name }}
 
       - name: Cleanup
         if: always()

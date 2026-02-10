@@ -20,6 +20,11 @@ struct PreferencesView: View {
             Divider()
                 .opacity(0.5)
 
+            LicensePreferenceView()
+
+            Divider()
+                .opacity(0.5)
+
             LogPrefrenceView()
         }
     }

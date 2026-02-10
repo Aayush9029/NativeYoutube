@@ -15,11 +15,27 @@ struct NativeYoutubeApp: App {
         AppCoordinator()
     }
 
+    @State private var licenseManager = LicenseManager()
+    @State private var showingNag = false
+
     var body: some Scene {
         MenuBarExtra("Native Youtube", systemImage: "play.rectangle.fill") {
             ContentView()
                 .environment(coordinator)
+                .environment(licenseManager)
                 .frame(width: 360, height: 512)
+                .sheet(isPresented: $showingNag) {
+                    LicenseNagView()
+                        .environment(licenseManager)
+                }
+                .task {
+                    await licenseManager.validateExisting()
+                }
+                .onAppear {
+                    if licenseManager.shouldShowNag {
+                        showingNag = true
+                    }
+                }
         }
         .menuBarExtraStyle(WindowMenuBarExtraStyle())
         .commands {

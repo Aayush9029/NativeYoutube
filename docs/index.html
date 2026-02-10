@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NativeYoutube — YouTube in your Mac menu bar</title>
+    <meta name="description" content="A lightweight macOS menu bar app for browsing and playing YouTube videos natively. No browser needed.">
+    <meta property="og:title" content="NativeYoutube — YouTube in your Mac menu bar">
+    <meta property="og:description" content="Browse playlists, search videos, and play directly from your menu bar.">
+    <meta property="og:image" content="https://github.com/user-attachments/assets/0530149b-6dda-4a20-ac04-18c525e0729a">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fafafa;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Nav */
+        nav {
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fafafa;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: #ff0033;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg { width: 16px; height: 16px; fill: white; }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: #fafafa; }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 0 48px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 0, 51, 0.1);
+            border: 1px solid rgba(255, 0, 51, 0.2);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-size: 13px;
+            color: #ff4466;
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #ff0033, #ff6644);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #a1a1aa;
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #ff0033;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e6002e;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(255, 0, 51, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #fafafa;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .price-note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #71717a;
+        }
+
+        /* Hero image */
+        .hero-image {
+            margin: 64px auto 0;
+            max-width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-image img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Features */
+        .features {
+            padding: 96px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 28px;
+            transition: border-color 0.2s;
+        }
+
+        .feature:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 0, 51, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #a1a1aa;
+            line-height: 1.5;
+        }
+
+        /* Requirements */
+        .requirements {
+            text-align: center;
+            padding: 0 0 96px;
+        }
+
+        .req-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 14px;
+            color: #a1a1aa;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: #52525b;
+        }
+
+        footer a {
+            color: #71717a;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover { color: #a1a1aa; }
+
+        @media (max-width: 640px) {
+            .hero { padding: 48px 0 32px; }
+            .features { padding: 64px 0; }
+            .nav-links { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24"><polygon points="10,8 16,12 10,16"/></svg>
+                </div>
+                NativeYoutube
+            </a>
+            <div class="nav-links">
+                <a href="https://github.com/Aayush9029/NativeYoutube">GitHub</a>
+                <a href="https://aayushbuilds.gumroad.com/l/YouTube" class="btn btn-primary" style="padding: 8px 18px; font-size: 13px;">Download</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                macOS menu bar app
+            </div>
+            <h1>YouTube in your<br><span>menu bar</span></h1>
+            <p class="subtitle">Browse playlists, search videos, and play them natively — all from a lightweight menu bar app. No browser tab needed.</p>
+
+            <div class="cta-group">
+                <a href="https://aayushbuilds.gumroad.com/l/YouTube" class="btn btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download — $12.99
+                </a>
+                <a href="https://github.com/Aayush9029/NativeYoutube" class="btn btn-secondary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    View Source
+                </a>
+            </div>
+            <p class="price-note">Free to use — purchasing a license removes periodic reminders and supports development.</p>
+        </section>
+
+        <div class="hero-image">
+            <img src="https://github.com/user-attachments/assets/0530149b-6dda-4a20-ac04-18c525e0729a" alt="NativeYoutube app screenshot" loading="lazy">
+        </div>
+
+        <section class="features">
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">&#9654;</div>
+                    <h3>Play from the menu bar</h3>
+                    <p>Watch YouTube videos without opening a browser. Click a video to play it natively on your Mac.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">&#128269;</div>
+                    <h3>Search & browse</h3>
+                    <p>Search YouTube or browse your custom playlists directly from the menu bar dropdown.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">&#127926;</div>
+                    <h3>Custom playlists</h3>
+                    <p>Set any YouTube playlist as your default — perfect for music, lectures, or curated content.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">&#9889;</div>
+                    <h3>Lightweight & native</h3>
+                    <p>Built with Swift and SwiftUI. Uses minimal resources — no Electron, no web views for the UI.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">&#127909;</div>
+                    <h3>IINA support</h3>
+                    <p>Prefer IINA? Enable it in settings and videos will open in your favorite media player.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">&#128260;</div>
+                    <h3>Auto-updates</h3>
+                    <p>Sparkle-powered updates keep you on the latest version automatically. No manual downloads.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="requirements">
+            <div class="req-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Requires macOS 14.0 (Sonoma) or later
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Built by <a href="https://aayush.art">Aayush Pokharel</a> &middot; <a href="https://github.com/Aayush9029/NativeYoutube">Source on GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>

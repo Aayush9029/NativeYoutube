@@ -4,12 +4,16 @@
 [![Swift](https://github.com/Aayush9029/NativeYoutube/actions/workflows/swift.yml/badge.svg?branch=main)](https://github.com/Aayush9029/NativeYoutube/actions/workflows/swift.yml) [![Build and Release](https://github.com/Aayush9029/NativeYoutube/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/Aayush9029/NativeYoutube/actions/workflows/build-and-release.yml)
 
 
+## Download
+
+[![Download NativeYoutube](assets/download-button.png)](https://aayushbuilds.gumroad.com/l/YouTube)
+
+Free to use. Purchasing a license removes reminders and supports development.
 
 ## Requirements:
 - MacOS 14.0 or above
 
 ## Usage
-### Download the universal binary from the releases tab.
 - Open the app *It's a menu bar app*
 
 - Click on the gear icon > paste your api key, you're done.
