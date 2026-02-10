@@ -6,7 +6,7 @@
 
 ## Download
 
-[![Download NativeYoutube](assets/download-button.png)](https://aayushbuilds.gumroad.com/l/YouTube)
+[![Download NativeYoutube](https://img.shields.io/badge/Download-NativeYoutube_$12.99-FF5733?style=for-the-badge&logo=apple&logoColor=white)](https://aayushbuilds.gumroad.com/l/YouTube)
 
 Free to use. Purchasing a license removes reminders and supports development.
 
