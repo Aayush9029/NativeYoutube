@@ -9,6 +9,7 @@ env:
   SCHEME: NativeYoutube
   PRODUCT_NAME: NativeYoutube
   XCODE_VERSION: "16.3"
+  SPARKLE_VERSION: "2.8.1"
 
 jobs:
   build-and-release:
@@ -18,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
@@ -42,16 +45,13 @@ jobs:
           KEYCHAIN_PATH="$RUNNER_TEMP/build.keychain-db"
           KEYCHAIN_PASSWORD="$(openssl rand -base64 32)"
 
-          # Save for cleanup
           echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> "$GITHUB_ENV"
           echo "KEYCHAIN_PASSWORD=$KEYCHAIN_PASSWORD" >> "$GITHUB_ENV"
 
-          # Create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
 
-          # Import certificate
           echo "$CERTIFICATE_P12" | base64 --decode > "$RUNNER_TEMP/certificate.p12"
           security import "$RUNNER_TEMP/certificate.p12" \
             -P "$CERTIFICATE_PASSWORD" \
@@ -60,10 +60,7 @@ jobs:
             -f pkcs12 \
             -k "$KEYCHAIN_PATH"
 
-          # Allow codesign to access keychain
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
-
-          # Add to search list
           security list-keychains -d user -s "$KEYCHAIN_PATH" "$(security list-keychains -d user | tr -d '"' | tr '\n' ' ')"
 
       - name: Setup App Store Connect API key
@@ -73,6 +70,13 @@ jobs:
         run: |
           mkdir -p ~/private_keys
           echo "$API_KEY_P8" | base64 --decode > ~/private_keys/AuthKey_${API_KEY_ID}.p8
+
+      - name: Download Sparkle
+        run: |
+          curl -L -o "$RUNNER_TEMP/Sparkle.tar.xz" \
+            "https://github.com/sparkle-project/Sparkle/releases/download/${{ env.SPARKLE_VERSION }}/Sparkle-${{ env.SPARKLE_VERSION }}.tar.xz"
+          mkdir -p "$RUNNER_TEMP/sparkle-tools"
+          tar -xf "$RUNNER_TEMP/Sparkle.tar.xz" -C "$RUNNER_TEMP/sparkle-tools"
 
       - name: Resolve SPM packages
         run: |
@@ -166,7 +170,6 @@ jobs:
           EXIT_CODE=$?
           set -e
 
-          # create-dmg returns 2 when it can't set custom icon (non-fatal)
           if [ $EXIT_CODE -ne 0 ] && [ $EXIT_CODE -ne 2 ]; then
             exit $EXIT_CODE
           fi
@@ -192,6 +195,64 @@ jobs:
             --wait
 
           xcrun stapler staple "$DMG_PATH"
+
+      - name: Generate appcast
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          SIGN_UPDATE="$RUNNER_TEMP/sparkle-tools/bin/sign_update"
+          chmod +x "$SIGN_UPDATE"
+
+          # Sign DMG with EdDSA key
+          RAW_OUTPUT=$(echo "$SPARKLE_PRIVATE_KEY" | "$SIGN_UPDATE" "$DMG_PATH" --ed-key-file -)
+          ED_SIGNATURE=$(echo "$RAW_OUTPUT" | sed -n 's/.*sparkle:edSignature="\([^"]*\)".*/\1/p')
+          FILE_SIZE=$(stat -f%z "$DMG_PATH")
+
+          export VERSION="${{ steps.version.outputs.version }}"
+          export BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
+          export DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${DMG_NAME}"
+          export ED_SIGNATURE
+          export FILE_SIZE
+
+          python3 - "sparkle/appcast.xml" <<'PYEOF'
+          import sys, os
+          from datetime import datetime, timezone
+
+          pub_date = datetime.now(timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
+          xml = '<?xml version="1.0" encoding="utf-8"?>\n'
+          xml += '<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">\n'
+          xml += '  <channel>\n'
+          xml += '    <title>Native Youtube</title>\n'
+          xml += '    <link>https://github.com/Aayush9029/NativeYoutube</link>\n'
+          xml += '    <description>Most recent changes with links to updates.</description>\n'
+          xml += '    <language>en</language>\n'
+          xml += '    <item>\n'
+          xml += f'      <title>Version {os.environ["VERSION"]}</title>\n'
+          xml += f'      <pubDate>{pub_date}</pubDate>\n'
+          xml += f'      <sparkle:version>{os.environ["BUILD_NUMBER"]}</sparkle:version>\n'
+          xml += f'      <sparkle:shortVersionString>{os.environ["VERSION"]}</sparkle:shortVersionString>\n'
+          xml += '      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>\n'
+          xml += '      <enclosure\n'
+          xml += f'        url="{os.environ["DOWNLOAD_URL"]}"\n'
+          xml += f'        sparkle:edSignature="{os.environ["ED_SIGNATURE"]}"\n'
+          xml += f'        length="{os.environ["FILE_SIZE"]}"\n'
+          xml += '        type="application/octet-stream"\n'
+          xml += '      />\n'
+          xml += '    </item>\n'
+          xml += '  </channel>\n'
+          xml += '</rss>\n'
+
+          with open(sys.argv[1], "w") as f:
+              f.write(xml)
+          PYEOF
+
+      - name: Commit appcast
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sparkle/appcast.xml
+          git commit -m "Update appcast for v${{ steps.version.outputs.version }}"
+          git push origin HEAD:main
 
       - name: Upload DMG to GitHub Release
         uses: softprops/action-gh-release@v2
