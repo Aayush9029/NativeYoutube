@@ -1,8 +1,9 @@
 import APIClient
+import Dependencies
+import DependenciesMacros
 import Foundation
 import Models
 import Shared
-import Dependencies
 
 @DependencyClient
 public struct PlaylistClient {

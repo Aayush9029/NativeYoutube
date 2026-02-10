@@ -1,5 +1,6 @@
 import APIClient
 import Dependencies
+import DependenciesMacros
 import Foundation
 import Models
 import Shared

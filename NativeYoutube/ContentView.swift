@@ -1,14 +1,15 @@
 import Models
-import Shared
+import Sharing
 import SwiftUI
 import UI
 
 struct ContentView: View {
-    @EnvironmentObject var coordinator: AppCoordinator
+    @Environment(AppCoordinator.self) private var coordinator
     @Shared(.isPlaying) private var isPlaying
     @Shared(.currentlyPlaying) private var currentlyPlaying
 
     var body: some View {
+        @Bindable var coordinator = coordinator
         ZStack {
             VStack(alignment: .center, spacing: 0) {
                 switch coordinator.currentPage {
@@ -17,7 +18,7 @@ struct ContentView: View {
                 case .search:
                     SearchVideosView()
                 case .settings:
-                    PreferencesView() // Keep showing the playlists when settings is selected
+                    PreferencesView()
                 }
                 BottomBarView(
                     currentPage: $coordinator.currentPage,
@@ -42,6 +43,6 @@ struct ContentView: View {
 #if DEBUG
 #Preview {
     ContentView()
-        .environmentObject(AppCoordinator())
+        .environment(AppCoordinator())
 }
 #endif

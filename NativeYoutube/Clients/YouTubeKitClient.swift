@@ -1,12 +1,15 @@
+import Dependencies
+import DependenciesMacros
 import Foundation
 import Shared
 import YouTubeKit
 
+@DependencyClient
 struct YouTubeKitClient {
-    var extractVideoURL: @Sendable (String) async throws -> URL
-    var extractHighestQualityVideoURL: @Sendable (String) async throws -> URL
-    var extractAudioOnlyURL: @Sendable (String) async throws -> URL
-    var extractStreamInfo: @Sendable (String) async throws -> StreamInfo
+    var extractVideoURL: @Sendable (_ videoIDOrURL: String) async throws -> URL
+    var extractHighestQualityVideoURL: @Sendable (_ videoIDOrURL: String) async throws -> URL
+    var extractAudioOnlyURL: @Sendable (_ videoIDOrURL: String) async throws -> URL
+    var extractStreamInfo: @Sendable (_ videoIDOrURL: String) async throws -> StreamInfo
 }
 
 struct StreamInfo: Equatable, Sendable {
@@ -17,14 +20,97 @@ struct StreamInfo: Equatable, Sendable {
     let hasVideo: Bool
 }
 
-extension YouTubeKitClient: TestDependencyKey {
-    static let testValue = YouTubeKitClient(
-        extractVideoURL: unimplemented("YouTubeKitClient.extractVideoURL"),
-        extractHighestQualityVideoURL: unimplemented("YouTubeKitClient.extractHighestQualityVideoURL"),
-        extractAudioOnlyURL: unimplemented("YouTubeKitClient.extractAudioOnlyURL"),
-        extractStreamInfo: unimplemented("YouTubeKitClient.extractStreamInfo")
+extension YouTubeKitClient: DependencyKey {
+    static let liveValue = YouTubeKitClient(
+        extractVideoURL: { videoIDOrURL in
+            let youtube: YouTube
+
+            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
+                youtube = YouTube(url: URL(string: videoIDOrURL)!)
+            } else {
+                youtube = YouTube(videoID: videoIDOrURL)
+            }
+
+            let streams = try await youtube.streams
+
+            guard let stream = streams
+                .filter({ $0.isNativelyPlayable && $0.includesVideoAndAudioTrack })
+                .highestResolutionStream()
+            else {
+                throw YouTubeKitError.noSuitableStreamFound
+            }
+
+            return stream.url
+        },
+        extractHighestQualityVideoURL: { videoIDOrURL in
+            let youtube: YouTube
+
+            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
+                youtube = YouTube(url: URL(string: videoIDOrURL)!)
+            } else {
+                youtube = YouTube(videoID: videoIDOrURL)
+            }
+
+            let streams = try await youtube.streams
+
+            guard let stream = streams
+                .filter({ $0.includesVideoAndAudioTrack && $0.isNativelyPlayable })
+                .highestResolutionStream()
+            else {
+                throw YouTubeKitError.noSuitableStreamFound
+            }
+
+            return stream.url
+        },
+        extractAudioOnlyURL: { videoIDOrURL in
+            let youtube: YouTube
+
+            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
+                youtube = YouTube(url: URL(string: videoIDOrURL)!)
+            } else {
+                youtube = YouTube(videoID: videoIDOrURL)
+            }
+
+            let streams = try await youtube.streams
+
+            guard let stream = streams
+                .filterAudioOnly()
+                .filter({ $0.fileExtension == .m4a })
+                .highestAudioBitrateStream()
+            else {
+                throw YouTubeKitError.noSuitableStreamFound
+            }
+
+            return stream.url
+        },
+        extractStreamInfo: { videoIDOrURL in
+            let youtube: YouTube
+
+            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
+                youtube = YouTube(url: URL(string: videoIDOrURL)!)
+            } else {
+                youtube = YouTube(videoID: videoIDOrURL)
+            }
+
+            let streams = try await youtube.streams
+
+            guard let stream = streams
+                .filter({ $0.isNativelyPlayable && $0.includesVideoAndAudioTrack })
+                .highestResolutionStream()
+            else {
+                throw YouTubeKitError.noSuitableStreamFound
+            }
+
+            return StreamInfo(
+                url: stream.url,
+                quality: stream.videoResolution?.description ?? "Unknown",
+                fileExtension: stream.fileExtension.rawValue,
+                hasAudio: stream.includesAudioTrack,
+                hasVideo: stream.includesVideoTrack
+            )
+        }
     )
-    
+
     static let previewValue = YouTubeKitClient(
         extractVideoURL: { _ in
             URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
@@ -47,103 +133,6 @@ extension YouTubeKitClient: TestDependencyKey {
     )
 }
 
-extension YouTubeKitClient: DependencyKey {
-    static let liveValue = YouTubeKitClient(
-        extractVideoURL: { videoIDOrURL in
-            let youtube: YouTube
-            
-            // Handle both video ID and full URL
-            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
-                youtube = YouTube(url: URL(string: videoIDOrURL)!)
-            } else {
-                youtube = YouTube(videoID: videoIDOrURL)
-            }
-            
-            // Try local extraction first, fall back to remote if needed
-            let streams = try await youtube.streams
-            
-            // Get streams that are natively playable and include both video and audio
-            guard let stream = streams
-                .filter({ $0.isNativelyPlayable && $0.includesVideoAndAudioTrack })
-                .highestResolutionStream()
-            else {
-                throw YouTubeKitError.noSuitableStreamFound
-            }
-            
-            return stream.url
-        },
-        extractHighestQualityVideoURL: { videoIDOrURL in
-            let youtube: YouTube
-            
-            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
-                youtube = YouTube(url: URL(string: videoIDOrURL)!)
-            } else {
-                youtube = YouTube(videoID: videoIDOrURL)
-            }
-            
-            let streams = try await youtube.streams
-            
-            // Get highest resolution stream with both video and audio
-            guard let stream = streams
-                .filter({ $0.includesVideoAndAudioTrack && $0.isNativelyPlayable })
-                .highestResolutionStream()
-            else {
-                throw YouTubeKitError.noSuitableStreamFound
-            }
-            
-            return stream.url
-        },
-        extractAudioOnlyURL: { videoIDOrURL in
-            let youtube: YouTube
-            
-            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
-                youtube = YouTube(url: URL(string: videoIDOrURL)!)
-            } else {
-                youtube = YouTube(videoID: videoIDOrURL)
-            }
-            
-            let streams = try await youtube.streams
-            
-            // Get highest quality audio-only stream
-            guard let stream = streams
-                .filterAudioOnly()
-                .filter({ $0.fileExtension == .m4a })
-                .highestAudioBitrateStream()
-            else {
-                throw YouTubeKitError.noSuitableStreamFound
-            }
-            
-            return stream.url
-        },
-        extractStreamInfo: { videoIDOrURL in
-            let youtube: YouTube
-            
-            if videoIDOrURL.contains("youtube.com") || videoIDOrURL.contains("youtu.be") {
-                youtube = YouTube(url: URL(string: videoIDOrURL)!)
-            } else {
-                youtube = YouTube(videoID: videoIDOrURL)
-            }
-            
-            let streams = try await youtube.streams
-            
-            guard let stream = streams
-                .filter({ $0.isNativelyPlayable && $0.includesVideoAndAudioTrack })
-                .highestResolutionStream()
-            else {
-                throw YouTubeKitError.noSuitableStreamFound
-            }
-            
-            return StreamInfo(
-                url: stream.url,
-                quality: stream.videoResolution?.description ?? "Unknown",
-                fileExtension: stream.fileExtension.rawValue,
-                hasAudio: stream.includesAudioTrack,
-                hasVideo: stream.includesVideoTrack
-            )
-        }
-    )
-}
-
 extension DependencyValues {
     var youTubeKitClient: YouTubeKitClient {
         get { self[YouTubeKitClient.self] }
@@ -155,7 +144,7 @@ enum YouTubeKitError: LocalizedError {
     case noSuitableStreamFound
     case invalidURL
     case extractionFailed(String)
-    
+
     var errorDescription: String? {
         switch self {
         case .noSuitableStreamFound:
@@ -167,4 +156,3 @@ enum YouTubeKitError: LocalizedError {
         }
     }
 }
-

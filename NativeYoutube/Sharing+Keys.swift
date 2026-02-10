@@ -2,10 +2,8 @@ import Foundation
 import Models
 import Sharing
 
-// Default values
 private enum DefaultValues {
-    // Note this might expire at any time so generate yours
-    static let apiKey = "AIzaSyD3NN6IhiVng4iQcNHfZEQy-dlAVqTjq6Q"
+    static let apiKey = ""
     static let playlistID = "PLVz-LYNW1HKcil_zzy51Z6ruyNLSJbH7m"
 }
 

@@ -1,12 +1,12 @@
 import APIClient
 import Clients
 import Dependencies
-import Shared
+import Sharing
 import SwiftUI
 
 @main
 struct NativeYoutubeApp: App {
-    @StateObject private var coordinator = withDependencies {
+    @State private var coordinator = withDependencies {
         $0.apiClient = .liveValue
         $0.searchClient = .liveValue
         $0.playlistClient = .liveValue
@@ -18,7 +18,7 @@ struct NativeYoutubeApp: App {
     var body: some Scene {
         MenuBarExtra("Native Youtube", systemImage: "play.rectangle.fill") {
             ContentView()
-                .environmentObject(coordinator)
+                .environment(coordinator)
                 .frame(width: 360, height: 512)
         }
         .menuBarExtraStyle(WindowMenuBarExtraStyle())

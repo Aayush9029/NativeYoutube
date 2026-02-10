@@ -1,5 +1,5 @@
 import Models
-import Shared
+import Sharing
 import SwiftUI
 import UI
 
@@ -8,7 +8,7 @@ struct GeneralPreferenceView: View {
     @Shared(.useIINA) private var useIINA
     @Shared(.videoClickBehaviour) private var videoClickBehaviour
     @Shared(.autoCheckUpdates) private var autoCheckUpdates
-    @EnvironmentObject var coordinator: AppCoordinator
+    @Environment(AppCoordinator.self) private var coordinator
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -43,14 +43,14 @@ struct GeneralPreferenceView: View {
                     .bold()
             }
             .thinRoundedBG()
-            
+
             Divider()
                 .opacity(0.5)
-            
+
             DisclosureGroup {
                 VStack {
                     SpacedToggle("Check for updates automatically", isOn: Binding($autoCheckUpdates))
-                    
+
                     Button("Check for Updates Now") {
                         coordinator.checkForUpdates()
                     }

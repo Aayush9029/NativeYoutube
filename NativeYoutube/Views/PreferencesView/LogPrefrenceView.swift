@@ -1,4 +1,4 @@
-import Shared
+import Sharing
 import SwiftUI
 import UI
 

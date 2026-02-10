@@ -1,13 +1,13 @@
 import Clients
-import Shared
+import Dependencies
+import Sharing
 import SwiftUI
 import UI
-import Dependencies
 
 struct PlayListView: View {
-    @EnvironmentObject var coordinator: AppCoordinator
+    @Environment(AppCoordinator.self) private var coordinator
     @Shared(.videoClickBehaviour) private var videoClickBehaviour
-    
+
     var body: some View {
         Group {
             switch coordinator.playlistStatus {
@@ -68,7 +68,7 @@ struct PlayListView: View {
 #if DEBUG
 #Preview {
     PlayListView()
-        .environmentObject(
+        .environment(
             withDependencies({
                 $0.playlistClient = .previewValue
                 $0.appStateClient = .previewValue

@@ -1,11 +1,11 @@
 import Clients
 import Dependencies
-import Shared
+import Sharing
 import SwiftUI
 import UI
 
 struct SearchVideosView: View {
-    @EnvironmentObject var coordinator: AppCoordinator
+    @Environment(AppCoordinator.self) private var coordinator
     @Shared(.videoClickBehaviour) private var videoClickBehaviour
 
     var body: some View {
@@ -92,7 +92,7 @@ private struct ErrorView: View {
 #if DEBUG
 #Preview {
     SearchVideosView()
-        .environmentObject(
+        .environment(
             withDependencies({
                 $0.searchClient = .previewValue
                 $0.appStateClient = .previewValue

@@ -16,6 +16,7 @@ extension Target.Dependency {
     static let identifiedCollections: Self = .product(name: "IdentifiedCollections", package: "swift-identified-collections")
     static let swiftSharing: Self = .product(name: "Sharing", package: "swift-sharing")
     static let youTubeKit: Self = .product(name: "YouTubeKit", package: "YouTubeKit")
+    static let customDump: Self = .product(name: "CustomDump", package: "swift-custom-dump")
 }
 
 let package = Package(
@@ -33,6 +34,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.11.0"),
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
         .package(url: "https://github.com/pointfreeco/swift-sharing.git", from: "2.7.4"),
+        .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.3.0"),
         .package(url: "https://github.com/alexeichhorn/YouTubeKit.git", from: "0.4.3")
     ],
     targets: [
@@ -66,7 +68,6 @@ let package = Package(
         .target(
             name: "Shared",
             dependencies: [
-                .identifiedCollections,
                 .swiftSharing,
                 .youTubeKit,
                 .swiftDependencies,
@@ -81,6 +82,41 @@ let package = Package(
                 .shared,
                 .swiftDependencies,
                 .swiftDependenciesMacros
+            ]
+        ),
+        .testTarget(
+            name: "ModelsTests",
+            dependencies: [
+                .models,
+                .customDump
+            ]
+        ),
+        .testTarget(
+            name: "APIClientTests",
+            dependencies: [
+                .apiClient,
+                .models,
+                .swiftDependencies,
+                .customDump
+            ]
+        ),
+        .testTarget(
+            name: "ClientsTests",
+            dependencies: [
+                .clients,
+                .apiClient,
+                .models,
+                .shared,
+                .swiftDependencies,
+                .customDump
+            ]
+        ),
+        .testTarget(
+            name: "APIIntegrationTests",
+            dependencies: [
+                .apiClient,
+                .models,
+                .shared
             ]
         )
     ]

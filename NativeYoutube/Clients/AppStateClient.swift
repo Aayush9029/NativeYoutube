@@ -1,5 +1,6 @@
 import AppKit
 import Dependencies
+import DependenciesMacros
 import Foundation
 import Shared
 import SwiftUI
