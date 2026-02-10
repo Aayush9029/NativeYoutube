@@ -22,9 +22,7 @@ final class AppCoordinator {
 
     @ObservationIgnored @Dependency(\.searchClient) private var searchClient
     @ObservationIgnored @Dependency(\.appStateClient) private var appStateClient
-    @ObservationIgnored @Dependency(\.floatingWindowClient) private var floatingWindowClient
     @ObservationIgnored @Dependency(\.playlistClient) private var playlistClient
-    @ObservationIgnored private var settingsWindowController: NSWindowController?
 
     @ObservationIgnored @Shared(.apiKey) var apiKey
     @ObservationIgnored @Shared(.playlistID) var playlistID
@@ -52,18 +50,6 @@ final class AppCoordinator {
 
         @Shared(.autoCheckUpdates) var autoCheckUpdates
         updaterController.updater.automaticallyChecksForUpdates = autoCheckUpdates
-    }
-
-    func showVideoInApp(_ url: URL, _ title: String) {
-        currentVideoURL = url
-        currentVideoTitle = title
-        showingVideoPlayer = true
-    }
-
-    func hideVideoPlayer() {
-        showingVideoPlayer = false
-        currentVideoURL = nil
-        currentVideoTitle = ""
     }
 
     // MARK: - Navigation
@@ -157,49 +143,5 @@ final class AppCoordinator {
 
     func checkForUpdates() {
         updaterController.checkForUpdates(nil)
-    }
-
-    func checkForUpdatesInBackground() {
-        updaterController.updater.checkForUpdatesInBackground()
-    }
-
-    // MARK: - Settings Window
-
-    func showSettings() {
-        if let existingWindow = settingsWindowController?.window {
-            existingWindow.makeKeyAndOrderFront(nil)
-            return
-        }
-
-        let styleMask: NSWindow.StyleMask = [.titled, .closable, .fullSizeContentView]
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 600),
-            styleMask: styleMask,
-            backing: .buffered,
-            defer: false
-        )
-        window.titlebarAppearsTransparent = true
-        window.titleVisibility = .hidden
-        window.isOpaque = false
-        window.backgroundColor = .clear
-        window.hasShadow = true
-        window.level = .floating
-        window.isMovableByWindowBackground = true
-
-        let rootView = PreferencesView()
-
-        window.contentView = NSHostingView(rootView: rootView)
-
-        window.center()
-        settingsWindowController = NSWindowController(window: window)
-        settingsWindowController?.showWindow(nil)
-
-        NotificationCenter.default.addObserver(
-            forName: NSWindow.willCloseNotification,
-            object: window,
-            queue: .main
-        ) { [weak self] _ in
-            self?.settingsWindowController = nil
-        }
     }
 }

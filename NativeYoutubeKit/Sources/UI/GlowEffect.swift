@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct GlowEffect: View {
+struct GlowEffect: View {
     @State private var offset: Int = 0
     private var gradientStops: [Gradient.Stop] {
         generateGradientStops(offset: offset)
@@ -18,13 +18,13 @@ public struct GlowEffect: View {
     var cornerRadius: CGFloat
     var blurRadius: CGFloat
 
-    public init(lineWidth: CGFloat, cornerRadius: CGFloat, blurRadius: CGFloat) {
+    init(lineWidth: CGFloat, cornerRadius: CGFloat, blurRadius: CGFloat) {
         self.lineWidth = lineWidth
         self.cornerRadius = cornerRadius
         self.blurRadius = blurRadius
     }
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             BlurredGradientLine(gradientStops: gradientStops, lineWidth: lineWidth / 3, cornerRadius: cornerRadius, blurRadius: blurRadius / 3)
             BlurredGradientLine(gradientStops: gradientStops, lineWidth: lineWidth / 2, cornerRadius: cornerRadius, blurRadius: blurRadius / 2)

@@ -21,11 +21,7 @@ struct YouTubePlayerView: View {
             if let player = player {
                 VideoPlayer(player: player)
                     .ignoresSafeArea()
-                    .onAppear {
-                        player.volume = 0.25
-                        player.play()
-                        isPlaying = true
-                    }
+                    .onAppear { playerDidAppear(player) }
                 
             } else if isLoading {
                 loadingView
@@ -45,26 +41,14 @@ struct YouTubePlayerView: View {
                 isHovering = hovering
             }
         }
-        .onAppear {
-            Task {
-                await extractAndPlayVideo()
-            }
-            
-            // Set up close handler to stop video
-            windowClient.setCloseHandler { [weak player] in
-                player?.pause()
-                player = nil
-            }
-        }
+        .task { await extractAndPlayVideo() }
+        .onAppear { setupCloseHandler() }
     }
     
     // MARK: - Subviews
     
     private var closeButton: some View {
-        Button(action: {
-            player?.pause()
-            windowClient.hidePanel()
-        }) {
+        Button(action: closeButtonTapped) {
             Image(systemName: "xmark")
                 .foregroundStyle(.secondary)
                 .bold()
@@ -82,19 +66,35 @@ struct YouTubePlayerView: View {
     }
     
     private func errorView(_ error: String) -> some View {
-        ErrorView(error: error,
-                  onRetry: {
-                      Task {
-                          await extractAndPlayVideo()
-                      }
-                  },
-                  onClose: {
-                      windowClient.hidePanel()
-                  })
+        ErrorView(
+            error: error,
+            onRetry: { Task { await extractAndPlayVideo() } },
+            onClose: { windowClient.hidePanel() }
+        )
     }
     
+    // MARK: - Actions
+
+    private func playerDidAppear(_ player: AVPlayer) {
+        player.volume = 0.25
+        player.play()
+        isPlaying = true
+    }
+
+    private func closeButtonTapped() {
+        player?.pause()
+        windowClient.hidePanel()
+    }
+
+    private func setupCloseHandler() {
+        windowClient.setCloseHandler { [weak player] in
+            player?.pause()
+            player = nil
+        }
+    }
+
     // MARK: - Helper methods
-    
+
     private func extractAndPlayVideo() async {
         isLoading = true
         errorMessage = nil
@@ -183,39 +183,3 @@ private struct ErrorView: View {
     }
 }
 
-#if DEBUG
-struct YouTubePlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            // Main player view
-            YouTubePlayerView(
-                videoURL: URL(string: "https://www.youtube.com/watch?v=dQw4w9WgXcQ")!,
-                title: "Never Gonna Give You Up"
-            )
-            .frame(width: 800, height: 420)
-            .preferredColorScheme(.dark)
-            .previewDisplayName("Player View")
-            
-            // Loading state
-            LoadingView(title: "Never Gonna Give You Up")
-                .frame(width: 800, height: 420)
-                .background(VisualEffectView())
-                .preferredColorScheme(.dark)
-                .previewDisplayName("Loading State")
-            
-            // Error state
-            ErrorView(error: "Cannot play YouTube videos in preview mode",
-                      onRetry: {
-                          print("Retry tapped")
-                      },
-                      onClose: {
-                          print("Close tapped")
-                      })
-                      .frame(width: 800, height: 420)
-                      .background(VisualEffectView())
-                      .preferredColorScheme(.dark)
-                      .previewDisplayName("Error State")
-        }
-    }
-}
-#endif

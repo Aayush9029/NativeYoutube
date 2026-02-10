@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-public struct GlowEffectViewModifier: ViewModifier {
+struct GlowEffectViewModifier: ViewModifier {
     var lineWidth: CGFloat
     var cornerRadius: CGFloat
     var blurRadius: CGFloat
 
-    public init(lineWidth: CGFloat, cornerRadius: CGFloat, blurRadius: CGFloat) {
+    init(lineWidth: CGFloat, cornerRadius: CGFloat, blurRadius: CGFloat) {
         self.lineWidth = lineWidth
         self.cornerRadius = cornerRadius
         self.blurRadius = blurRadius
     }
 
-    public func body(content: Content) -> some View {
+    func body(content: Content) -> some View {
         GeometryReader { proxy in
             ZStack {
                 GlowEffect(lineWidth: lineWidth, cornerRadius: cornerRadius, blurRadius: blurRadius)

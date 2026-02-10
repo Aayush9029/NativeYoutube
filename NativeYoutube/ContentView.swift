@@ -25,18 +25,18 @@ struct ContentView: View {
                     searchQuery: $coordinator.searchQuery,
                     isPlaying: isPlaying,
                     currentlyPlaying: currentlyPlaying,
-                    onSearch: {
-                        coordinator.navigateTo(.search)
-                        Task {
-                            await coordinator.search(coordinator.searchQuery)
-                        }
-                    },
+                    onSearch: { searchSubmitted() },
                     onQuit: coordinator.quit
                 )
             }
             .frame(width: 360.0)
         }
         .animation(.easeInOut(duration: 0.2), value: coordinator.showingVideoPlayer)
+    }
+
+    private func searchSubmitted() {
+        coordinator.navigateTo(.search)
+        Task { await coordinator.search(coordinator.searchQuery) }
     }
 }
 

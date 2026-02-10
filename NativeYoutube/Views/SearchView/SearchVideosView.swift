@@ -1,5 +1,6 @@
 import Clients
 import Dependencies
+import Models
 import Sharing
 import SwiftUI
 import UI
@@ -20,37 +21,31 @@ struct SearchVideosView: View {
                 VideoListView(
                     videos: coordinator.searchResults,
                     videoClickBehaviour: videoClickBehaviour,
-                    onVideoTap: { video in
-                        Task {
-                            await coordinator.handleVideoTap(video)
-                        }
-                    },
+                    onVideoTap: { videoTapped($0) },
                     useIINA: true,
-                    onPlayVideo: { video in
-                        Task {
-                            await coordinator.playVideo(video)
-                        }
-                    },
-                    onPlayInIINA: { video in
-                        Task {
-                            await coordinator.playInIINA(video)
-                        }
-                    },
-                    onOpenInYouTube: { video in
-                        coordinator.openInYouTube(video)
-                    },
-                    onCopyLink: { video in
-                        coordinator.copyVideoLink(video)
-                    },
-                    onShareLink: { url in
-                        coordinator.shareVideo(url)
-                    }
+                    onPlayVideo: { playVideoTapped($0) },
+                    onPlayInIINA: { playInIINATapped($0) },
+                    onOpenInYouTube: { coordinator.openInYouTube($0) },
+                    onCopyLink: { coordinator.copyVideoLink($0) },
+                    onShareLink: { coordinator.shareVideo($0) }
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .error(let message):
                 ErrorView(message: message)
             }
         }
+    }
+
+    private func videoTapped(_ video: Video) {
+        Task { await coordinator.handleVideoTap(video) }
+    }
+
+    private func playVideoTapped(_ video: Video) {
+        Task { await coordinator.playVideo(video) }
+    }
+
+    private func playInIINATapped(_ video: Video) {
+        Task { await coordinator.playInIINA(video) }
     }
 }
 

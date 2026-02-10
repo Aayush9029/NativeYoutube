@@ -113,28 +113,10 @@ extension FloatingWindowClient: TestDependencyKey {
         updateContent: unimplemented("\(Self.self).updateContent"),
         setCloseHandler: unimplemented("\(Self.self).setCloseHandler")
     )
-    
-    public static let noop = Self(
-        createFloatingPanel: { _ in },
-        isVisible: { false },
-        showPanel: {},
-        hidePanel: {},
-        centerPanel: {},
-        updateContent: { _ in },
-        setCloseHandler: { _ in }
-    )
 }
 
 public extension DependencyValues {
     var floatingWindowClient: FloatingWindowClient {
-        get { self[FloatingWindowClient.self] }
-        set { self[FloatingWindowClient.self] = newValue }
-    }
-}
-
-// Keep this for backwards compatibility but it now uses FloatingWindowClient internally
-public extension DependencyValues {
-    var youTubePlayerWindowClient: FloatingWindowClient {
         get { self[FloatingWindowClient.self] }
         set { self[FloatingWindowClient.self] = newValue }
     }
