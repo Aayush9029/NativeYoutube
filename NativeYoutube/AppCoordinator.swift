@@ -1,5 +1,6 @@
 import Clients
 import Dependencies
+import IdentifiedCollections
 import Models
 import Sharing
 import SwiftUI
@@ -10,9 +11,9 @@ import Sparkle
 final class AppCoordinator {
     var currentPage: Pages = .playlists
     var searchQuery: String = ""
-    var searchResults: [Video] = []
+    var searchResults: IdentifiedArrayOf<Video> = []
     var searchStatus: SearchStatus = .idle
-    var playlistVideos: [Video] = []
+    var playlistVideos: IdentifiedArrayOf<Video> = []
     var selectedPlaylist: String = ""
     var showingVideoPlayer = false
     var currentVideoURL: URL?

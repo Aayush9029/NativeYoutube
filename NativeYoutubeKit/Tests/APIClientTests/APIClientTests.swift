@@ -1,7 +1,9 @@
 import APIClient
 import CustomDump
 import Dependencies
+import DependenciesTestSupport
 import Foundation
+import IdentifiedCollections
 import Models
 import Testing
 
@@ -41,7 +43,7 @@ struct APIClientTests {
 
     @Test("Mock client returns fixture data for search")
     func mockClientSearch() async throws {
-        let expectedVideos = [
+        let expectedVideos: IdentifiedArrayOf<Video> = [
             Video(
                 id: "v1",
                 title: "Mock Video",
@@ -63,7 +65,7 @@ struct APIClientTests {
 
     @Test("Mock client returns fixture data for playlist")
     func mockClientPlaylist() async throws {
-        let expectedVideos = [
+        let expectedVideos: IdentifiedArrayOf<Video> = [
             Video(
                 id: "p1",
                 title: "Playlist Video",

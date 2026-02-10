@@ -1,6 +1,7 @@
 import Dependencies
 import DependenciesMacros
 import Foundation
+import IdentifiedCollections
 import Models
 
 public enum APIClientError: LocalizedError, Equatable {
@@ -22,8 +23,8 @@ public enum APIClientError: LocalizedError, Equatable {
 
 @DependencyClient
 public struct APIClient {
-    public var searchVideos: (_ request: SearchRequest) async throws -> [Video]
-    public var fetchPlaylistVideos: (_ request: PlaylistRequest) async throws -> [Video]
+    public var searchVideos: (_ request: SearchRequest) async throws -> IdentifiedArrayOf<Video>
+    public var fetchPlaylistVideos: (_ request: PlaylistRequest) async throws -> IdentifiedArrayOf<Video>
 }
 
 public struct SearchRequest: Equatable {
@@ -51,7 +52,7 @@ public struct PlaylistRequest: Equatable {
 }
 
 extension APIClient: DependencyKey {
-    public static let liveValue = APIClient(
+    public static var liveValue = APIClient(
         searchVideos: { request in
             let query = request.query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             let urlString = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=\(query)&key=\(request.apiKey)&type=video&maxResults=\(request.maxResults)"
@@ -72,7 +73,7 @@ extension APIClient: DependencyKey {
 
             do {
                 let searchResponse = try JSONDecoder().decode(YouTubeSearchResponse.self, from: data)
-                return searchResponse.items.compactMap { $0.toVideo() }
+                return IdentifiedArray(uniqueElements: searchResponse.items.compactMap { $0.toVideo() })
             } catch let error as DecodingError {
                 throw APIClientError.decodingError(String(describing: error))
             }
@@ -96,14 +97,14 @@ extension APIClient: DependencyKey {
 
             do {
                 let playlistResponse = try JSONDecoder().decode(YouTubePlaylistResponse.self, from: data)
-                return playlistResponse.items.map { $0.toVideo() }
+                return IdentifiedArray(uniqueElements: playlistResponse.items.map { $0.toVideo() })
             } catch let error as DecodingError {
                 throw APIClientError.decodingError(String(describing: error))
             }
         }
     )
 
-    public static let previewValue = APIClient(
+    public static var previewValue = APIClient(
         searchVideos: { _ in [] },
         fetchPlaylistVideos: { _ in [] }
     )

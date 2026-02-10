@@ -2,7 +2,9 @@ import APIClient
 import Clients
 import CustomDump
 import Dependencies
+import DependenciesTestSupport
 import Foundation
+import IdentifiedCollections
 import Models
 import Testing
 
@@ -10,7 +12,7 @@ import Testing
 struct SearchClientTests {
     @Test("searchVideos delegates to apiClient.searchVideos")
     func searchDelegation() async throws {
-        let expectedVideos = [
+        let expectedVideos: IdentifiedArrayOf<Video> = [
             Video(
                 id: "s1",
                 title: "Search Result",
@@ -43,9 +45,9 @@ struct SearchClientTests {
         }
     }
 
-    @Test("searchVideos propagates errors from apiClient")
-    func searchErrorPropagation() async {
-        await withDependencies {
+    @Test(
+        "searchVideos propagates errors from apiClient",
+        .dependencies {
             $0.apiClient = APIClient(
                 searchVideos: { _ in
                     throw APIClientError.httpError(statusCode: 403)
@@ -53,16 +55,17 @@ struct SearchClientTests {
                 fetchPlaylistVideos: { _ in [] }
             )
             $0.searchClient = .liveValue
-        } operation: {
-            @Dependency(\.searchClient) var searchClient
-            do {
-                _ = try await searchClient.searchVideos("test", "badKey")
-                Issue.record("Expected error to be thrown")
-            } catch let error as APIClientError {
-                #expect(error == .httpError(statusCode: 403))
-            } catch {
-                Issue.record("Unexpected error type: \(error)")
-            }
+        }
+    )
+    func searchErrorPropagation() async {
+        @Dependency(\.searchClient) var searchClient
+        do {
+            _ = try await searchClient.searchVideos("test", "badKey")
+            Issue.record("Expected error to be thrown")
+        } catch let error as APIClientError {
+            #expect(error == .httpError(statusCode: 403))
+        } catch {
+            Issue.record("Unexpected error type: \(error)")
         }
     }
 }

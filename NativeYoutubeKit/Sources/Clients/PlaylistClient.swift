@@ -2,16 +2,17 @@ import APIClient
 import Dependencies
 import DependenciesMacros
 import Foundation
+import IdentifiedCollections
 import Models
 import Shared
 
 @DependencyClient
 public struct PlaylistClient {
-    public var fetchVideos: (_ apiKey: String, _ playlistId: String) async throws -> [Video] = { _, _ in [] }
+    public var fetchVideos: (_ apiKey: String, _ playlistId: String) async throws -> IdentifiedArrayOf<Video> = { _, _ in [] }
 }
 
 extension PlaylistClient: DependencyKey {
-    public static let liveValue = PlaylistClient(
+    public static var liveValue = PlaylistClient(
         fetchVideos: { apiKey, playlistId in
             @Dependency(\.apiClient) var apiClient
             let request = PlaylistRequest(playlistId: playlistId, apiKey: apiKey)
@@ -19,7 +20,7 @@ extension PlaylistClient: DependencyKey {
         }
     )
     
-    public static let previewValue = PlaylistClient(
+    public static var previewValue = PlaylistClient(
         fetchVideos: { _, _ in
             [
                 Video(
@@ -50,7 +51,7 @@ extension PlaylistClient: DependencyKey {
         }
     )
 
-    public static let testValue = PlaylistClient()
+    public static var testValue = PlaylistClient()
 }
 
 public extension DependencyValues {

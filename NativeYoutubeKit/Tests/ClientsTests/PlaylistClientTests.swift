@@ -2,7 +2,9 @@ import APIClient
 import Clients
 import CustomDump
 import Dependencies
+import DependenciesTestSupport
 import Foundation
+import IdentifiedCollections
 import Models
 import Testing
 
@@ -10,7 +12,7 @@ import Testing
 struct PlaylistClientTests {
     @Test("fetchVideos delegates to apiClient.fetchPlaylistVideos")
     func fetchDelegation() async throws {
-        let expectedVideos = [
+        let expectedVideos: IdentifiedArrayOf<Video> = [
             Video(
                 id: "p1",
                 title: "Playlist Video",
@@ -43,9 +45,9 @@ struct PlaylistClientTests {
         }
     }
 
-    @Test("fetchVideos propagates errors from apiClient")
-    func fetchErrorPropagation() async {
-        await withDependencies {
+    @Test(
+        "fetchVideos propagates errors from apiClient",
+        .dependencies {
             $0.apiClient = APIClient(
                 searchVideos: { _ in [] },
                 fetchPlaylistVideos: { _ in
@@ -53,16 +55,17 @@ struct PlaylistClientTests {
                 }
             )
             $0.playlistClient = .liveValue
-        } operation: {
-            @Dependency(\.playlistClient) var playlistClient
-            do {
-                _ = try await playlistClient.fetchVideos("key", "badPlaylist")
-                Issue.record("Expected error to be thrown")
-            } catch let error as APIClientError {
-                #expect(error == .httpError(statusCode: 404))
-            } catch {
-                Issue.record("Unexpected error type: \(error)")
-            }
+        }
+    )
+    func fetchErrorPropagation() async {
+        @Dependency(\.playlistClient) var playlistClient
+        do {
+            _ = try await playlistClient.fetchVideos("key", "badPlaylist")
+            Issue.record("Expected error to be thrown")
+        } catch let error as APIClientError {
+            #expect(error == .httpError(statusCode: 404))
+        } catch {
+            Issue.record("Unexpected error type: \(error)")
         }
     }
 }

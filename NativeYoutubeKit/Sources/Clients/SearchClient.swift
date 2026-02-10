@@ -2,16 +2,17 @@ import APIClient
 import Dependencies
 import DependenciesMacros
 import Foundation
+import IdentifiedCollections
 import Models
 import Shared
 
 @DependencyClient
 public struct SearchClient {
-    public var searchVideos: (_ query: String, _ apiKey: String) async throws -> [Video] = { _, _ in [] }
+    public var searchVideos: (_ query: String, _ apiKey: String) async throws -> IdentifiedArrayOf<Video> = { _, _ in [] }
 }
 
 extension SearchClient: DependencyKey {
-    public static let liveValue = SearchClient(
+    public static var liveValue = SearchClient(
         searchVideos: { query, apiKey in
             @Dependency(\.apiClient) var apiClient
             let request = SearchRequest(query: query, apiKey: apiKey)
@@ -19,7 +20,7 @@ extension SearchClient: DependencyKey {
         }
     )
     
-    public static let previewValue = SearchClient(
+    public static var previewValue = SearchClient(
         searchVideos: { query, _ in
             [
                 Video(
@@ -50,7 +51,7 @@ extension SearchClient: DependencyKey {
         }
     )
 
-    public static let testValue = SearchClient()
+    public static var testValue = SearchClient()
 }
 
 public extension DependencyValues {

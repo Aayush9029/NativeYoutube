@@ -1,8 +1,9 @@
+import IdentifiedCollections
 import Models
 import SwiftUI
 
 public struct VideoListView: View {
-    let videos: [Video]
+    let videos: IdentifiedArrayOf<Video>
     let videoClickBehaviour: VideoClickBehaviour
     let onVideoTap: (Video) -> Void
     let useIINA: Bool
@@ -13,7 +14,7 @@ public struct VideoListView: View {
     let onShareLink: (URL) -> Void
 
     public init(
-        videos: [Video],
+        videos: IdentifiedArrayOf<Video>,
         videoClickBehaviour: VideoClickBehaviour,
         onVideoTap: @escaping (Video) -> Void,
         useIINA: Bool = false,
@@ -72,7 +73,7 @@ public struct VideoListView: View {
 
 #if DEBUG
 #Preview {
-    let sampleVideos = [
+    let sampleVideos: IdentifiedArrayOf<Video> = [
         Video(
             id: "1",
             title: "First Video Title - Long title that might wrap to multiple lines",

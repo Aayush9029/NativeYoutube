@@ -1,7 +1,7 @@
 import Foundation
 
 // Video model with proper Codable conformance
-public struct Video: Codable, Equatable, Identifiable {
+public struct Video: Codable, Equatable, Hashable, Identifiable {
     public let id: String
     public let title: String
     public let thumbnail: URL

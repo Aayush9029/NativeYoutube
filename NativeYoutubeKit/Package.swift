@@ -13,6 +13,7 @@ extension Target.Dependency {
     // External Dependencies
     static let swiftDependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
     static let swiftDependenciesMacros: Self = .product(name: "DependenciesMacros", package: "swift-dependencies")
+    static let dependenciesTestSupport: Self = .product(name: "DependenciesTestSupport", package: "swift-dependencies")
     static let identifiedCollections: Self = .product(name: "IdentifiedCollections", package: "swift-identified-collections")
     static let swiftSharing: Self = .product(name: "Sharing", package: "swift-sharing")
     static let youTubeKit: Self = .product(name: "YouTubeKit", package: "YouTubeKit")
@@ -43,7 +44,8 @@ let package = Package(
             dependencies: [
                 .assets,
                 .models,
-                .shared
+                .shared,
+                .identifiedCollections
             ]
         ),
         .target(
@@ -53,7 +55,8 @@ let package = Package(
         .target(
             name: "Models",
             dependencies: [
-                .shared
+                .shared,
+                .identifiedCollections
             ]
         ),
         .target(
@@ -62,7 +65,8 @@ let package = Package(
                 .models,
                 .shared,
                 .swiftDependencies,
-                .swiftDependenciesMacros
+                .swiftDependenciesMacros,
+                .identifiedCollections
             ]
         ),
         .target(
@@ -81,7 +85,8 @@ let package = Package(
                 .models,
                 .shared,
                 .swiftDependencies,
-                .swiftDependenciesMacros
+                .swiftDependenciesMacros,
+                .identifiedCollections
             ]
         ),
         .testTarget(
@@ -97,6 +102,7 @@ let package = Package(
                 .apiClient,
                 .models,
                 .swiftDependencies,
+                .dependenciesTestSupport,
                 .customDump
             ]
         ),
@@ -108,6 +114,7 @@ let package = Package(
                 .models,
                 .shared,
                 .swiftDependencies,
+                .dependenciesTestSupport,
                 .customDump
             ]
         ),
