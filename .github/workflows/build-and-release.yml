@@ -152,12 +152,14 @@ jobs:
           set +e
           create-dmg \
             --volname "Native Youtube" \
+            --volicon "dmg-assets/VolumeIcon.icns" \
+            --background "dmg-assets/dmg-bg@2x.jpg" \
             --window-pos 200 120 \
-            --window-size 600 400 \
-            --icon-size 100 \
-            --icon "${{ env.PRODUCT_NAME }}.app" 200 200 \
+            --window-size 560 350 \
+            --icon-size 80 \
+            --icon "${{ env.PRODUCT_NAME }}.app" 150 165 \
             --hide-extension "${{ env.PRODUCT_NAME }}.app" \
-            --app-drop-link 400 200 \
+            --app-drop-link 410 165 \
             --no-internet-enable \
             "$DMG_PATH" \
             "$APP_PATH"
