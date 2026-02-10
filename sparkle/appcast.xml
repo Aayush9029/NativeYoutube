@@ -6,15 +6,15 @@
     <description>Most recent changes with links to updates.</description>
     <language>en</language>
     <item>
-      <title>Version 3.0.1</title>
-      <pubDate>Tue, 10 Feb 2026 04:44:17 +0000</pubDate>
-      <sparkle:version>5</sparkle:version>
-      <sparkle:shortVersionString>3.0.1</sparkle:shortVersionString>
+      <title>Version 3.2</title>
+      <pubDate>Tue, 10 Feb 2026 07:14:28 +0000</pubDate>
+      <sparkle:version>6</sparkle:version>
+      <sparkle:shortVersionString>3.2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/Aayush9029/NativeYoutube/releases/download/v3.0.1/NativeYoutube-3.0.1.dmg"
-        sparkle:edSignature="5n/F0Nz7/6gREBXq4OhWcO+98ANfVlcXtn6HiWMmu47ufexU9ynxkG95SfWTFALlIY7evzZ+SqAOtVJjpJfLAw=="
-        length="3778059"
+        url="https://f005.backblazeb2.com/file/native-youtube/releases/NativeYoutube-3.2.dmg"
+        sparkle:edSignature="QuiO8TOEHbOxlWkkHqBzfNTAcHkB/2fdIeLktyeq0n+/+iVarR8VU+Rk6IzkwOjrBuhwJMLJUo92yjS/1jpkDA=="
+        length="3337600"
         type="application/octet-stream"
       />
     </item>
