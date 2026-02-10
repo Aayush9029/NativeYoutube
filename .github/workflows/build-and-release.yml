@@ -210,7 +210,7 @@ jobs:
 
           export VERSION="${{ steps.version.outputs.version }}"
           export BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
-          export DOWNLOAD_URL="https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/native-youtube/releases/${DMG_NAME}"
+          export DOWNLOAD_URL="https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/releases/${DMG_NAME}"
           export ED_SIGNATURE
           export FILE_SIZE
 
@@ -256,8 +256,8 @@ jobs:
           B2_BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
         run: |
           b2 account authorize "$B2_APPLICATION_KEY_ID" "$B2_APPLICATION_KEY"
-          b2 file upload "$B2_BUCKET_NAME" "$DMG_PATH" "native-youtube/releases/$DMG_NAME"
-          b2 file upload --content-type "application/xml" "$B2_BUCKET_NAME" "$RUNNER_TEMP/appcast.xml" "native-youtube/native-youtube-appcast.xml"
+          b2 file upload "$B2_BUCKET_NAME" "$DMG_PATH" "releases/$DMG_NAME"
+          b2 file upload --content-type "application/xml" "$B2_BUCKET_NAME" "$RUNNER_TEMP/appcast.xml" "appcast.xml"
 
       - name: Verify deployment
         run: |
@@ -270,7 +270,7 @@ jobs:
 
           # Verify DMG is accessible on B2
           HTTP_STATUS=$(curl -s -o /dev/null -w '%{http_code}' \
-            "https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/native-youtube/releases/$DMG_NAME")
+            "https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/releases/$DMG_NAME")
           if [ "$HTTP_STATUS" != "200" ]; then
             echo "WARNING: DMG returned HTTP $HTTP_STATUS (may need time to propagate)"
           else

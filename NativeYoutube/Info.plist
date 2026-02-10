@@ -22,7 +22,7 @@
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://f005.backblazeb2.com/file/compose-updates/native-youtube/native-youtube-appcast.xml</string>
+	<string>https://f005.backblazeb2.com/file/native-youtube/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>TBsrewxAHzjnt9BHjOcOkQa7H4+9dPZnkJR4gQ/1R7g=</string>
 	<key>SUEnableAutomaticChecks</key>
