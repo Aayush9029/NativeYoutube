@@ -2,255 +2,207 @@ name: Build and Release
 
 on:
   release:
-    types: [created]
-  workflow_dispatch:  # Allow manual triggering
+    types: [published]
+  workflow_dispatch:
+
+env:
+  SCHEME: NativeYoutube
+  PRODUCT_NAME: NativeYoutube
+  XCODE_VERSION: "16.3"
 
 jobs:
-  build:
-    runs-on: macos-latest
-    
+  build-and-release:
+    runs-on: macos-15
+    timeout-minutes: 45
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Set up Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest-stable
-        
-    - name: Configure Xcode defaults
-      run: |
-        set -e
-        # Check if the defaults exist before trying to delete them
-        defaults read com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile 2>/dev/null && defaults delete com.apple.dt.Xcode IDEPackageOnlyUseVersionsFromResolvedFile || true
-        defaults read com.apple.dt.Xcode IDEDisableAutomaticPackageResolution 2>/dev/null && defaults delete com.apple.dt.Xcode IDEDisableAutomaticPackageResolution || true
-        defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
-        
-    - name: Install dependencies
-      run: |
-        brew install coreutils
-        
-    - name: Import Code Signing Certificate
-      env:
-        SIGNING_CERTIFICATE_BASE64: ${{ secrets.SIGNING_CERTIFICATE_BASE64 }}
-        SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
-        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
-      run: |
-        # Create variables
-        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-        KEYCHAIN_PASSWORD=temp_password_$(date +%s)
-        
-        # Import certificate from secrets
-        echo "$SIGNING_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
-        
-        # Create temporary keychain
-        security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
-        security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
-        security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
-        
-        # Import certificate to keychain
-        security import "$CERTIFICATE_PATH" -P "$SIGNING_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
-        security list-keychain -d user -s "$KEYCHAIN_PATH"
-        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
-        
-    - name: Build and Archive
-      env:
-        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
-      run: |
-        xcodebuild -project NativeYoutube.xcodeproj \
-          -scheme NativeYoutube \
-          -configuration Release \
-          -archivePath $RUNNER_TEMP/NativeYoutube.xcarchive \
-          -allowProvisioningUpdates \
-          DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
-          CODE_SIGN_STYLE=Automatic \
-          archive
-          
-    - name: Export Archive
-      env:
-        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
-      run: |
-        # Create export options plist
-        cat > $RUNNER_TEMP/ExportOptions.plist <<EOF
-        <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-        <plist version="1.0">
-        <dict>
-            <key>method</key>
-            <string>developer-id</string>
-            <key>teamID</key>
-            <string>$DEVELOPMENT_TEAM</string>
-            <key>signingStyle</key>
-            <string>automatic</string>
-        </dict>
-        </plist>
-        EOF
-        
-        xcodebuild -exportArchive \
-          -archivePath $RUNNER_TEMP/NativeYoutube.xcarchive \
-          -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist \
-          -exportPath $RUNNER_TEMP/export \
-          -allowProvisioningUpdates
-          
-    - name: Notarize Application
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
-        DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }}
-      run: |
-        # Create ZIP for notarization
-        if [[ "${{ github.event_name }}" == "release" ]]; then
-          VERSION=${{ github.event.release.tag_name }}
-          VERSION=${VERSION#v}
-        else
-          VERSION=${GITHUB_REF_NAME#v}
-        fi
-        APP_PATH="$RUNNER_TEMP/export/NativeYoutube.app"
-        ZIP_PATH="$RUNNER_TEMP/NativeYoutube-$VERSION-notarize.zip"
-        
-        ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
-        
-        # Submit for notarization
-        xcrun notarytool submit "$ZIP_PATH" \
-          --apple-id "$APPLE_ID" \
-          --password "$APPLE_ID_PASSWORD" \
-          --team-id "$DEVELOPMENT_TEAM" \
-          --wait
-          
-        # Staple the notarization ticket
-        xcrun stapler staple "$APP_PATH"
-          
-    - name: Create Release Assets
-      run: |
-        if [[ "${{ github.event_name }}" == "release" ]]; then
-          VERSION=${{ github.event.release.tag_name }}
-          VERSION=${VERSION#v}
-        else
-          VERSION=${GITHUB_REF_NAME#v}
-        fi
-        APP_PATH="$RUNNER_TEMP/export/NativeYoutube.app"
-        
-        # Create ZIP for distribution
-        ditto -c -k --keepParent "$APP_PATH" "NativeYoutube-$VERSION.zip"
-        
-        # Create DMG
-        brew install create-dmg
-        create-dmg \
-          --volname "Native Youtube" \
-          --window-pos 200 120 \
-          --window-size 600 400 \
-          --icon-size 100 \
-          --icon "NativeYoutube.app" 200 200 \
-          --hide-extension "NativeYoutube.app" \
-          --app-drop-link 400 200 \
-          "NativeYoutube-$VERSION.dmg" \
-          "$APP_PATH"
-        
-    - name: Sign Sparkle Update
-      env:
-        SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
-      run: |
-        if [[ "${{ github.event_name }}" == "release" ]]; then
-          VERSION=${{ github.event.release.tag_name }}
-          VERSION=${VERSION#v}
-        else
-          VERSION=${GITHUB_REF_NAME#v}
-        fi
-        
-        # Download Sparkle tools
-        curl -L https://github.com/sparkle-project/Sparkle/releases/latest/download/Sparkle-2.x.tar.xz -o sparkle.tar.xz
-        tar -xf sparkle.tar.xz
-        
-        # Create private key file from secret
-        echo "$SPARKLE_PRIVATE_KEY" | base64 --decode > sparkle_private_key.pem
-        
-        # Sign the update
-        ./bin/sign_update "NativeYoutube-$VERSION.zip" -f sparkle_private_key.pem
-        
-        # Get signature for appcast
-        SIGNATURE=$(./bin/sign_update "NativeYoutube-$VERSION.zip" -f sparkle_private_key.pem | awk '/sparkle:edSignature=/ {print $2}' | tr -d '"')
-        echo "SPARKLE_SIGNATURE=$SIGNATURE" >> $GITHUB_ENV
-        
-        # Clean up
-        rm sparkle_private_key.pem
-        
-    - name: Generate Appcast Entry
-      run: |
-        if [[ "${{ github.event_name }}" == "release" ]]; then
-          VERSION=${{ github.event.release.tag_name }}
-          VERSION=${VERSION#v}
-        else
-          VERSION=${GITHUB_REF_NAME#v}
-        fi
-        FILE_SIZE=$(stat -f%z "NativeYoutube-$VERSION.zip")
-        PUB_DATE=$(date -u +"%a, %d %b %Y %H:%M:%S +0000")
-        BUILD_NUMBER=$(defaults read "$RUNNER_TEMP/export/NativeYoutube.app/Contents/Info.plist" CFBundleVersion)
-        
-        cat > appcast-item.xml << EOF
-        <item>
-            <title>Version $VERSION</title>
-            <description><![CDATA[
-                <h2>Version $VERSION</h2>
-                <p>See the <a href="https://github.com/${{ github.repository }}/releases/tag/v$VERSION">release notes</a> for details.</p>
-            ]]></description>
-            <pubDate>$PUB_DATE</pubDate>
-            <sparkle:version>$BUILD_NUMBER</sparkle:version>
-            <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/${{ github.repository }}/releases/download/v$VERSION/NativeYoutube-$VERSION.zip"
-                      sparkle:edSignature="$SPARKLE_SIGNATURE"
-                      length="$FILE_SIZE"
-                      type="application/octet-stream" />
-        </item>
-        EOF
-        
-    - name: Upload Release Assets
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          NativeYoutube-*.dmg
-          NativeYoutube-*.zip
-          appcast-item.xml
-        tag_name: ${{ github.event.release.tag_name }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        
-    - name: Update Appcast
-      run: |
-        # Clone the repository
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        
-        # Checkout main branch
-        git fetch origin main
-        git checkout main
-        
-        # Update appcast.xml
-        if [ ! -f sparkle/appcast.xml ]; then
-          echo '<?xml version="1.0" standalone="yes"?>' > sparkle/appcast.xml
-          echo '<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">' >> sparkle/appcast.xml
-          echo '    <channel>' >> sparkle/appcast.xml
-          echo '        <title>Native Youtube</title>' >> sparkle/appcast.xml
-          echo '    </channel>' >> sparkle/appcast.xml
-          echo '</rss>' >> sparkle/appcast.xml
-        fi
-        
-        # Insert new item into appcast
-        sed -i '' '/<\/channel>/i\
-        '"$(cat appcast-item.xml | sed 's/$/\\/')" sparkle/appcast.xml
-        
-        # Commit and push
-        git add sparkle/appcast.xml
-        
-        if [[ "${{ github.event_name }}" == "release" ]]; then
-          VERSION=${{ github.event.release.tag_name }}
-          VERSION=${VERSION#v}
-        else
-          VERSION=${GITHUB_REF_NAME#v}
-        fi
-        
-        git commit -m "Update appcast for version ${VERSION}"
-        git push origin main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            TAG="${{ github.event.release.tag_name }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+          VERSION="${TAG#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building version: $VERSION"
+
+      - name: Import Developer ID certificate
+        env:
+          CERTIFICATE_P12: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          KEYCHAIN_PATH="$RUNNER_TEMP/build.keychain-db"
+          KEYCHAIN_PASSWORD="$(openssl rand -base64 32)"
+
+          # Save for cleanup
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> "$GITHUB_ENV"
+          echo "KEYCHAIN_PASSWORD=$KEYCHAIN_PASSWORD" >> "$GITHUB_ENV"
+
+          # Create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          # Import certificate
+          echo "$CERTIFICATE_P12" | base64 --decode > "$RUNNER_TEMP/certificate.p12"
+          security import "$RUNNER_TEMP/certificate.p12" \
+            -P "$CERTIFICATE_PASSWORD" \
+            -A \
+            -t cert \
+            -f pkcs12 \
+            -k "$KEYCHAIN_PATH"
+
+          # Allow codesign to access keychain
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          # Add to search list
+          security list-keychains -d user -s "$KEYCHAIN_PATH" "$(security list-keychains -d user | tr -d '"' | tr '\n' ' ')"
+
+      - name: Setup App Store Connect API key
+        env:
+          API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+        run: |
+          mkdir -p ~/private_keys
+          echo "$API_KEY_P8" | base64 --decode > ~/private_keys/AuthKey_${API_KEY_ID}.p8
+
+      - name: Resolve SPM packages
+        run: |
+          defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+          xcodebuild -resolvePackageDependencies \
+            -project ${{ env.SCHEME }}.xcodeproj \
+            -scheme "$SCHEME" \
+            -clonedSourcePackagesDirPath "$RUNNER_TEMP/spm"
+
+      - name: Archive
+        run: |
+          xcodebuild archive \
+            -project ${{ env.SCHEME }}.xcodeproj \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -archivePath "$RUNNER_TEMP/${{ env.SCHEME }}.xcarchive" \
+            -clonedSourcePackagesDirPath "$RUNNER_TEMP/spm" \
+            CODE_SIGN_IDENTITY="Developer ID Application" \
+            DEVELOPMENT_TEAM="${{ secrets.APPLE_TEAM_ID }}" \
+            CODE_SIGN_STYLE=Manual \
+            OTHER_CODE_SIGN_FLAGS="--timestamp"
+
+      - name: Create export options plist
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" << 'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>developer-id</string>
+              <key>teamID</key>
+              <string>TEAM_ID_PLACEHOLDER</string>
+              <key>signingStyle</key>
+              <string>manual</string>
+              <key>signingCertificate</key>
+              <string>Developer ID Application</string>
+          </dict>
+          </plist>
+          PLIST
+
+          sed -i '' "s/TEAM_ID_PLACEHOLDER/${{ secrets.APPLE_TEAM_ID }}/" "$RUNNER_TEMP/ExportOptions.plist"
+
+      - name: Export archive
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/${{ env.SCHEME }}.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export"
+
+      - name: Notarize app
+        env:
+          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          API_ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+        run: |
+          ditto -c -k --keepParent "$RUNNER_TEMP/export/${{ env.PRODUCT_NAME }}.app" "$RUNNER_TEMP/app-for-notarization.zip"
+
+          xcrun notarytool submit "$RUNNER_TEMP/app-for-notarization.zip" \
+            --key ~/private_keys/AuthKey_${API_KEY_ID}.p8 \
+            --key-id "$API_KEY_ID" \
+            --issuer "$API_ISSUER_ID" \
+            --wait
+
+      - name: Staple app
+        run: xcrun stapler staple "$RUNNER_TEMP/export/${{ env.PRODUCT_NAME }}.app"
+
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Create DMG
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          DMG_NAME="${{ env.PRODUCT_NAME }}-${VERSION}.dmg"
+          DMG_PATH="$RUNNER_TEMP/$DMG_NAME"
+          APP_PATH="$RUNNER_TEMP/export/${{ env.PRODUCT_NAME }}.app"
+
+          set +e
+          create-dmg \
+            --volname "Native Youtube" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "${{ env.PRODUCT_NAME }}.app" 200 200 \
+            --hide-extension "${{ env.PRODUCT_NAME }}.app" \
+            --app-drop-link 400 200 \
+            --no-internet-enable \
+            "$DMG_PATH" \
+            "$APP_PATH"
+          EXIT_CODE=$?
+          set -e
+
+          # create-dmg returns 2 when it can't set custom icon (non-fatal)
+          if [ $EXIT_CODE -ne 0 ] && [ $EXIT_CODE -ne 2 ]; then
+            exit $EXIT_CODE
+          fi
+
+          echo "DMG_NAME=$DMG_NAME" >> "$GITHUB_ENV"
+          echo "DMG_PATH=$DMG_PATH" >> "$GITHUB_ENV"
+
+      - name: Sign DMG
+        run: |
+          codesign --force --sign "Developer ID Application: Aayush Pokharel (${{ secrets.APPLE_TEAM_ID }})" \
+            --timestamp \
+            "$DMG_PATH"
+
+      - name: Notarize DMG
+        env:
+          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          API_ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+        run: |
+          xcrun notarytool submit "$DMG_PATH" \
+            --key ~/private_keys/AuthKey_${API_KEY_ID}.p8 \
+            --key-id "$API_KEY_ID" \
+            --issuer "$API_ISSUER_ID" \
+            --wait
+
+          xcrun stapler staple "$DMG_PATH"
+
+      - name: Upload DMG to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ runner.temp }}/${{ env.DMG_NAME }}
+          tag_name: ${{ github.event.release.tag_name }}
+
+      - name: Cleanup
+        if: always()
+        run: |
+          if [ -f "$KEYCHAIN_PATH" ]; then
+            security delete-keychain "$KEYCHAIN_PATH" || true
+          fi
+          rm -f ~/private_keys/AuthKey_*.p8
+          rm -f "$RUNNER_TEMP/certificate.p12"
+          rm -f "$RUNNER_TEMP/app-for-notarization.zip"
