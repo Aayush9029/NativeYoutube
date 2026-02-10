@@ -30,10 +30,10 @@ let package = Package(
         .library(name: "Clients", targets: ["Clients"])
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.7.0"),
-        .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.0"),
-        .package(url: "https://github.com/pointfreeco/swift-sharing.git", from: "2.4.0"),
-        .package(url: "https://github.com/alexeichhorn/YouTubeKit.git", from: "0.2.7")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.11.0"),
+        .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
+        .package(url: "https://github.com/pointfreeco/swift-sharing.git", from: "2.7.4"),
+        .package(url: "https://github.com/alexeichhorn/YouTubeKit.git", from: "0.4.3")
     ],
     targets: [
         .target(
