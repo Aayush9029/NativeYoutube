@@ -8,7 +8,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLIconFile</key>
-			<string>AppIcon</string>
+			<string>NativeYoutubeIcon</string>
 			<key>CFBundleURLName</key>
 			<string>com.aayushpokharel.opensource.NativeYoutube</string>
 			<key>CFBundleURLSchemes</key>
