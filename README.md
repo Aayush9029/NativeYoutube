@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0530149b-6dda-4a20-ac04-18c525e0729a" height="140" alt="NativeYoutube banner" />
+  <img src="https://github.com/user-attachments/assets/0530149b-6dda-4a20-ac04-18c525e0729a" alt="NativeYoutube banner" />
   <h1 align="center">NativeYoutube for macOS</h1>
 </p>
 
