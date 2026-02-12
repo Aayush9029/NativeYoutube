@@ -22,24 +22,22 @@ struct LicenseNagView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                Spacer(minLength: 16)
+            VStack(spacing: 0) {
+                Spacer(minLength: 20)
 
-                Image(systemName: "heart.fill")
-                    .font(.system(size: 40, weight: .bold))
-                    .foregroundStyle(.red)
+                LicensePromptHeader(
+                    symbol: "heart.fill",
+                    symbolColor: .red,
+                    title: "Enjoying NativeYoutube?",
+                    subtitle: "A license removes reminders and supports NativeYoutube."
+                )
+                .frame(maxWidth: 340)
 
-                Text("Enjoying NativeYoutube?")
-                    .font(.title2.weight(.bold))
+                Spacer(minLength: 26)
 
-                Text("A license removes reminders and supports NativeYoutube.")
-                    .font(.body.weight(.medium))
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-
-                VStack(spacing: 12) {
+                HStack(spacing: 10) {
                     Link(destination: URL(string: "https://aayushbuilds.gumroad.com/l/YouTube")!) {
-                        Label("Purchase License — $12.99", systemImage: "cart.fill")
+                        Label("Purchase", systemImage: "cart.fill")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
@@ -51,26 +49,24 @@ struct LicenseNagView: View {
                         Text("I have a license key")
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.large)
-
-                    Button("I don’t want to") {
-                        if let onLater {
-                            onLater()
-                        } else {
-                            dismiss()
-                        }
-                    }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(LicenseDarkActionButtonStyle())
                     .controlSize(.large)
                 }
-                .frame(maxWidth: 320)
+                .frame(maxWidth: 340)
 
                 Spacer(minLength: 0)
+
+                LicenseSecondaryAction(title: "I don’t want to") {
+                    if let onLater {
+                        onLater()
+                    } else {
+                        dismiss()
+                    }
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(24)
-            .background(backgroundGradient)
+            .background(LicensePromptBackground())
             .navigationDestination(item: $destination) { destination in
                 switch destination {
                 case .activation:
@@ -91,16 +87,5 @@ struct LicenseNagView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var backgroundGradient: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.16, green: 0.07, blue: 0.10),
-                Color(red: 0.07, green: 0.09, blue: 0.14)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
     }
 }

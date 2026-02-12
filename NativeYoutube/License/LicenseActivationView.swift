@@ -1,9 +1,14 @@
 import SwiftUI
+import AppKit
 
 struct LicenseActivationView: View {
+    private static let minimumKeyLength = 3
+    private static let maximumKeyLength = 64
+
     @Environment(LicenseManager.self) private var licenseManager
     @Environment(\.dismiss) private var dismiss
     @State private var keyInput = ""
+    @State private var inputValidationError: String?
     var onCancel: (() -> Void)?
     var onActivated: (() -> Void)?
 
@@ -16,75 +21,143 @@ struct LicenseActivationView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
-            Spacer(minLength: 16)
+        VStack(spacing: 0) {
+            Spacer(minLength: 20)
 
-            Image(systemName: "key.fill")
-                .font(.system(size: 34, weight: .bold))
-                .foregroundStyle(.orange)
+            LicensePromptHeader(
+                symbol: "key.fill",
+                symbolColor: .orange,
+                title: "Activate License",
+                subtitle: "Paste your key to unlock reminders."
+            )
+            .frame(maxWidth: 340)
 
-            Text("Activate License")
-                .font(.title2.weight(.bold))
-
-            Text("Paste your key to unlock reminders.")
-                .font(.body.weight(.medium))
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+            Spacer(minLength: 26)
 
             VStack(spacing: 12) {
-                TextField("Enter your license key", text: $keyInput)
-                    .textFieldStyle(.roundedBorder)
-                    .controlSize(.large)
-                    .frame(maxWidth: .infinity)
+                HStack(spacing: 8) {
+                    TextField("Enter your license key", text: $keyInput)
+                        .textFieldStyle(.plain)
+                        .font(.callout.monospaced())
+                        .lineLimit(1)
+                        .onChange(of: keyInput) { _, _ in
+                            inputValidationError = nil
+                        }
 
-                if let error = licenseManager.activationError {
-                    Text(error)
+                    Button {
+                        pasteLicenseKeyFromClipboard()
+                    } label: {
+                        Image(systemName: "clipboard.fill")
+                            .font(.callout.weight(.semibold))
+                            .frame(width: 26, height: 26)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.secondary)
+                    .help("Paste from clipboard")
+                }
+                .padding(.horizontal, 12)
+                .frame(height: 44)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(.white.opacity(0.08))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(.white.opacity(0.18), lineWidth: 1)
+                )
+
+                if let errorMessage {
+                    Text(errorMessage)
                         .font(.caption)
                         .foregroundStyle(.red)
-                        .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
-                Button {
-                    Task {
-                        await licenseManager.activate(key: keyInput.trimmingCharacters(in: .whitespacesAndNewlines))
-                        if licenseManager.isActivated {
-                            if let onActivated {
-                                onActivated()
-                            } else {
-                                dismiss()
-                            }
-                        }
+                HStack(spacing: 10) {
+                    Button {
+                        activateLicense()
+                    } label: {
+                        Label("Activate", systemImage: "heart.fill")
+                            .frame(maxWidth: .infinity)
                     }
-                } label: {
-                    Label("Activate", systemImage: "heart.fill")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .keyboardShortcut(.defaultAction)
-                .disabled(keyInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || licenseManager.isActivating)
+                    .buttonStyle(LicenseDarkActionButtonStyle())
+                    .controlSize(.large)
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(!isKeyLengthValid || licenseManager.isActivating)
 
-                Button("I don’t want to") {
-                    if let onCancel {
-                        onCancel()
-                    } else {
-                        dismiss()
+                    Link(destination: URL(string: "https://aayushbuilds.gumroad.com/l/YouTube")!) {
+                        Label("Get a license", systemImage: "cart.fill")
+                            .frame(maxWidth: .infinity)
                     }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
                 }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
-                .keyboardShortcut(.cancelAction)
             }
             .frame(maxWidth: 340)
 
-            Link("Purchase a license on Gumroad", destination: URL(string: "https://aayushbuilds.gumroad.com/l/YouTube")!)
-                .font(.callout.weight(.medium))
-
             Spacer(minLength: 0)
+
+            LicenseSecondaryAction(title: "I don’t want to") {
+                if let onCancel {
+                    onCancel()
+                } else {
+                    dismiss()
+                }
+            }
+            .keyboardShortcut(.cancelAction)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(24)
+        .background(LicensePromptBackground())
         .navigationBarBackButtonHidden(true)
+    }
+
+    private var normalizedKey: String {
+        keyInput.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var isKeyLengthValid: Bool {
+        let length = normalizedKey.count
+        return (Self.minimumKeyLength...Self.maximumKeyLength).contains(length)
+    }
+
+    private var errorMessage: String? {
+        inputValidationError ?? licenseManager.activationError
+    }
+
+    private func activateLicense() {
+        guard isKeyLengthValid else {
+            inputValidationError = "License key must be 3-64 characters."
+            return
+        }
+
+        inputValidationError = nil
+        Task {
+            await licenseManager.activate(key: normalizedKey)
+            if licenseManager.isActivated {
+                if let onActivated {
+                    onActivated()
+                } else {
+                    dismiss()
+                }
+            }
+        }
+    }
+
+    private func pasteLicenseKeyFromClipboard() {
+        guard let rawValue = NSPasteboard.general.string(forType: .string) else {
+            inputValidationError = "Clipboard doesn't contain text."
+            return
+        }
+
+        let candidate = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        let length = candidate.count
+        guard (Self.minimumKeyLength...Self.maximumKeyLength).contains(length) else {
+            inputValidationError = "Clipboard key must be 3-64 characters."
+            return
+        }
+
+        keyInput = candidate
+        inputValidationError = nil
     }
 }
