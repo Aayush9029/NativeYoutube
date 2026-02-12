@@ -8,12 +8,11 @@ on:
 env:
   SCHEME: NativeYoutube
   PRODUCT_NAME: NativeYoutube
-  XCODE_VERSION: "16.3"
   SPARKLE_VERSION: "2.8.1"
 
 jobs:
   build-and-release:
-    runs-on: macos-15
+    runs-on: macos-latest
     timeout-minutes: 45
 
     steps:
@@ -23,7 +22,22 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app/Contents/Developer
+        run: |
+          LATEST_XCODE_PATH=$(
+            find /Applications -maxdepth 1 -name 'Xcode_*.app' -type d -print \
+              | sed -E 's#^/Applications/Xcode_([0-9][0-9.]*)\.app$#\1 \0#' \
+              | sort -V \
+              | tail -n1 \
+              | cut -d' ' -f2-
+          )
+
+          if [[ -z "${LATEST_XCODE_PATH:-}" ]]; then
+            LATEST_XCODE_PATH="/Applications/Xcode.app"
+          fi
+
+          echo "Selecting Xcode: $LATEST_XCODE_PATH"
+          sudo xcode-select -s "$LATEST_XCODE_PATH/Contents/Developer"
+          /usr/bin/xcodebuild -version
 
       - name: Extract version from tag
         id: version
@@ -126,6 +140,35 @@ jobs:
             -archivePath "$RUNNER_TEMP/${{ env.SCHEME }}.xcarchive" \
             -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
             -exportPath "$RUNNER_TEMP/export"
+
+      - name: Verify exported app icon
+        run: |
+          APP_PATH="$RUNNER_TEMP/export/${{ env.PRODUCT_NAME }}.app"
+          INFO_PLIST="$APP_PATH/Contents/Info.plist"
+          RESOURCES="$APP_PATH/Contents/Resources"
+
+          ICON_FILE=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIconFile" "$INFO_PLIST" 2>/dev/null || true)
+          ICON_NAME=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIconName" "$INFO_PLIST" 2>/dev/null || true)
+
+          if [[ -z "$ICON_FILE" || -z "$ICON_NAME" ]]; then
+            echo "::error::Missing CFBundleIconFile/CFBundleIconName in exported app"
+            plutil -p "$INFO_PLIST"
+            exit 1
+          fi
+
+          if [[ "$ICON_FILE" == *.icns ]]; then
+            ICON_PATH="$RESOURCES/$ICON_FILE"
+          else
+            ICON_PATH="$RESOURCES/$ICON_FILE.icns"
+          fi
+
+          if [[ ! -s "$ICON_PATH" ]]; then
+            echo "::error::Expected app icon file not found: $ICON_PATH"
+            ls -la "$RESOURCES"
+            exit 1
+          fi
+
+          echo "Validated exported app icon at $ICON_PATH"
 
       - name: Notarize app
         env:

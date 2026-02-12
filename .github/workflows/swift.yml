@@ -13,10 +13,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: '16.1'
+    - name: Select latest Xcode
+      run: |
+        LATEST_XCODE_PATH=$(
+          find /Applications -maxdepth 1 -name 'Xcode_*.app' -type d -print \
+            | sed -E 's#^/Applications/Xcode_([0-9][0-9.]*)\.app$#\1 \0#' \
+            | sort -V \
+            | tail -n1 \
+            | cut -d' ' -f2-
+        )
+
+        if [[ -z "${LATEST_XCODE_PATH:-}" ]]; then
+          LATEST_XCODE_PATH="/Applications/Xcode.app"
+        fi
+
+        echo "Selecting Xcode: $LATEST_XCODE_PATH"
+        sudo xcode-select -s "$LATEST_XCODE_PATH/Contents/Developer"
+        /usr/bin/xcodebuild -version
     - name: Configure Xcode defaults
       run: |
         set -e
