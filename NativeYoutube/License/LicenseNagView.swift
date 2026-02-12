@@ -22,57 +22,62 @@ struct LicenseNagView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                Text("Enjoying NativeYoutube?")
-                    .font(.headline)
+            VStack(spacing: 20) {
+                Spacer(minLength: 16)
 
-                Text("Support development by purchasing a license. The app is fully functional — a license removes these reminders.")
-                    .font(.caption)
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 40, weight: .bold))
+                    .foregroundStyle(.red)
+
+                Text("Enjoying NativeYoutube?")
+                    .font(.title2.weight(.bold))
+
+                Text("A license removes reminders and supports NativeYoutube.")
+                    .font(.body.weight(.medium))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
 
-                VStack(spacing: 10) {
+                VStack(spacing: 12) {
                     Link(destination: URL(string: "https://aayushbuilds.gumroad.com/l/YouTube")!) {
-                        HStack {
-                            Spacer()
-                            Label("Purchase License — $12.99", systemImage: "cart.fill")
-                            Spacer()
-                        }
+                        Label("Purchase License — $12.99", systemImage: "cart.fill")
+                            .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
-                    .controlSize(.regular)
+                    .controlSize(.large)
 
                     Button {
                         destination = .activation
                     } label: {
-                        HStack {
-                            Spacer()
-                            Text("I have a license key")
-                            Spacer()
-                        }
+                        Text("I have a license key")
+                            .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
-                    .controlSize(.regular)
+                    .controlSize(.large)
 
-                    Button("Later") {
+                    Button("I don’t want to") {
                         if let onLater {
                             onLater()
                         } else {
                             dismiss()
                         }
                     }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.secondary)
-                    .font(.caption)
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
                 }
+                .frame(maxWidth: 320)
+
+                Spacer(minLength: 0)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(24)
-            .frame(width: 320)
+            .background(backgroundGradient)
             .navigationDestination(item: $destination) { destination in
                 switch destination {
                 case .activation:
                     LicenseActivationView(
-                        onCancel: { self.destination = nil },
+                        onCancel: {
+                            self.destination = nil
+                        },
                         onActivated: {
                             if let onActivated {
                                 onActivated()
@@ -85,5 +90,17 @@ struct LicenseNagView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var backgroundGradient: some View {
+        LinearGradient(
+            colors: [
+                Color(red: 0.16, green: 0.07, blue: 0.10),
+                Color(red: 0.07, green: 0.09, blue: 0.14)
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 }

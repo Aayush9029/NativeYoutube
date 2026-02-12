@@ -63,11 +63,6 @@ private struct MenuBarRootView: View {
                 .disabled(isShowingNagOverlay)
 
             if isShowingNagOverlay {
-                Color.black.opacity(0.28)
-                    .ignoresSafeArea()
-                    .onTapGesture { }
-                    .transition(.opacity)
-
                 LicenseNagView(
                     onLater: {
                         isShowingNagOverlay = false
@@ -77,14 +72,8 @@ private struct MenuBarRootView: View {
                     }
                 )
                     .environment(licenseManager)
-                    .padding(12)
-                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .strokeBorder(.white.opacity(0.14), lineWidth: 1)
-                    )
-                    .shadow(color: .black.opacity(0.22), radius: 20, x: 0, y: 10)
-                    .transition(.scale(scale: 0.97).combined(with: .opacity))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .transition(.opacity)
             }
         }
         .animation(.easeInOut(duration: 0.2), value: isShowingNagOverlay)
