@@ -17,10 +17,8 @@ jobs:
       run: |
         LATEST_XCODE_PATH=$(
           find /Applications -maxdepth 1 -name 'Xcode_*.app' -type d -print \
-            | sed -E 's#^/Applications/Xcode_([0-9][0-9.]*)\.app$#\1 \0#' \
             | sort -V \
-            | tail -n1 \
-            | cut -d' ' -f2-
+            | tail -n1
         )
 
         if [[ -z "${LATEST_XCODE_PATH:-}" ]]; then
