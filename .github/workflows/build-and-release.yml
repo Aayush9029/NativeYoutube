@@ -21,21 +21,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Select Xcode
-        run: |
-          LATEST_XCODE_PATH=$(
-            find /Applications -maxdepth 1 -name 'Xcode_*.app' -type d -print \
-              | sort -V \
-              | tail -n1
-          )
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 'latest-stable'
 
-          if [[ -z "${LATEST_XCODE_PATH:-}" ]]; then
-            LATEST_XCODE_PATH="/Applications/Xcode.app"
-          fi
-
-          echo "Selecting Xcode: $LATEST_XCODE_PATH"
-          sudo xcode-select -s "$LATEST_XCODE_PATH/Contents/Developer"
-          /usr/bin/xcodebuild -version
+      - name: Show Xcode version
+        run: /usr/bin/xcodebuild -version
 
       - name: Extract version from tag
         id: version
