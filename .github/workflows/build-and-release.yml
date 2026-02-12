@@ -48,11 +48,9 @@ jobs:
             TAG="${GITHUB_REF_NAME}"
           fi
           VERSION="${TAG#v}"
-          RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${TAG}"
 
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "release_url=$RELEASE_URL" >> "$GITHUB_OUTPUT"
           echo "Building version: $VERSION"
 
       - name: Verify project version matches tag
@@ -280,7 +278,6 @@ jobs:
           export VERSION="${{ steps.version.outputs.version }}"
           export BUILD_NUMBER="${APP_BUILD_NUMBER}"
           export DOWNLOAD_URL="https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/releases/${DMG_NAME}"
-          export RELEASE_URL="${{ steps.version.outputs.release_url }}"
           export ED_SIGNATURE
           export FILE_SIZE
 
@@ -293,15 +290,14 @@ jobs:
           xml += '<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">\n'
           xml += '  <channel>\n'
           xml += '    <title>Native Youtube</title>\n'
-          xml += '    <link>https://github.com/Aayush9029/NativeYoutube</link>\n'
-          xml += '    <description>Most recent changes with links to updates.</description>\n'
+          xml += '    <link>https://aayushbuilds.gumroad.com/l/YouTube</link>\n'
+          xml += '    <description>Latest Native Youtube releases.</description>\n'
           xml += '    <language>en</language>\n'
           xml += '    <item>\n'
           xml += f'      <title>Version {os.environ["VERSION"]}</title>\n'
           xml += f'      <pubDate>{pub_date}</pubDate>\n'
           xml += f'      <sparkle:version>{os.environ["BUILD_NUMBER"]}</sparkle:version>\n'
           xml += f'      <sparkle:shortVersionString>{os.environ["VERSION"]}</sparkle:shortVersionString>\n'
-          xml += f'      <sparkle:releaseNotesLink>{os.environ["RELEASE_URL"]}</sparkle:releaseNotesLink>\n'
           xml += '      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>\n'
           xml += '      <enclosure\n'
           xml += f'        url="{os.environ["DOWNLOAD_URL"]}"\n'

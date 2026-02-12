@@ -4,6 +4,11 @@ struct LicenseActivationView: View {
     @Environment(LicenseManager.self) private var licenseManager
     @Environment(\.dismiss) private var dismiss
     @State private var keyInput = ""
+    var onActivated: (() -> Void)?
+
+    init(onActivated: (() -> Void)? = nil) {
+        self.onActivated = onActivated
+    }
 
     var body: some View {
         VStack(spacing: 16) {
@@ -30,7 +35,11 @@ struct LicenseActivationView: View {
                     Task {
                         await licenseManager.activate(key: keyInput.trimmingCharacters(in: .whitespacesAndNewlines))
                         if licenseManager.isActivated {
-                            dismiss()
+                            if let onActivated {
+                                onActivated()
+                            } else {
+                                dismiss()
+                            }
                         }
                     }
                 }
