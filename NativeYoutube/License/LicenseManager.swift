@@ -4,8 +4,15 @@ import Sharing
 @MainActor
 @Observable
 final class LicenseManager {
+    enum Overlay: String, Identifiable {
+        case activation
+
+        var id: String { rawValue }
+    }
+
     var activationError: String?
     var isActivating = false
+    var overlay: Overlay?
 
     @ObservationIgnored @Shared(.licenseKey) var licenseKey
     @ObservationIgnored @Shared(.isLicenseActivated) var isLicenseActivated
@@ -91,5 +98,14 @@ final class LicenseManager {
         $licenseKey.withLock { $0 = "" }
         $isLicenseActivated.withLock { $0 = false }
         activationError = nil
+    }
+
+    func presentActivationOverlay() {
+        activationError = nil
+        overlay = .activation
+    }
+
+    func dismissOverlay() {
+        overlay = nil
     }
 }

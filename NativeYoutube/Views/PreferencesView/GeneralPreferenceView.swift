@@ -1,7 +1,6 @@
 import Models
 import Sharing
 import SwiftUI
-import UI
 
 struct GeneralPreferenceView: View {
     @Shared(.playlistID) private var playlistID
@@ -11,78 +10,69 @@ struct GeneralPreferenceView: View {
     @Environment(AppCoordinator.self) private var coordinator
 
     var body: some View {
-        VStack(alignment: .leading) {
-            DisclosureGroup {
-                TextField("Playlist ID", text: Binding($playlistID))
-                    .textFieldStyle(.plain)
-                    .thinRoundedBG()
-            } label: {
-                Label("Custom Playlist ID", systemImage: "music.note.list")
-                    .bold()
-            }
-            .thinRoundedBG()
+        SettingsCard(
+            title: "General",
+            subtitle: "Playlist, playback, and update behavior",
+            symbol: "slider.horizontal.3"
+        ) {
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Custom Playlist ID")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.72))
 
-            Divider()
-                .opacity(0.5)
+                    TextField("Playlist ID", text: Binding($playlistID))
+                        .textFieldStyle(.plain)
+                        .settingsInputFieldStyle()
+                }
 
-            DisclosureGroup {
-                VStack {
-                    SpacedToggle("Use IINA", isOn: Binding($useIINA))
+                SettingsRow(
+                    title: "Use IINA",
+                    subtitle: "Enable IINA as an available playback target."
+                ) {
+                    Toggle("Use IINA", isOn: Binding($useIINA))
+                        .toggleStyle(.switch)
+                        .labelsHidden()
+                        .tint(Color(red: 0.98, green: 0.38, blue: 0.47))
+                }
 
-                    Picker("Double Click to", selection: Binding($videoClickBehaviour)) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Double-click action")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.72))
+
+                    Picker("Double-click action", selection: Binding($videoClickBehaviour)) {
                         ForEach(VideoClickBehaviour.allCases, id: \.self) { behaviour in
                             if behaviour != .playInIINA || useIINA {
-                                Text(behaviour.rawValue).tag(behaviour)
+                                Text(behaviour.rawValue)
+                                    .tag(behaviour)
                             }
                         }
                     }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .settingsInputFieldStyle()
                 }
-                .thinRoundedBG()
-            } label: {
-                Label("Player Settings", systemImage: "play.rectangle.on.rectangle.fill")
-                    .bold()
-            }
-            .thinRoundedBG()
 
-            Divider()
-                .opacity(0.5)
-
-            DisclosureGroup {
-                VStack {
-                    SpacedToggle("Check for updates automatically", isOn: Binding($autoCheckUpdates))
-
-                    Button("Check for Updates Now") {
-                        coordinator.checkForUpdates()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.small)
+                SettingsRow(
+                    title: "Automatic updates",
+                    subtitle: "Check for updates in the background."
+                ) {
+                    Toggle("Automatic updates", isOn: Binding($autoCheckUpdates))
+                        .toggleStyle(.switch)
+                        .labelsHidden()
+                        .tint(Color(red: 0.98, green: 0.38, blue: 0.47))
                 }
-                .thinRoundedBG()
-            } label: {
-                Label("Updates", systemImage: "arrow.triangle.2.circlepath")
-                    .bold()
+
+                Button("Check for Updates Now") {
+                    coordinator.checkForUpdates()
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+                .tint(Color(red: 0.98, green: 0.38, blue: 0.47))
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .thinRoundedBG()
-        }
-    }
-}
-
-struct SpacedToggle: View {
-    let title: String
-    @Binding var isOn: Bool
-
-    init(_ title: String, isOn: Binding<Bool>) {
-        self.title = title
-        self._isOn = isOn
-    }
-
-    var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Toggle("", isOn: $isOn)
-                .toggleStyle(.switch)
-                .labelsHidden()
         }
     }
 }

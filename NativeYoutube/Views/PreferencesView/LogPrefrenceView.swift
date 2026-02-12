@@ -1,63 +1,82 @@
 import Sharing
 import SwiftUI
-import UI
 
 struct LogPrefrenceView: View {
     @Shared(.logs) private var logs
 
     var body: some View {
-        Group {
-            DisclosureGroup {
-                VStack(alignment: .leading) {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack(alignment: .leading) {
+        SettingsCard(
+            title: "Logs",
+            subtitle: "Diagnostic history and quick export",
+            symbol: "newspaper.fill"
+        ) {
+            VStack(alignment: .leading, spacing: 10) {
+                SettingsRow(
+                    title: "Stored entries",
+                    subtitle: "Useful when sharing bug reports."
+                ) {
+                    Text("\(logs.count)")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.92))
+                }
+
+                HStack(spacing: 8) {
+                    Button {
+                        copyLogsToClipboard(redacted: true)
+                    } label: {
+                        Label("Copy Safe", systemImage: "clipboard.fill")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.small)
+                    .tint(Color(red: 0.98, green: 0.38, blue: 0.47))
+
+                    Button {
+                        copyLogsToClipboard(redacted: false)
+                    } label: {
+                        Label("Copy Raw", systemImage: "key.radiowaves.forward.fill")
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                    .tint(.white)
+
+                    Button {
+                        $logs.withLock { $0.removeAll() }
+                    } label: {
+                        Label("Clear", systemImage: "trash.fill")
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                    .tint(.red)
+                }
+
+                ScrollView(.vertical) {
+                    LazyVStack(alignment: .leading, spacing: 6) {
+                        if logs.isEmpty {
+                            Text("No logs yet.")
+                                .font(.system(size: 11, weight: .medium, design: .rounded))
+                                .foregroundStyle(.white.opacity(0.6))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.vertical, 4)
+                        } else {
                             ForEach(logs, id: \.self) { log in
-                                LogText(text: log, color: .gray)
+                                LogText(text: log, color: .white.opacity(0.72))
                             }
                         }
                     }
                 }
-            }
-            label: {
-                HStack {
-                    Label("Logs", systemImage: "newspaper.fill")
-                        .bold()
-                        .padding(.top, 5)
-
-                    Spacer()
-
-                    Label("Copy", systemImage: "clipboard.fill")
-                        .labelStyle(.iconOnly)
-                        .thinRoundedBG(padding: 8, material: .thinMaterial)
-                        .clipShape(Circle())
-                        .onTapGesture {
-                            copyLogsToClipboard(redacted: true)
-                        }
-                        .contextMenu {
-                            VStack {
-                                Button {
-                                    copyLogsToClipboard(redacted: false)
-                                } label: {
-                                    Label("Copy Raw", systemImage: "key.radiowaves.forward.fill")
-                                }
-
-                                Button {
-                                    copyLogsToClipboard(redacted: true)
-                                } label: {
-                                    Label("Copy Redacted", systemImage: "eyes.inverse")
-                                }
-
-                                Button {
-                                    $logs.withLock { $0.removeAll() }
-                                } label: {
-                                    Label("Clear Logs", systemImage: "trash.fill")
-                                }
-                            }
-                        }
-                }
+                .scrollIndicators(.hidden)
+                .frame(maxHeight: 170)
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(.black.opacity(0.24))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .stroke(.white.opacity(0.08), lineWidth: 1)
+                        )
+                )
             }
         }
-        .thinRoundedBG()
     }
 
     private func copyLogsToClipboard(redacted: Bool) {

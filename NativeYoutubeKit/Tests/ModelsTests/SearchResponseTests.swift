@@ -93,4 +93,49 @@ struct SearchResponseTests {
         #expect(response.regionCode == nil)
         #expect(response.items.isEmpty)
     }
+
+    @Test("Decodes thumbnails when width/height are missing")
+    func decodeThumbnailWithoutDimensions() throws {
+        let json = """
+        {
+            "kind": "youtube#searchListResponse",
+            "etag": "test_missing_thumbnail_dimensions",
+            "pageInfo": {
+                "totalResults": 1,
+                "resultsPerPage": 5
+            },
+            "items": [
+                {
+                    "kind": "youtube#searchResult",
+                    "etag": "item_etag_2",
+                    "id": {
+                        "kind": "youtube#video",
+                        "videoId": "abc123"
+                    },
+                    "snippet": {
+                        "publishedAt": "2024-01-01T00:00:00Z",
+                        "channelId": "UCtest",
+                        "title": "Missing Thumbnail Dimensions",
+                        "description": "test",
+                        "thumbnails": {
+                            "default": {
+                                "url": "https://i.ytimg.com/vi/abc123/default.jpg"
+                            }
+                        },
+                        "channelTitle": "Test Channel",
+                        "liveBroadcastContent": "none"
+                    }
+                }
+            ]
+        }
+        """
+
+        let data = json.data(using: .utf8)!
+        let response = try JSONDecoder().decode(YouTubeSearchResponse.self, from: data)
+
+        let thumbnail = try #require(response.items.first?.snippet.thumbnails.default)
+        #expect(thumbnail.url == "https://i.ytimg.com/vi/abc123/default.jpg")
+        #expect(thumbnail.width == 0)
+        #expect(thumbnail.height == 0)
+    }
 }

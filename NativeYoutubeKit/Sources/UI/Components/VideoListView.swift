@@ -49,23 +49,26 @@ public struct VideoListView: View {
                 }
                 .foregroundStyle(.quaternary)
             } else {
-                ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(videos) { video in
-                        VideoRowView(
-                            video: video,
-                            useIINA: useIINA,
-                            onPlayVideo: { onPlayVideo(video) },
-                            onPlayInIINA: { onPlayInIINA(video) },
-                            onOpenInYouTube: { onOpenInYouTube(video) },
-                            onCopyLink: { onCopyLink(video) },
-                            onShareLink: onShareLink
-                        )
-                        .onTapGesture(count: 2) {
-                            onVideoTap(video)
+                ScrollView(.vertical) {
+                    LazyVStack(spacing: 6) {
+                        ForEach(videos) { video in
+                            VideoRowView(
+                                video: video,
+                                useIINA: useIINA,
+                                onPlayVideo: { onPlayVideo(video) },
+                                onPlayInIINA: { onPlayInIINA(video) },
+                                onOpenInYouTube: { onOpenInYouTube(video) },
+                                onCopyLink: { onCopyLink(video) },
+                                onShareLink: onShareLink
+                            )
+                            .onTapGesture(count: 2) {
+                                onVideoTap(video)
+                            }
                         }
                     }
                     .padding(6)
                 }
+                .scrollIndicators(.hidden)
             }
         }
     }

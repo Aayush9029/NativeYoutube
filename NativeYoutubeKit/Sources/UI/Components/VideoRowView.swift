@@ -3,7 +3,7 @@ import Models
 
 struct VideoRowView: View {
     let video: Video
-    @State private var focused: Bool = false
+    @State private var isHovering = false
     let useIINA: Bool
     let onPlayVideo: () -> Void
     let onPlayInIINA: () -> Void
@@ -30,83 +30,109 @@ struct VideoRowView: View {
     }
     
     public var body: some View {
-        Group {
-            ZStack {
-                AsyncImage(url: video.thumbnail) { image in
-                    image
-                        .resizable()
-                        .overlay {
-                            Rectangle()
-                                .fill(focused ? .ultraThinMaterial : .ultraThickMaterial)
-                        }
-                } placeholder: {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.2))
-                }
-                
-                HStack {
-                    if !focused {
-                        AsyncImage(url: video.thumbnail) { image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 128, height: 72)
-                                .clipped()
-                        } placeholder: {
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.2))
-                        }
-                        .cornerRadius(5)
-                        .shadow(radius: 6, x: 2)
-                        .padding(.leading, 4)
-                        .padding(.vertical, 2)
-                        .transition(.offset(x: -130))
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(video.title)
-                            .foregroundStyle(.primary)
-                            .bold()
-                            .lineLimit(focused ? 3 : 1)
-                        
-                        Text(video.channelTitle)
-                            .foregroundStyle(.secondary)
-                            .font(focused ? .caption : .footnote)
-                        
-                        if !focused {
-                            Text(video.publishedAt)
-                                .font(.caption2)
-                                .foregroundStyle(.tertiary)
-                                .lineLimit(1)
-                        }
-                    }
-                    .padding(.leading, 10)
-                    Spacer()
-                }
+        ZStack {
+            AsyncImage(url: video.thumbnail) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+            } placeholder: {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.25))
             }
-            .clipped()
-            .frame(height: 80)
-            .containerShape(RoundedRectangle(cornerRadius: 5))
-            .overlay(RoundedRectangle(cornerRadius: 5)
-                .stroke(focused ? Color.pink : .gray.opacity(0.25), lineWidth: 2)
-                .shadow(color: focused ? .pink : .blue.opacity(0), radius: 10)
-            )
-            .onTapGesture(perform: {
-                focused.toggle()
-            })
-            .animation(.easeInOut, value: focused)
-            .contextMenu {
-                VideoContextMenuView(
-                    video: video,
-                    useIINA: useIINA,
-                    onPlayVideo: onPlayVideo,
-                    onPlayInIINA: onPlayInIINA,
-                    onOpenInYouTube: onOpenInYouTube,
-                    onCopyLink: onCopyLink,
-                    onShareLink: onShareLink
+            .overlay {
+                LinearGradient(
+                    colors: [
+                        .black.opacity(isHovering ? 0.42 : 0.6),
+                        .black.opacity(isHovering ? 0.57 : 0.75)
+                    ],
+                    startPoint: .leading,
+                    endPoint: .trailing
                 )
             }
+            .blur(radius: isHovering ? 24 : 8)
+
+            HStack(spacing: 10) {
+                if !isHovering {
+                    thumbnailView
+                        .transition(
+                            .asymmetric(
+                                insertion: .move(edge: .leading).combined(with: .opacity),
+                                removal: .move(edge: .leading).combined(with: .opacity)
+                            )
+                        )
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(video.title)
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.white)
+                        .lineLimit(isHovering ? 3 : 1)
+
+                    Text(video.channelTitle)
+                        .font(.system(size: isHovering ? 11 : 10, weight: .medium, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.84))
+
+                    if !isHovering {
+                        Text(video.publishedAt)
+                            .font(.system(size: 10, weight: .regular, design: .rounded))
+                            .foregroundStyle(.white.opacity(0.7))
+                            .lineLimit(1)
+                            .transition(.opacity)
+                    }
+                }
+
+                Spacer(minLength: 0)
+            }
+            .padding(7)
         }
+        .frame(height: 82)
+        .clipShape(.rect(cornerRadius: 10))
+        .overlay(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .stroke(
+                    isHovering ? Color(red: 0.98, green: 0.41, blue: 0.55) : .white.opacity(0.2),
+                    lineWidth: isHovering ? 1.5 : 1
+                )
+        )
+        .shadow(
+            color: isHovering ? Color(red: 0.96, green: 0.37, blue: 0.53).opacity(0.45) : .clear,
+            radius: 12,
+            y: 5
+        )
+        .contentShape(.rect(cornerRadius: 10))
+        .onHover { hovering in
+            isHovering = hovering
+        }
+        .animation(.spring(response: 0.26, dampingFraction: 0.84), value: isHovering)
+        .contextMenu {
+            VideoContextMenuView(
+                video: video,
+                useIINA: useIINA,
+                onPlayVideo: onPlayVideo,
+                onPlayInIINA: onPlayInIINA,
+                onOpenInYouTube: onOpenInYouTube,
+                onCopyLink: onCopyLink,
+                onShareLink: onShareLink
+            )
+        }
+    }
+
+    private var thumbnailView: some View {
+        AsyncImage(url: video.thumbnail) { image in
+            image
+                .resizable()
+                .scaledToFill()
+        } placeholder: {
+            Rectangle()
+                .fill(Color.gray.opacity(0.3))
+        }
+        .frame(width: 128, height: 72)
+        .clipShape(.rect(cornerRadius: 7))
+        .overlay(
+            RoundedRectangle(cornerRadius: 7, style: .continuous)
+                .stroke(.white.opacity(0.16), lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 2)
     }
 }
 

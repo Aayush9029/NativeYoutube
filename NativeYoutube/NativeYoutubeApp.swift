@@ -42,6 +42,10 @@ private struct MenuBarRootView: View {
     let coordinator: AppCoordinator
     let licenseManager: LicenseManager
 
+    private var isShowingOverlay: Bool {
+        isShowingNagOverlay || licenseManager.overlay != nil
+    }
+
     var body: some View {
         ZStack {
             ContentView()
@@ -56,11 +60,12 @@ private struct MenuBarRootView: View {
 
                     guard licenseManager.shouldShowNag else { return }
                     guard !isShowingNagOverlay else { return }
+                    guard licenseManager.overlay == nil else { return }
                     DispatchQueue.main.async {
                         isShowingNagOverlay = true
                     }
                 }
-                .disabled(isShowingNagOverlay)
+                .disabled(isShowingOverlay)
 
             if isShowingNagOverlay {
                 LicenseNagView(
@@ -75,7 +80,22 @@ private struct MenuBarRootView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .transition(.opacity)
             }
+
+            if licenseManager.overlay == .activation {
+                LicenseActivationView(
+                    onCancel: {
+                        licenseManager.dismissOverlay()
+                    },
+                    onActivated: {
+                        licenseManager.dismissOverlay()
+                    }
+                )
+                .environment(licenseManager)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .transition(.opacity)
+            }
         }
         .animation(.easeInOut(duration: 0.2), value: isShowingNagOverlay)
+        .animation(.easeInOut(duration: 0.2), value: licenseManager.overlay)
     }
 }
