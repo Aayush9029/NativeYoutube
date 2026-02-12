@@ -9,16 +9,23 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: macos-26
 
     steps:
     - uses: actions/checkout@v4
     - name: Set up Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '16.4'
-    - name: Show Xcode version
-      run: /usr/bin/xcodebuild -version
+        xcode-version: latest
+    - name: Show and verify Xcode version
+      run: |
+        set -euo pipefail
+        /usr/bin/xcodebuild -version
+        XCODE_VERSION=$(/usr/bin/xcodebuild -version | awk '/Xcode/{print $2}')
+        if [[ "$XCODE_VERSION" != 26.* ]]; then
+          echo "::error::Expected Xcode 26.x on CI, got $XCODE_VERSION"
+          exit 1
+        fi
     - name: Configure Xcode defaults
       run: |
         set -e
