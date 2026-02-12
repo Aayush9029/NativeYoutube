@@ -1,16 +1,27 @@
 import SwiftUI
+import SwiftUINavigation
 
 struct LicenseNagView: View {
-    private enum Destination: Hashable {
+    private enum Destination {
         case activation
     }
 
     @Environment(LicenseManager.self) private var licenseManager
     @Environment(\.dismiss) private var dismiss
-    @State private var navigationPath: [Destination] = []
+    @State private var destination: Destination?
+    var onLater: (() -> Void)?
+    var onActivated: (() -> Void)?
+
+    init(
+        onLater: (() -> Void)? = nil,
+        onActivated: (() -> Void)? = nil
+    ) {
+        self.onLater = onLater
+        self.onActivated = onActivated
+    }
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationStack {
             VStack(spacing: 16) {
                 Text("Enjoying NativeYoutube?")
                     .font(.headline)
@@ -32,7 +43,7 @@ struct LicenseNagView: View {
                     .controlSize(.regular)
 
                     Button {
-                        navigationPath.append(.activation)
+                        destination = .activation
                     } label: {
                         HStack {
                             Spacer()
@@ -44,7 +55,11 @@ struct LicenseNagView: View {
                     .controlSize(.regular)
 
                     Button("Later") {
-                        dismiss()
+                        if let onLater {
+                            onLater()
+                        } else {
+                            dismiss()
+                        }
                     }
                     .buttonStyle(.plain)
                     .foregroundStyle(.secondary)
@@ -53,12 +68,19 @@ struct LicenseNagView: View {
             }
             .padding(24)
             .frame(width: 320)
-            .navigationDestination(for: Destination.self) { destination in
+            .navigationDestination(item: $destination) { destination in
                 switch destination {
                 case .activation:
-                    LicenseActivationView {
-                        dismiss()
-                    }
+                    LicenseActivationView(
+                        onCancel: { self.destination = nil },
+                        onActivated: {
+                            if let onActivated {
+                                onActivated()
+                            } else {
+                                dismiss()
+                            }
+                        }
+                    )
                     .environment(licenseManager)
                 }
             }

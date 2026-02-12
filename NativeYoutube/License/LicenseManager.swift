@@ -10,19 +10,22 @@ final class LicenseManager {
     @ObservationIgnored @Shared(.licenseKey) var licenseKey
     @ObservationIgnored @Shared(.isLicenseActivated) var isLicenseActivated
     @ObservationIgnored @Shared(.deviceID) var deviceID
-    @ObservationIgnored @Shared(.launchCount) var launchCount
+    @ObservationIgnored @Shared(.menuOpenCount) var menuOpenCount
 
     var isActivated: Bool { isLicenseActivated }
 
     var shouldShowNag: Bool {
-        !isLicenseActivated && launchCount > 0 && launchCount % 5 == 0
+        !isLicenseActivated && menuOpenCount > 0 && menuOpenCount % 3 == 0
     }
 
     init() {
         if deviceID.isEmpty {
             $deviceID.withLock { $0 = UUID().uuidString }
         }
-        $launchCount.withLock { $0 += 1 }
+    }
+
+    func recordMenuOpen() {
+        $menuOpenCount.withLock { $0 += 1 }
     }
 
     func activate(key: String) async {

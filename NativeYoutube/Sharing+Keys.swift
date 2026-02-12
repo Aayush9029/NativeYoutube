@@ -41,8 +41,8 @@ extension SharedReaderKey where Self == AppStorageKey<Bool>.Default {
 }
 
 extension SharedReaderKey where Self == AppStorageKey<Int>.Default {
-    static var launchCount: Self {
-        Self[.appStorage("launchCount"), default: 0]
+    static var menuOpenCount: Self {
+        Self[.appStorage("menuOpenCount"), default: 0]
     }
 }
 

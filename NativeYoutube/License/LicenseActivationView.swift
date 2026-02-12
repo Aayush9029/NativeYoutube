@@ -4,9 +4,14 @@ struct LicenseActivationView: View {
     @Environment(LicenseManager.self) private var licenseManager
     @Environment(\.dismiss) private var dismiss
     @State private var keyInput = ""
+    var onCancel: (() -> Void)?
     var onActivated: (() -> Void)?
 
-    init(onActivated: (() -> Void)? = nil) {
+    init(
+        onCancel: (() -> Void)? = nil,
+        onActivated: (() -> Void)? = nil
+    ) {
+        self.onCancel = onCancel
         self.onActivated = onActivated
     }
 
@@ -27,7 +32,11 @@ struct LicenseActivationView: View {
 
             HStack(spacing: 12) {
                 Button("Cancel") {
-                    dismiss()
+                    if let onCancel {
+                        onCancel()
+                    } else {
+                        dismiss()
+                    }
                 }
                 .keyboardShortcut(.cancelAction)
 

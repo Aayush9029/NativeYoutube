@@ -16,6 +16,7 @@ extension Target.Dependency {
     static let dependenciesTestSupport: Self = .product(name: "DependenciesTestSupport", package: "swift-dependencies")
     static let identifiedCollections: Self = .product(name: "IdentifiedCollections", package: "swift-identified-collections")
     static let swiftSharing: Self = .product(name: "Sharing", package: "swift-sharing")
+    static let swiftUINavigation: Self = .product(name: "SwiftUINavigation", package: "swift-navigation")
     static let youTubeKit: Self = .product(name: "YouTubeKit", package: "YouTubeKit")
     static let customDump: Self = .product(name: "CustomDump", package: "swift-custom-dump")
 }
@@ -36,6 +37,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.1.1"),
         .package(url: "https://github.com/pointfreeco/swift-sharing.git", from: "2.7.4"),
         .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.3.0"),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", from: "2.0.0"),
         .package(url: "https://github.com/alexeichhorn/YouTubeKit.git", from: "0.4.3")
     ],
     targets: [
@@ -73,6 +75,7 @@ let package = Package(
             name: "Shared",
             dependencies: [
                 .swiftSharing,
+                .swiftUINavigation,
                 .youTubeKit,
                 .swiftDependencies,
                 .swiftDependenciesMacros
