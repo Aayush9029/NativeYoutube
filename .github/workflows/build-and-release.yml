@@ -5,6 +5,9 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   SCHEME: NativeYoutube
   PRODUCT_NAME: NativeYoutube
@@ -45,8 +48,25 @@ jobs:
             TAG="${GITHUB_REF_NAME}"
           fi
           VERSION="${TAG#v}"
+          RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${TAG}"
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "release_url=$RELEASE_URL" >> "$GITHUB_OUTPUT"
           echo "Building version: $VERSION"
+
+      - name: Verify project version matches tag
+        run: |
+          PROJECT_VERSION=$(awk -F' = |;' '/MARKETING_VERSION =/{print $2; exit}' "${{ env.SCHEME }}.xcodeproj/project.pbxproj")
+          if [[ -z "$PROJECT_VERSION" ]]; then
+            echo "::error::Unable to read MARKETING_VERSION from project settings"
+            exit 1
+          fi
+
+          if [[ "$PROJECT_VERSION" != "${{ steps.version.outputs.version }}" ]]; then
+            echo "::error::Tag version (${{ steps.version.outputs.version }}) does not match MARKETING_VERSION ($PROJECT_VERSION)"
+            exit 1
+          fi
 
       - name: Import Developer ID certificate
         env:
@@ -165,7 +185,16 @@ jobs:
             exit 1
           fi
 
+          APP_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$INFO_PLIST" 2>/dev/null || true)
+          if [[ -z "$APP_BUILD_NUMBER" ]]; then
+            echo "::error::Missing CFBundleVersion in exported app"
+            plutil -p "$INFO_PLIST"
+            exit 1
+          fi
+
           echo "Validated exported app icon at $ICON_PATH"
+          echo "Resolved app build number: $APP_BUILD_NUMBER"
+          echo "APP_BUILD_NUMBER=$APP_BUILD_NUMBER" >> "$GITHUB_ENV"
 
       - name: Notarize app
         env:
@@ -249,8 +278,9 @@ jobs:
           FILE_SIZE=$(stat -f%z "$DMG_PATH")
 
           export VERSION="${{ steps.version.outputs.version }}"
-          export BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
+          export BUILD_NUMBER="${APP_BUILD_NUMBER}"
           export DOWNLOAD_URL="https://f005.backblazeb2.com/file/${{ secrets.B2_BUCKET_NAME }}/releases/${DMG_NAME}"
+          export RELEASE_URL="${{ steps.version.outputs.release_url }}"
           export ED_SIGNATURE
           export FILE_SIZE
 
@@ -271,12 +301,13 @@ jobs:
           xml += f'      <pubDate>{pub_date}</pubDate>\n'
           xml += f'      <sparkle:version>{os.environ["BUILD_NUMBER"]}</sparkle:version>\n'
           xml += f'      <sparkle:shortVersionString>{os.environ["VERSION"]}</sparkle:shortVersionString>\n'
+          xml += f'      <sparkle:releaseNotesLink>{os.environ["RELEASE_URL"]}</sparkle:releaseNotesLink>\n'
           xml += '      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>\n'
           xml += '      <enclosure\n'
           xml += f'        url="{os.environ["DOWNLOAD_URL"]}"\n'
           xml += f'        sparkle:edSignature="{os.environ["ED_SIGNATURE"]}"\n'
           xml += f'        length="{os.environ["FILE_SIZE"]}"\n'
-          xml += '        type="application/octet-stream"\n'
+          xml += '        type="application/x-apple-diskimage"\n'
           xml += '      />\n'
           xml += '    </item>\n'
           xml += '  </channel>\n'
@@ -316,6 +347,13 @@ jobs:
           else
             echo "DMG accessible on B2 (HTTP 200)"
           fi
+
+      - name: Upload DMG to GitHub release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${{ steps.version.outputs.tag }}" "$DMG_PATH" --clobber
 
       - name: Cleanup
         if: always()
