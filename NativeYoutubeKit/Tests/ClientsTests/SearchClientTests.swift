@@ -40,8 +40,10 @@ struct SearchClientTests {
 
             expectNoDifference(results, expectedVideos)
             let request = try #require(capturedRequest)
-            #expect(request.query == "SwiftUI")
-            #expect(request.apiKey == "testApiKey")
+            expectNoDifference(
+                request,
+                SearchRequest(query: "SwiftUI", apiKey: "testApiKey")
+            )
         }
     }
 
@@ -63,7 +65,7 @@ struct SearchClientTests {
             _ = try await searchClient.searchVideos("test", "badKey")
             Issue.record("Expected error to be thrown")
         } catch let error as APIClientError {
-            #expect(error == .httpError(statusCode: 403))
+            expectNoDifference(error, .httpError(statusCode: 403))
         } catch {
             Issue.record("Unexpected error type: \(error)")
         }

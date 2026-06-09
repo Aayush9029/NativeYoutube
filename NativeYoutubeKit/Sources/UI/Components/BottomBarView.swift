@@ -100,8 +100,8 @@ public struct BottomBarView: View {
                     searchQuery: $searchQuery,
                     isPlaying: true,
                     currentlyPlaying: "Example Video Title Playing Right Now",
-                    onSearch: { print("Search triggered") },
-                    onQuit: { print("Quit triggered") }
+                    onSearch: {},
+                    onQuit: {}
                 )
 
                 BottomBarView(
@@ -109,8 +109,8 @@ public struct BottomBarView: View {
                     searchQuery: $searchQuery,
                     isPlaying: false,
                     currentlyPlaying: "",
-                    onSearch: { print("Search triggered") },
-                    onQuit: { print("Quit triggered") }
+                    onSearch: {},
+                    onQuit: {}
                 )
                 .padding()
             }

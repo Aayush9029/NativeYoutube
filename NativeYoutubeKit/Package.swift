@@ -104,7 +104,6 @@ let package = Package(
             dependencies: [
                 .apiClient,
                 .models,
-                .swiftDependencies,
                 .dependenciesTestSupport,
                 .customDump
             ]
@@ -116,7 +115,6 @@ let package = Package(
                 .apiClient,
                 .models,
                 .shared,
-                .swiftDependencies,
                 .dependenciesTestSupport,
                 .customDump
             ]

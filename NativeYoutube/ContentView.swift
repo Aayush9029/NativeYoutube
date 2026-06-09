@@ -26,7 +26,7 @@ struct ContentView: View {
                     isPlaying: isPlaying,
                     currentlyPlaying: currentlyPlaying,
                     onSearch: { searchSubmitted() },
-                    onQuit: coordinator.quit
+                    onQuit: coordinator.quitButtonTapped
                 )
             }
             .frame(width: 360.0)
@@ -35,8 +35,8 @@ struct ContentView: View {
     }
 
     private func searchSubmitted() {
-        coordinator.navigateTo(.search)
-        Task { await coordinator.search(coordinator.searchQuery) }
+        coordinator.pageButtonTapped(.search)
+        Task { await coordinator.searchSubmitted(coordinator.searchQuery) }
     }
 }
 

@@ -40,8 +40,10 @@ struct PlaylistClientTests {
 
             expectNoDifference(results, expectedVideos)
             let request = try #require(capturedRequest)
-            #expect(request.playlistId == "PLtest123")
-            #expect(request.apiKey == "testApiKey")
+            expectNoDifference(
+                request,
+                PlaylistRequest(playlistId: "PLtest123", apiKey: "testApiKey")
+            )
         }
     }
 
@@ -63,7 +65,7 @@ struct PlaylistClientTests {
             _ = try await playlistClient.fetchVideos("key", "badPlaylist")
             Issue.record("Expected error to be thrown")
         } catch let error as APIClientError {
-            #expect(error == .httpError(statusCode: 404))
+            expectNoDifference(error, .httpError(statusCode: 404))
         } catch {
             Issue.record("Unexpected error type: \(error)")
         }

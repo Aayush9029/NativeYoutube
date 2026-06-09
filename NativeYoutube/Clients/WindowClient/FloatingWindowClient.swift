@@ -10,7 +10,7 @@ public struct FloatingWindowClient {
     public var hidePanel: @MainActor () -> Void
     public var centerPanel: @MainActor () -> Void
     public var updateContent: @MainActor (NSView) -> Void
-    public var setCloseHandler: @MainActor (@escaping () -> Void) -> Void
+    public var setCloseHandler: @MainActor (@escaping @MainActor () -> Void) -> Void
 }
 
 // Helper to hold window state outside of the main implementation
@@ -18,7 +18,7 @@ private extension FloatingWindowClient {
     @MainActor
     final class WindowStateHolder {
         var floatingPanel: FloatingPanel?
-        var closeHandler: (() -> Void)?
+        var closeHandler: (@MainActor () -> Void)?
         static let shared = WindowStateHolder()
     }
 }

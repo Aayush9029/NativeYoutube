@@ -1,31 +1,24 @@
 import AVKit
-import Dependencies
 import SwiftUI
 import UI
 
 struct YouTubePlayerView: View {
-    let videoURL: URL
-    let title: String
-    
-    @State private var player: AVPlayer? = nil
-    @State private var isLoading = true
-    @State private var errorMessage: String? = nil
-    @State private var isHovering = true
-    @State private var isPlaying = false
-    
-    @Dependency(\.youTubeKitClient) private var youTubeKit
-    @Dependency(\.floatingWindowClient) private var windowClient
+    @State private var model: YouTubePlayerModel
+
+    init(videoURL: URL, title: String) {
+        _model = State(initialValue: YouTubePlayerModel(videoURL: videoURL, title: title))
+    }
     
     var body: some View {
         ZStack {
-            if let player = player {
+            if let player = model.player {
                 VideoPlayer(player: player)
                     .ignoresSafeArea()
-                    .onAppear { playerDidAppear(player) }
+                    .onAppear { model.playerDidAppear(player) }
                 
-            } else if isLoading {
+            } else if model.isLoading {
                 loadingView
-            } else if let error = errorMessage {
+            } else if let error = model.errorMessage {
                 errorView(error)
             }
         }
@@ -38,17 +31,17 @@ struct YouTubePlayerView: View {
         }
         .onHover { hovering in
             withAnimation(.easeInOut(duration: 0.2)) {
-                isHovering = hovering
+                model.hoverChanged(hovering)
             }
         }
-        .task { await extractAndPlayVideo() }
-        .onAppear { setupCloseHandler() }
+        .task { await model.task() }
+        .onAppear { model.viewAppeared() }
     }
     
     // MARK: - Subviews
     
     private var closeButton: some View {
-        Button(action: closeButtonTapped) {
+        Button(action: model.closeButtonTapped) {
             Image(systemName: "xmark")
                 .foregroundStyle(.secondary)
                 .bold()
@@ -57,70 +50,20 @@ struct YouTubePlayerView: View {
                 .clipShape(.circle)
         }
         .buttonStyle(.plain)
-        .opacity(isHovering ? 1 : 0)
-        .animation(.easeInOut(duration: 0.2), value: isHovering)
+        .opacity(model.isHovering ? 1 : 0)
+        .animation(.easeInOut(duration: 0.2), value: model.isHovering)
     }
     
     private var loadingView: some View {
-        LoadingView(title: title)
+        LoadingView(title: model.title)
     }
     
     private func errorView(_ error: String) -> some View {
         ErrorView(
             error: error,
-            onRetry: { Task { await extractAndPlayVideo() } },
-            onClose: { windowClient.hidePanel() }
+            onRetry: { Task { await model.retryButtonTapped() } },
+            onClose: model.closeButtonTapped
         )
-    }
-    
-    // MARK: - Actions
-
-    private func playerDidAppear(_ player: AVPlayer) {
-        player.volume = 0.25
-        player.play()
-        isPlaying = true
-    }
-
-    private func closeButtonTapped() {
-        player?.pause()
-        windowClient.hidePanel()
-    }
-
-    private func setupCloseHandler() {
-        windowClient.setCloseHandler { [weak player] in
-            player?.pause()
-            player = nil
-        }
-    }
-
-    // MARK: - Helper methods
-
-    private func extractAndPlayVideo() async {
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            // Use YouTubeKitClient to extract the stream URL
-            let streamURL = try await youTubeKit.extractVideoURL(videoURL.absoluteString)
-            
-            // Create player with extracted URL
-            await MainActor.run {
-                self.player = AVPlayer(url: streamURL)
-                self.player?.play()
-                self.isPlaying = true
-                self.isLoading = false
-            }
-            
-        } catch {
-            await MainActor.run {
-                self.isLoading = false
-                self.errorMessage = "Failed to load video: \(error.localizedDescription)"
-                if self.errorMessage?.contains("outside world") == true {
-                    // This is a test/preview context without proper YouTube access
-                    self.errorMessage = "Cannot play YouTube videos in preview mode"
-                }
-            }
-        }
     }
 }
 
@@ -182,4 +125,3 @@ private struct ErrorView: View {
         .padding()
     }
 }
-

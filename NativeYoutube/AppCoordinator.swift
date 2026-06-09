@@ -54,13 +54,13 @@ final class AppCoordinator {
 
     // MARK: - Navigation
 
-    func navigateTo(_ page: Pages) {
+    func pageButtonTapped(_ page: Pages) {
         currentPage = page
     }
 
     // MARK: - Search
 
-    func search(_ query: String) async {
+    func searchSubmitted(_ query: String) async {
         guard !query.isEmpty else { return }
 
         searchQuery = query
@@ -78,7 +78,15 @@ final class AppCoordinator {
 
     // MARK: - Playlists
 
-    func loadPlaylist() async {
+    func playlistViewTask() async {
+        await loadPlaylistVideos()
+    }
+
+    func playlistIDDidChange() async {
+        await loadPlaylistVideos()
+    }
+
+    private func loadPlaylistVideos() async {
         playlistStatus = .loading
 
         do {
@@ -95,7 +103,7 @@ final class AppCoordinator {
 
     // MARK: - Video Actions
 
-    func handleVideoTap(_ video: Video) async {
+    func videoDoubleTapped(_ video: Video) async {
         switch videoClickBehaviour {
         case .nothing:
             return
@@ -108,25 +116,25 @@ final class AppCoordinator {
         }
     }
 
-    func playVideo(_ video: Video) async {
+    func playVideoButtonTapped(_ video: Video) async {
         await appStateClient.playVideo(video.url, video.title, false)
     }
 
-    func playInIINA(_ video: Video) async {
+    func playInIINAButtonTapped(_ video: Video) async {
         await appStateClient.playVideo(video.url, video.title, true)
     }
 
-    func openInYouTube(_ video: Video) {
+    func openInYouTubeButtonTapped(_ video: Video) {
         appStateClient.openInYouTube(video.url)
     }
 
-    func copyVideoLink(_ video: Video) {
+    func copyLinkButtonTapped(_ video: Video) {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.setString(video.url.absoluteString, forType: .string)
     }
 
-    func shareVideo(_ url: URL) {
+    func shareButtonTapped(_ url: URL) {
         let sharingPicker = NSSharingServicePicker(items: [url])
         if let window = NSApp.keyWindow {
             sharingPicker.show(relativeTo: .zero, of: window.contentView!, preferredEdge: .minY)
@@ -135,13 +143,13 @@ final class AppCoordinator {
 
     // MARK: - App Actions
 
-    func quit() {
+    func quitButtonTapped() {
         NSApplication.shared.terminate(nil)
     }
 
     // MARK: - Update Actions
 
-    func checkForUpdates() {
+    func checkForUpdatesButtonTapped() {
         updaterController.checkForUpdates(nil)
     }
 }

@@ -2,8 +2,14 @@ import AppKit
 import Dependencies
 import DependenciesMacros
 import Foundation
+import OSLog
 import Shared
 import SwiftUI
+
+private let appStateLogger = Logger(
+    subsystem: "com.pokharel.aayush.nativeyoutube",
+    category: "AppStateClient"
+)
 
 @DependencyClient
 public struct AppStateClient {
@@ -21,16 +27,13 @@ extension AppStateClient: DependencyKey {
         return AppStateClient(
             playVideo: { url, title, useIINA in
                 if useIINA {
-                    // Use mpv to play YouTube videos
                     await MainActor.run {
-                        // Common locations for IINA's mpv binary
                         let possibleMpvPaths = [
                             "/Applications/IINA.app/Contents/Frameworks/MPVPlayer.framework/Versions/A/Resources/mpv",
                             "/Applications/IINA.app/Contents/MacOS/mpv",
-                            "/usr/local/bin/mpv" // Fallback to system mpv if available
+                            "/usr/local/bin/mpv"
                         ]
 
-                        // Find the first available mpv binary
                         let mpvPath = possibleMpvPaths.first { path in
                             FileManager.default.fileExists(atPath: path)
                         }
@@ -43,21 +46,17 @@ extension AppStateClient: DependencyKey {
                             do {
                                 try task.run()
                             } catch {
-                                print("Failed to launch mpv: \(error)")
-                                // Fallback to IINA URL scheme
+                                appStateLogger.error("Failed to launch mpv: \(error.localizedDescription, privacy: .public)")
                                 let iinaURL = URL(string: "iina://weblink?url=\(url.absoluteString)")!
                                 NSWorkspace.shared.open(iinaURL)
                             }
                         } else {
-                            // Fallback to IINA URL scheme if mpv binary not found
                             let iinaURL = URL(string: "iina://weblink?url=\(url.absoluteString)")!
                             NSWorkspace.shared.open(iinaURL)
                         }
                     }
                 } else {
-                    // Show in YouTube player window
                     await MainActor.run {
-                        // Create player view content
                         let playerView = YouTubePlayerView(
                             videoURL: url,
                             title: title
@@ -65,14 +64,12 @@ extension AppStateClient: DependencyKey {
                         
                         let hostingView = NSHostingView(rootView: playerView)
                         
-                        // Create floating panel if it doesn't exist
                         if !windowClient.isVisible() {
                             windowClient.createFloatingPanel(hostingView)
                         } else {
                             windowClient.updateContent(hostingView)
                         }
                         
-                        // Show the panel
                         windowClient.showPanel()
                     }
                 }
@@ -86,8 +83,6 @@ extension AppStateClient: DependencyKey {
                 NSWorkspace.shared.open(url)
             },
             showVideoInApp: { _, _ in
-                // This method is used to show video in the main app window overlay
-                // The coordinator handles this directly now via playVideo
             },
             hideVideoPlayer: {
                 Task { @MainActor in
@@ -97,24 +92,7 @@ extension AppStateClient: DependencyKey {
         )
     }
 
-    public static let previewValue = AppStateClient(
-        playVideo: { url, title, useIINA in
-            // Mock implementation for previews
-            print("Preview: Playing video '\(title)' at \(url) \(useIINA ? "with IINA" : "in app")")
-        },
-        stopVideo: {
-            print("Preview: Stopping video")
-        },
-        openInYouTube: { url in
-            print("Preview: Opening \(url) in YouTube")
-        },
-        showVideoInApp: { _, title in
-            print("Preview: Showing video '\(title)' in app")
-        },
-        hideVideoPlayer: {
-            print("Preview: Hiding video player")
-        }
-    )
+    public static let previewValue = AppStateClient()
 
     public static let testValue = AppStateClient()
 }

@@ -106,9 +106,7 @@ public struct VideoListView: View {
     VideoListView(
         videos: sampleVideos,
         videoClickBehaviour: .playVideo,
-        onVideoTap: { video in
-            print("Tapped video: \(video.title)")
-        }
+        onVideoTap: { _ in }
     )
 }
 #endif

@@ -29,7 +29,7 @@ struct NativeYoutubeApp: App {
                 }
                 Divider()
                 Button("Check for Updates...") {
-                    coordinator.checkForUpdates()
+                    coordinator.checkForUpdatesButtonTapped()
                 }
             }
         }

@@ -66,7 +66,7 @@ struct GeneralPreferenceView: View {
                 }
 
                 Button("Check for Updates Now") {
-                    coordinator.checkForUpdates()
+                    coordinator.checkForUpdatesButtonTapped()
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.small)

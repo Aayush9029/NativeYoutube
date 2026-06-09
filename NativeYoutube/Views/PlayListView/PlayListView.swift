@@ -27,14 +27,14 @@ struct PlayListView: View {
                         useIINA: true,
                         onPlayVideo: { playVideoTapped($0) },
                         onPlayInIINA: { playInIINATapped($0) },
-                        onOpenInYouTube: { coordinator.openInYouTube($0) },
-                        onCopyLink: { coordinator.copyVideoLink($0) },
-                        onShareLink: { coordinator.shareVideo($0) }
+                        onOpenInYouTube: { coordinator.openInYouTubeButtonTapped($0) },
+                        onCopyLink: { coordinator.copyLinkButtonTapped($0) },
+                        onShareLink: { coordinator.shareButtonTapped($0) }
                     )
                 }
             }
         }
-        .task { await coordinator.loadPlaylist() }
+        .task { await coordinator.playlistViewTask() }
         .onChange(of: Shared(.playlistID).wrappedValue) { _, _ in
             playlistIDDidChange()
         }
@@ -42,19 +42,19 @@ struct PlayListView: View {
     }
 
     private func videoTapped(_ video: Video) {
-        Task { await coordinator.handleVideoTap(video) }
+        Task { await coordinator.videoDoubleTapped(video) }
     }
 
     private func playVideoTapped(_ video: Video) {
-        Task { await coordinator.playVideo(video) }
+        Task { await coordinator.playVideoButtonTapped(video) }
     }
 
     private func playInIINATapped(_ video: Video) {
-        Task { await coordinator.playInIINA(video) }
+        Task { await coordinator.playInIINAButtonTapped(video) }
     }
 
     private func playlistIDDidChange() {
-        Task { await coordinator.loadPlaylist() }
+        Task { await coordinator.playlistIDDidChange() }
     }
 }
 

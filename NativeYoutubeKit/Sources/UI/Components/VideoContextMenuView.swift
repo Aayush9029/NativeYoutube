@@ -78,11 +78,11 @@ struct VideoContextMenuView: View {
             VideoContextMenuView(
                 video: sampleVideo,
                 useIINA: true,
-                onPlayVideo: { print("Play video") },
-                onPlayInIINA: { print("Play in IINA") },
-                onOpenInYouTube: { print("Open in YouTube") },
-                onCopyLink: { print("Copy link") },
-                onShareLink: { url in print("Share link: \(url)") }
+                onPlayVideo: {},
+                onPlayInIINA: {},
+                onOpenInYouTube: {},
+                onCopyLink: {},
+                onShareLink: { _ in }
             )
         }
         
@@ -90,11 +90,11 @@ struct VideoContextMenuView: View {
             VideoContextMenuView(
                 video: sampleVideo,
                 useIINA: false,
-                onPlayVideo: { print("Play video") },
-                onPlayInIINA: { print("Play in IINA") },
-                onOpenInYouTube: { print("Open in YouTube") },
-                onCopyLink: { print("Copy link") },
-                onShareLink: { url in print("Share link: \(url)") }
+                onPlayVideo: {},
+                onPlayInIINA: {},
+                onOpenInYouTube: {},
+                onCopyLink: {},
+                onShareLink: { _ in }
             )
         }
     }
