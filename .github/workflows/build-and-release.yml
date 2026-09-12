@@ -92,6 +92,10 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security list-keychains -d user -s "$KEYCHAIN_PATH" "$(security list-keychains -d user | tr -d '"' | tr '\n' ' ')"
 
+          SIGN_IDENTITY="$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | sed -n 's/.*"\(Developer ID Application: [^"]*\)".*/\1/p' | head -n 1)"
+          [ -n "$SIGN_IDENTITY" ] || { echo "No Developer ID Application identity" >&2; exit 1; }
+          echo "SIGN_IDENTITY=$SIGN_IDENTITY" >> "$GITHUB_ENV"
+
       - name: Setup App Store Connect API key
         env:
           API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
@@ -246,7 +250,7 @@ jobs:
 
       - name: Sign DMG
         run: |
-          codesign --force --sign "Developer ID Application: Aayush Pokharel (${{ secrets.APPLE_TEAM_ID }})" \
+          codesign --force --sign "$SIGN_IDENTITY" \
             --timestamp \
             "$DMG_PATH"
 
