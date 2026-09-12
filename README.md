@@ -1,3 +1,11 @@
+> [!WARNING]
+> APPLE REMOVED MY APPLE ID FOR MAKING MAC APPS that they didn't agree with. Please wait a moment while I figure out new signing keys. Until then, macOS reports the downloaded app as damaged. Move the app to Applications, then run:
+>
+> ```bash
+> xattr -c /Applications/NativeYoutube.app
+> open /Applications/NativeYoutube.app
+> ```
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/0530149b-6dda-4a20-ac04-18c525e0729a" alt="NativeYoutube banner" />
   <h1 align="center">NativeYoutube for macOS</h1>
