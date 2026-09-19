@@ -1,6 +1,4 @@
-> [!WARNING]
-> APPLE REMOVED MY APPLE ID FOR MAKING MAC APPS that they didn't agree with. Please wait a moment while I figure out new signing keys. Until then, macOS reports the downloaded app as damaged. Move the app to Applications, then run:
->
+
 > ```bash
 > xattr -c /Applications/NativeYoutube.app
 > open /Applications/NativeYoutube.app
